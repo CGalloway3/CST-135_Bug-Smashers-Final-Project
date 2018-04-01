@@ -2,10 +2,10 @@ package vendingmachine;
 
 public abstract class Product {
 	
-	String productName;          
-	String productLocation;
-	int productQuantity;
-	double productPrice;
+	private String productName;          
+	private String productLocation;
+	private int productQuantity;
+	private double productPrice;
 	
 	public Product() {	//no argument constructor
 	}

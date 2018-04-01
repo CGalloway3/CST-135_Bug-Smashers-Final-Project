@@ -7,21 +7,15 @@ public class Drink extends Product {
 	}
 	
 	public Drink(String name, String location, int quantity, double price) {
-		productName = name;
-		productLocation = location;
-		productQuantity = quantity;
-		productPrice = price;
+		super(name, location, quantity, price);
 	}
 	
 	public Drink(Product copy) {    //overloaded constructor that copies another objects fields
-		productName = copy.getName();
-		productLocation = copy.getLocation();
-		productQuantity = copy.getQuantity();
-		productPrice = copy.getPrice();
+		super(copy.getName(), copy.getLocation(), copy.getQuantity(), copy.getPrice());
 	}
 	
 	public String toString() {     //toString method
-		return productName + ", " + productLocation + ", " + productQuantity + ", " + productPrice;
+		return this.getName() + ", " + this.getLocation() + ", " + this.getQuantity() + ", " + this.getPrice();
 	}
 
 }
