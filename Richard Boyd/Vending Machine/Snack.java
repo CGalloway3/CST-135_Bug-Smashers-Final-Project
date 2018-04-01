@@ -11,7 +11,7 @@ public abstract class Snack extends Product{
 	}
 	
 	public Snack(Product copy) {    //overloaded constructor that copies another objects fields
-		super(copy.getName(), copy.getLocation(), copy.getQuantity(), copy.getPrice());
+		super(copy);
 	}
 	
 	public String toString() {     //toString method

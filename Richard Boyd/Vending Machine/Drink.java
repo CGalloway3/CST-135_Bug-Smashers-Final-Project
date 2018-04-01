@@ -11,7 +11,7 @@ public class Drink extends Product {
 	}
 	
 	public Drink(Product copy) {    //overloaded constructor that copies another objects fields
-		super(copy.getName(), copy.getLocation(), copy.getQuantity(), copy.getPrice());
+		super(copy);
 	}
 	
 	public String toString() {     //toString method
