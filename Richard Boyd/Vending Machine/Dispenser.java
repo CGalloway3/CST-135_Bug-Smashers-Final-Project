@@ -4,13 +4,13 @@ import java.util.ArrayList;
 
 public class Dispenser {
 	
-	ArrayList<Object> productlist = new ArrayList<Object>();
+	ArrayList<Product> productlist = new ArrayList<Product>();
 	
 	public Dispenser() {
 		createProducts();
 	}
 	
-	private ArrayList<Object> createProducts() {              //creates products
+	private ArrayList<Product> createProducts() {              //creates products
 		
 		Drink pepsi = new Drink("Pepsi", "A1", 10, 1.75);
 		productlist.add(pepsi);
