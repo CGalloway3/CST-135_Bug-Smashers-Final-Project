@@ -1,1 +1,1 @@
-Topic 2 assignment submission location.
+Assignment submission material for Topic 2 CST-135

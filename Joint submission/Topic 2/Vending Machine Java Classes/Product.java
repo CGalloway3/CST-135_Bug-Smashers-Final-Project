@@ -10,7 +10,7 @@ package vendingmachine;
 
 public abstract class Product {
 	
-    //Private fields
+    // Private fields
     
         private String productName;          
 	private String productLocation;
