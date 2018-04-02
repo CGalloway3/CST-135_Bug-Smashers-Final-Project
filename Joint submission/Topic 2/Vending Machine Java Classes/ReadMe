@@ -6,5 +6,17 @@
 *    Date: March 30th, 2018
 **/
 
-This is the full package of my working code. Run the main class, just have them all in the same folder and they should package themselves.
-I only created 2 of each type of product, but the code is dynamic so you can add more, just follow the same format.
+Project timelime:
+
+  Weel 1: 
+    Develop story board, dispenser UML, and product UML
+  Week 2:
+    Expand on product UML by making it abstract and creating subclasses of drink, snack, candy, chips, and gum.
+    
+  Our current approach in design is to have a dispenser class with slot loctaions in it and products defined by the product class 
+in those slot locations. When the user purchases a product the code will trigger a dispensing mechanism for the items slot dropping
+the item to the user.
+  
+  This is the full package of working code. Run the main class, just have them all in the same folder and they should package themselves.
+I only created 3 of each type of product, but the code is dynamic so you can add more, just follow the same format.
+
