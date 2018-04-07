@@ -1,6 +1,6 @@
 package vendingmachine;
 
-public abstract class Snack extends Product{
+public abstract class Snack extends Product implements Comparable<Snack> {
 
 	public Snack() {
 		
@@ -16,6 +16,13 @@ public abstract class Snack extends Product{
 	
 	public String toString() {     //toString method
 		return this.getName() + ", " + this.getLocation() + ", " + this.getQuantity() + ", " + this.getPrice();
+	}
+	
+	@Override
+	public int compareTo(Snack o) {
+		
+		return getName().compareTo(o.getName());
+		
 	}
 	
 }

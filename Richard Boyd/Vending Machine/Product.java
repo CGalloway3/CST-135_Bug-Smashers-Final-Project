@@ -61,5 +61,6 @@ public abstract class Product {
 		return productName + ", " + productLocation + ", " + productQuantity + ", " + productPrice;
 	}
 	
+	
 		
 }

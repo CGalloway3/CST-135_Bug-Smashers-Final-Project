@@ -1,6 +1,6 @@
 package vendingmachine;
 
-public class Drink extends Product {
+public class Drink extends Product implements Comparable<Drink> {
 
 	public Drink() {
 		
@@ -16,6 +16,13 @@ public class Drink extends Product {
 	
 	public String toString() {     //toString method
 		return this.getName() + ", " + this.getLocation() + ", " + this.getQuantity() + ", " + this.getPrice();
+	}
+
+	@Override
+	public int compareTo(Drink o) {
+		
+		return getName().compareTo(o.getName());
+		
 	}
 
 }
