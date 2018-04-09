@@ -28,6 +28,7 @@ class Main {
                     productFound = false;
                     if ( i.equalsIgnoreCase("admin") ) {
                         System.out.print("Please enter the admin password: ");
+                        productFound = true;
                         i = input.nextLine();
                         System.out.println("Password is invalid");
                     }
@@ -45,7 +46,7 @@ class Main {
                     }
                 
                     if ( !productFound ) {
-                        System.out.println("Prodduct not in the list.");
+                        System.out.println("Product not in the list.");
                     }
                 }   
 	}
