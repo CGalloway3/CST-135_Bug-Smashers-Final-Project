@@ -32,7 +32,21 @@ public abstract class Snack extends Product implements Comparable<Snack> {
         @Override
 	public int compareTo(Snack o) {
 		
-		return getName().compareTo(o.getName());
+		if (getName().compareTo(o.getName()) == 0) {
+			
+			if (getPrice() > o.getPrice()) {
+				return 1;
+			}
+			
+			else if (getPrice() < o.getPrice()) {
+				return -1;
+			}
+			
+			else return 0;
+			
+		}
+		
+		else return getName().compareTo(o.getName());
 		
 	}
 
