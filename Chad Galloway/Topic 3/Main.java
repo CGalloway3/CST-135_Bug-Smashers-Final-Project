@@ -24,6 +24,7 @@ class Main {
                 
                 while ( !i.equalsIgnoreCase("x") ) {                
                     
+                    System.out.print("Selection: ");
                     i = input.nextLine();
                     productFound = false;
                     if ( i.equalsIgnoreCase("admin") ) {
