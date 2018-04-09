@@ -1,0 +1,9 @@
+package vendingmachine;
+
+public interface IVendingMachine {
+    String productName();
+    String productLocation();
+    int productQuantity();
+    double productPrice();
+
+}
