@@ -40,6 +40,8 @@ public class Dispenser extends Application {
     
     private final ArrayList<Product> productList = new ArrayList<>();
     private Boolean adminMode = false;  // adminMode flag
+    private int itemGridCategory;
+    private int itemGridPageNumber = 1;
     private int moneyInserted = 0;
     private int productsCost = 0;
     
@@ -53,6 +55,7 @@ public class Dispenser extends Application {
     private final GridPane categoryGrid = new GridPane();
     private final GridPane itemGrid = new GridPane();
     private final Label lblBills = new Label("Bills");
+    private final Button btnBackToCategories = new Button("<< Back");
     private final Button btnAddTwentyDollars = new Button("Twenty Dollars");
     private final Button btnAddTenDollars = new Button("Ten Dollars");
     private final Button btnAddFiveDollars = new Button("Five Dollars");
@@ -107,9 +110,9 @@ public class Dispenser extends Application {
         largeCoinSlot.setSpacing(8);
         smallCoinSlot.setSpacing(2);
         moneySlot.setSpacing(10);
-        moneySlot.setPadding(new Insets(5));
+        moneySlot.setPadding(new Insets(10));
         customerControls.setSpacing(8);
-        customerControls.setPadding(new Insets(5));
+        customerControls.setPadding(new Insets(10));
 
         // Set Grid gaps
         categoryGrid.setVgap(10);
@@ -118,64 +121,114 @@ public class Dispenser extends Application {
         itemGrid.setVgap(10);
         
         // Set button sizes, states, and events
-        btnNextPage.setPrefSize(70, 10);
+        btnNextPage.prefWidthProperty().bind(btnItem9.widthProperty());
         btnNextPage.setDisable(true);
-        btnPreviousPage.setPrefSize(70, 10);
-        btnPreviousPage.setDisable(true);
+        btnNextPage.setOnAction((event) -> {
+            itemGridPageNumber++;
+            if (populateItemGrid()) {
+                btnNextPage.setDisable(false);
+            }
+            else {
+                btnNextPage.setDisable(true);
+            }
+            
+            btnPreviousPage.setDisable(false);
+        });
         
-        btnDrinkCategory.setPrefSize(100, 100);
+        btnPreviousPage.prefWidthProperty().bind(btnItem7.widthProperty());
+        btnPreviousPage.setDisable(true);
+        btnPreviousPage.setOnAction((event) -> {
+            itemGridPageNumber--;
+            if (populateItemGrid()) {
+                btnNextPage.setDisable(false);
+            }
+            else {
+                btnNextPage.setDisable(true);
+            }
+            
+            if (itemGridPageNumber == 1) {
+                btnPreviousPage.setDisable(true);
+            }
+        });
+        
+        btnBackToCategories.setTranslateY(-225);
+        btnBackToCategories.setTranslateX(-260);
+        btnBackToCategories.setVisible(false);
+        btnBackToCategories.setOnAction((event) -> {
+            itemGridPageNumber = 1;
+            btnNextPage.setDisable(true);
+            btnPreviousPage.setDisable(true);
+            btnBackToCategories.setVisible(false);
+            customerBorder.setCenter(categoryGrid);
+        });
+        btnDrinkCategory.setPrefSize(200, 200);
         viewDrinkCategory.setFitHeight(100);
         viewDrinkCategory.setFitWidth(100);
         btnDrinkCategory.setContentDisplay(ContentDisplay.TOP);
         btnDrinkCategory.setGraphic(viewDrinkCategory);
         btnDrinkCategory.setOnAction((event) -> {
-            populateItemGrid(1,1);
+            itemGridCategory = 1;
+            if (populateItemGrid()) {
+                btnNextPage.setDisable(false);
+            }
+            else {
+                btnNextPage.setDisable(true);
+            }
         });
         
-        btnChipsCategory.setPrefSize(100, 100);
+        btnChipsCategory.setPrefSize(200, 200);
         viewChipsCategory.setFitHeight(100);
         viewChipsCategory.setFitWidth(100);
         btnChipsCategory.setContentDisplay(ContentDisplay.TOP);
         btnChipsCategory.setGraphic(viewChipsCategory);
         btnChipsCategory.setOnAction((event) -> {
-            populateItemGrid(2,1);
+            itemGridCategory = 2;
+            if (populateItemGrid()) {
+                btnNextPage.setDisable(false);
+            }
         });
         
-        btnCandyCategory.setPrefSize(100, 100);
+        btnCandyCategory.setPrefSize(200, 200);
         viewCandyCategory.setFitHeight(100);
         viewCandyCategory.setFitWidth(100);
         btnCandyCategory.setContentDisplay(ContentDisplay.TOP);
         btnCandyCategory.setGraphic(viewCandyCategory);
         btnCandyCategory.setOnAction((event) -> {
-            populateItemGrid(3,1);
+            itemGridCategory = 3;
+            if (populateItemGrid()) {
+                btnNextPage.setDisable(false);
+            }
         });
         
-        btnGumCategory.setPrefSize(100, 100);
+        btnGumCategory.setPrefSize(200, 200);
         viewGumCategory.setFitHeight(100);
         viewGumCategory.setFitWidth(100);
         btnGumCategory.setContentDisplay(ContentDisplay.TOP);
         btnGumCategory.setGraphic(viewGumCategory);
         btnGumCategory.setOnAction((event) -> {
-            populateItemGrid(4,1);
+            itemGridCategory = 4;
+            if (populateItemGrid()) {
+                btnNextPage.setDisable(false);
+            }
         });
         
-        btnItem1.setPrefSize(70, 70);
+        btnItem1.setPrefSize(140, 140);
         btnItem1.setDisable(true);
-        btnItem2.setPrefSize(70, 70);
+        btnItem2.setPrefSize(140, 140);
         btnItem2.setDisable(true);
-        btnItem3.setPrefSize(70, 70);
+        btnItem3.setPrefSize(140, 140);
         btnItem3.setDisable(true);
-        btnItem4.setPrefSize(70, 70);
+        btnItem4.setPrefSize(140, 140);
         btnItem4.setDisable(true);
-        btnItem5.setPrefSize(70, 70);
+        btnItem5.setPrefSize(140, 140);
         btnItem5.setDisable(true);
-        btnItem6.setPrefSize(70, 70);
+        btnItem6.setPrefSize(140, 140);
         btnItem6.setDisable(true);
-        btnItem7.setPrefSize(70, 70);
+        btnItem7.setPrefSize(140, 140);
         btnItem7.setDisable(true);
-        btnItem8.setPrefSize(70, 70);
+        btnItem8.setPrefSize(140, 140);
         btnItem8.setDisable(true);
-        btnItem9.setPrefSize(70, 70);
+        btnItem9.setPrefSize(140, 140);
         btnItem9.setDisable(true);
         
         btnAddDime.setOnAction((event) -> {
@@ -232,6 +285,9 @@ public class Dispenser extends Application {
         btnReturnMoney.prefWidthProperty().bind(btnCompletePurchase.widthProperty());
         btnFinished.prefWidthProperty().bind(btnCompletePurchase.widthProperty());
         btnFinished.setOnAction((event) -> {
+            itemGridPageNumber = 1;
+            btnNextPage.setDisable(true);
+            btnPreviousPage.setDisable(true);
             customerStage.hide();
             customerBorder.setCenter(categoryGrid);
             primaryStage.show();
@@ -277,16 +333,17 @@ public class Dispenser extends Application {
         
         // Add border to pane
         customerPane.getChildren().add(customerBorder);
+        customerPane.getChildren().add(btnBackToCategories);
         
         // Set the scene
         customerStage.setTitle("Speedy Vend 5000");
-        customerStage.setScene(new Scene(customerPane, 550, 300));
+        customerStage.setScene(new Scene(customerPane, 710, 500));
 
                 // Admin page not fully implemented. Code below is just filler code
                 Button btnAdmin = new Button("Admin Stage");
                 Stage adminStage = new Stage();
                 adminStage.setTitle("Admin Stage");
-                adminStage.setScene(new Scene(btnAdmin, 100, 100));
+                adminStage.setScene(new Scene(btnAdmin, 300, 300));
                 btnAdmin.setOnAction((ActionEvent event) -> {
                     adminStage.hide();
                     primaryStage.show();
@@ -326,7 +383,7 @@ public class Dispenser extends Application {
         });
         
         primaryStage.setTitle("Speedy Vend 5000");
-        primaryStage.setScene(new Scene(btn, 300, 250));
+        primaryStage.setScene(new Scene(btn, 710, 500));
         primaryStage.show();
         btn.requestFocus();      
 
@@ -343,51 +400,127 @@ public class Dispenser extends Application {
      *  @param category product category 1=drink 2=chips 3=candy 4=gum 
      *  @param page page number to display 1=first page 2=second...
      */
-    private Boolean populateItemGrid(int category, int page) {
+    private Boolean populateItemGrid() {
         
-        switch (category){
+        Boolean morePages = false;
+        String category;
+        
+        btnItem1.setText("");
+        btnItem1.setDisable(true);
+        btnItem2.setText("");
+        btnItem2.setDisable(true);
+        btnItem3.setText("");
+        btnItem3.setDisable(true);
+        btnItem4.setText("");
+        btnItem4.setDisable(true);
+        btnItem5.setText("");
+        btnItem5.setDisable(true);
+        btnItem6.setText("");
+        btnItem6.setDisable(true);
+        btnItem7.setText("");
+        btnItem7.setDisable(true);
+        btnItem8.setText("");
+        btnItem8.setDisable(true);
+        btnItem9.setText("");
+        btnItem9.setDisable(true);
+        
+        btnBackToCategories.setVisible(true);
+        
+        switch (itemGridCategory){
             case 1:
-                for (Product p : productList) {
-                    //System.out.println(String.valueOf((char)(64+page)));
-                    //System.out.println(p.getClass().getSimpleName());
-                    if (p.getClass().getSimpleName().equalsIgnoreCase("Drink") && p.getLocation().startsWith((String.valueOf((char)(64+page)))))
-                    {
-                        //System.out.println("vendingmachine.Dispenser.populateItemGrid()");
-                        //System.out.println(String.valueOf(p.getLocation().charAt(1)));
-                        switch (String.valueOf(p.getLocation().charAt(1))) {
-                            case "1":
-                                btnItem1.setDisable(false);
-                                btnItem1.setText(p.getName());
-                            case "2":
-                                btnItem2.setDisable(false);
-                                btnItem2.setText(p.getName());
-                            case "3":
-                                btnItem3.setDisable(false);
-                                btnItem3.setText(p.getName());
-                            case "4":
-                                btnItem4.setDisable(false);
-                                btnItem4.setText(p.getName());
-                            case "5":
-                                btnItem5.setDisable(false);
-                                btnItem5.setText(p.getName());
-                            case "6":
-                                btnItem6.setDisable(false);
-                                btnItem6.setText(p.getName());
-                            case "7":
-                                btnItem7.setDisable(false);
-                                btnItem7.setText(p.getName());
-                            case "8":
-                                btnItem8.setDisable(false);
-                                btnItem8.setText(p.getName());
-                            case "9":
-                                btnItem9.setDisable(false);
-                                btnItem9.setText(p.getName());
-                        }
-                    }
-                    
-                }
+                category = "Drink";
+                break;
+            case 2:
+                category = "Chips";
+                break;
+            case 3:
+                category = "Candy";
+                break;
+            case 4:
+                category = "Gum";
+                break;
+            default:
+                System.out.println("Category out of range. Please select a range of 1-4, inclusive.");
+                return false;
         }
+        
+        for (Product p : productList) {
+            if (p.getClass().getSimpleName().equalsIgnoreCase(category) && p.getLocation().startsWith((String.valueOf((char)(64+itemGridPageNumber))))) {
+                switch (String.valueOf(p.getLocation().charAt(1))) {
+                    case "1":
+                        btnItem1.setDisable(false);
+                        btnItem1.setText(p.getName());
+                        if (p.getQuantity() < 1) {
+                            btnItem1.setDisable(true);
+                        }
+                        break;
+                    case "2":
+                        btnItem2.setDisable(false);
+                        btnItem2.setText(p.getName());
+                        if (p.getQuantity() < 1) {
+                            btnItem2.setDisable(true);
+                        }
+                        break;
+                    case "3":
+                        btnItem3.setDisable(false);
+                        btnItem3.setText(p.getName());
+                        if (p.getQuantity() < 1) {
+                            btnItem3.setDisable(true);
+                        }
+                        break;
+                    case "4":
+                        btnItem4.setDisable(false);
+                        btnItem4.setText(p.getName());
+                        if (p.getQuantity() < 1) {
+                            btnItem4.setDisable(true);
+                        }
+                        break;
+                    case "5":
+                        btnItem5.setDisable(false);
+                        btnItem5.setText(p.getName());
+                        if (p.getQuantity() < 1) {
+                            btnItem5.setDisable(true);
+                        }
+                        break;
+                    case "6":
+                        btnItem6.setDisable(false);
+                        btnItem6.setText(p.getName());
+                        if (p.getQuantity() < 1) {
+                            btnItem6.setDisable(true);
+                        }
+                        break;
+                    case "7":
+                        btnItem7.setDisable(false);
+                        btnItem7.setText(p.getName());
+                        if (p.getQuantity() < 1) {
+                            btnItem7.setDisable(true);
+                        }
+                        break;
+                    case "8":
+                        btnItem8.setDisable(false);
+                        btnItem8.setText(p.getName());
+                        if (p.getQuantity() < 1) {
+                            btnItem8.setDisable(true);
+                        }
+                        break;
+                    case "9":
+                        btnItem9.setDisable(false);
+                        btnItem9.setText(p.getName());
+                        if (p.getQuantity() < 1) {
+                            btnItem9.setDisable(true);
+                        }
+                        break;
+                }
+            }
+
+            if (p.getClass().getSimpleName().equalsIgnoreCase(category) && p.getLocation().startsWith((String.valueOf((char)(65+itemGridPageNumber))))) {
+                morePages = true;
+            }
+        }
+
+        
         customerBorder.setCenter(itemGrid);
+        return morePages;
     }
 
     private void updateFunds() {
@@ -411,7 +544,7 @@ public class Dispenser extends Application {
         productList.add(new Drink("Fanta Grape", "B2", 0, 1.25));
         productList.add(new Drink("Fanta Strawberry", "B3", 10, 1.25));
         productList.add(new Drink("Mug Root Beer", "B4", 10, 1.25));
-        productList.add(new Drink("Mug Cream Soda", "B5", 10, 1.25));
+        productList.add(new Drink("Mug Cream Soda", "C5", 10, 1.25));
         productList.add(new Drink("Sprite", "B6", 10, 1.25));
         productList.add(new Drink("7-Up", "B7", 10, 1.25));
         productList.add(new Drink("Sierra Mist", "B8", 10, 1.25));
