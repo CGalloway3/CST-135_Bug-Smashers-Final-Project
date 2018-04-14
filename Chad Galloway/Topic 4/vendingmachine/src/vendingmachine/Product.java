@@ -75,7 +75,7 @@ public abstract class Product {
         
 	@Override
         public String toString() {     //toString method
-		return productName + ", " + productLocation + ", " + productQuantity + ", " + productPrice;
+		return productName + "\n " + productPrice;
 	}
 	
 		

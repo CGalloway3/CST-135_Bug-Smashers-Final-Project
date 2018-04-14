@@ -449,7 +449,7 @@ public class Dispenser extends Application {
                 switch (String.valueOf(p.getLocation().charAt(1))) {
                     case "1":
                         btnItem1.setDisable(false);
-                        btnItem1.setText(p.getName());
+                        btnItem1.setText(p.toString());
                         if (p.getQuantity() < 1) {
                             btnItem1.setDisable(true);
                         }
