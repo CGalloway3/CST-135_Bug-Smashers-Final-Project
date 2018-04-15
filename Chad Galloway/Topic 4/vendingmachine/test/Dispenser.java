@@ -8,6 +8,12 @@
 
 package vendingmachine;
 
+import vendingmachine.products.Snack;
+import vendingmachine.products.Product;
+import vendingmachine.products.Gum;
+import vendingmachine.products.Drink;
+import vendingmachine.products.Chips;
+import vendingmachine.products.Candy;
 import java.util.ArrayList;
 import java.util.Collections;
 

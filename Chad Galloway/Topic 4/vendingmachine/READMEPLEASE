@@ -1,0 +1,19 @@
+First off, apologies. Fell asleep without uploading.
+Second, the following are all the changes I've made to the build.
+
+Added functionality to "Coin Return"
+Declared ArrayList cart
+changed price type from double to int
+Added function to item buttons that:
+	adds selected item price to products cost
+	adds selected item to cart
+Changed item button labels so they all call p.toString
+	*this was why some displayed price and some didn't 
+Changed price data in populateProductList() to: 
+	reflect new int type for price 
+	add realistic variation in price 
+Changed toString methods in all classes to adjust for new int type price and to display well on buttons 
+added pop up windows for both "my items" and "complete purchase"
+	*neither have the ability to remove items, couldn't figure it out
+	*"complete purchase" still needs to have total cost added to bottom
+		-see notes in code

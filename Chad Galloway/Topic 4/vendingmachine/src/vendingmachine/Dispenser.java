@@ -1,4 +1,4 @@
-//CST-135 group assignment for Topic 2, a collaboration of Richard Boyd, Chad Galloway, and Dennis Witt
+//CST-135 group assignment for Topic 4, a collaboration of Richard Boyd, Chad Galloway, and Dennis Witt
 /**  Program: Vending Machine
 *    File: Dispenser.java
 *    Summary: Vending Machine GUI elements.
@@ -8,6 +8,12 @@
 
 package vendingmachine;
 
+import vendingmachine.products.IPurchasableProduct;
+import vendingmachine.products.Product;
+import vendingmachine.products.Gum;
+import vendingmachine.products.Drink;
+import vendingmachine.products.Chips;
+import vendingmachine.products.Candy;
 import java.util.ArrayList;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
@@ -19,11 +25,6 @@ import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundImage;
-import javafx.scene.layout.BackgroundPosition;
-import javafx.scene.layout.BackgroundRepeat;
-import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -34,13 +35,14 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class Dispenser extends Application {
     
     private final ArrayList<Product> productList = new ArrayList<>();
     private Boolean adminMode = false;  // adminMode flag
-    private int itemGridCategory;
+    private String itemGridCategory;
     private int itemGridPageNumber = 1;
     private int moneyInserted = 0;
     private int productsCost = 0;
@@ -54,6 +56,7 @@ public class Dispenser extends Application {
     private final VBox customerControls = new VBox();
     private final GridPane categoryGrid = new GridPane();
     private final GridPane itemGrid = new GridPane();
+    private final Button btnSplashButton = new Button(" Welcome to Speedy Vend 5000.\n\n        Click to begin shopping.");
     private final Label lblBills = new Label("Bills");
     private final Button btnBackToCategories = new Button("<< Back");
     private final Button btnAddTwentyDollars = new Button("Twenty Dollars");
@@ -82,15 +85,7 @@ public class Dispenser extends Application {
     private final Button btnGumCategory = new Button("Gum");
     private final Image imgGumCategory = new Image(getClass().getResourceAsStream("images/gumCategory.png"));
     private final ImageView viewGumCategory = new ImageView(imgGumCategory);
-    private final Button btnItem1 = new Button();
-    private final Button btnItem2 = new Button();
-    private final Button btnItem3 = new Button();
-    private final Button btnItem4 = new Button();
-    private final Button btnItem5 = new Button();
-    private final Button btnItem6 = new Button();
-    private final Button btnItem7 = new Button();
-    private final Button btnItem8 = new Button();
-    private final Button btnItem9 = new Button();
+    private final Button btnItems[] = new Button[9];
     private final Label lblFunds = new Label("Funds:");
     private final Text txtFundsAmount = new Text("$0.00");
     private final Label lblCost = new Label("Cost:");
@@ -100,11 +95,39 @@ public class Dispenser extends Application {
     private final Button btnMyItems = new Button ("My Items");
     private final Button btnFinished = new Button("Finished");
     private final Stage customerStage = new Stage();
+    private final Stage adminStage = new Stage();
+
     
     @Override
     public void start(Stage primaryStage) {
         
         populateProductList();
+        
+        primaryStage.setTitle("Speedy Vend 5000");
+        primaryStage.setScene(new Scene(btnSplashButton, 710, 500));
+        primaryStage.show();
+        btnSplashButton.requestFocus();      
+
+        // Catch key press ctrl-a and set admin mode flag to true
+        btnSplashButton.setOnKeyPressed((event) -> {
+            if ( event.isControlDown() && event.getText().equalsIgnoreCase("a") ) {
+                adminMode = true;
+            }
+            
+        });
+        
+        // Catch button action and enter customer mode or admin mode. reset admin flag to false
+        btnSplashButton.setOnAction((ActionEvent event) -> {
+            if (adminMode) {
+                adminMode = false;
+                primaryStage.hide();
+                adminStage.show();
+            }
+            else {
+                primaryStage.hide();
+                customerStage.show();
+            }
+        });
         
         // Set VBox and HBox spacing and padding.
         largeCoinSlot.setSpacing(8);
@@ -121,7 +144,13 @@ public class Dispenser extends Application {
         itemGrid.setVgap(10);
         
         // Set button sizes, states, and events
-        btnNextPage.prefWidthProperty().bind(btnItem9.widthProperty());
+        for (int i = 0; i < 9; i++) {
+            btnItems[i] = new Button();
+            btnItems[i].setPrefSize(140, 140);
+            btnItems[i].setDisable(true);
+        }
+
+        btnNextPage.prefWidthProperty().bind(btnItems[8].widthProperty());
         btnNextPage.setDisable(true);
         btnNextPage.setOnAction((event) -> {
             itemGridPageNumber++;
@@ -135,7 +164,7 @@ public class Dispenser extends Application {
             btnPreviousPage.setDisable(false);
         });
         
-        btnPreviousPage.prefWidthProperty().bind(btnItem7.widthProperty());
+        btnPreviousPage.prefWidthProperty().bind(btnItems[6].widthProperty());
         btnPreviousPage.setDisable(true);
         btnPreviousPage.setOnAction((event) -> {
             itemGridPageNumber--;
@@ -167,7 +196,7 @@ public class Dispenser extends Application {
         btnDrinkCategory.setContentDisplay(ContentDisplay.TOP);
         btnDrinkCategory.setGraphic(viewDrinkCategory);
         btnDrinkCategory.setOnAction((event) -> {
-            itemGridCategory = 1;
+            itemGridCategory = "Drink";
             if (populateItemGrid()) {
                 btnNextPage.setDisable(false);
             }
@@ -182,7 +211,7 @@ public class Dispenser extends Application {
         btnChipsCategory.setContentDisplay(ContentDisplay.TOP);
         btnChipsCategory.setGraphic(viewChipsCategory);
         btnChipsCategory.setOnAction((event) -> {
-            itemGridCategory = 2;
+            itemGridCategory = "Chips";
             if (populateItemGrid()) {
                 btnNextPage.setDisable(false);
             }
@@ -194,7 +223,7 @@ public class Dispenser extends Application {
         btnCandyCategory.setContentDisplay(ContentDisplay.TOP);
         btnCandyCategory.setGraphic(viewCandyCategory);
         btnCandyCategory.setOnAction((event) -> {
-            itemGridCategory = 3;
+            itemGridCategory = "Candy";
             if (populateItemGrid()) {
                 btnNextPage.setDisable(false);
             }
@@ -206,31 +235,12 @@ public class Dispenser extends Application {
         btnGumCategory.setContentDisplay(ContentDisplay.TOP);
         btnGumCategory.setGraphic(viewGumCategory);
         btnGumCategory.setOnAction((event) -> {
-            itemGridCategory = 4;
+            itemGridCategory = "Gum";
             if (populateItemGrid()) {
                 btnNextPage.setDisable(false);
             }
         });
-        
-        btnItem1.setPrefSize(140, 140);
-        btnItem1.setDisable(true);
-        btnItem2.setPrefSize(140, 140);
-        btnItem2.setDisable(true);
-        btnItem3.setPrefSize(140, 140);
-        btnItem3.setDisable(true);
-        btnItem4.setPrefSize(140, 140);
-        btnItem4.setDisable(true);
-        btnItem5.setPrefSize(140, 140);
-        btnItem5.setDisable(true);
-        btnItem6.setPrefSize(140, 140);
-        btnItem6.setDisable(true);
-        btnItem7.setPrefSize(140, 140);
-        btnItem7.setDisable(true);
-        btnItem8.setPrefSize(140, 140);
-        btnItem8.setDisable(true);
-        btnItem9.setPrefSize(140, 140);
-        btnItem9.setDisable(true);
-        
+                
         btnAddDime.setOnAction((event) -> {
             moneyInserted += 10;
             updateFunds();
@@ -275,6 +285,13 @@ public class Dispenser extends Application {
             moneyInserted += 2000;
             updateFunds();
         });
+        
+        btnReturnMoney.setOnAction((event) -> {   //returns funds to 0 when "coin return" is clicked
+        	moneyInserted = 0;
+        	updateFunds();
+        });
+        
+        
         
         btnAddOneDollar.prefWidthProperty().bind(smallCoinSlot.widthProperty());
         btnAddFiveDollars.prefWidthProperty().bind(smallCoinSlot.widthProperty());
@@ -325,9 +342,9 @@ public class Dispenser extends Application {
         customerBorder.setCenter(categoryGrid);
         
         // build item center section for border pane
-        itemGrid.addRow(0, btnItem1, btnItem2, btnItem3);
-        itemGrid.addRow(1, btnItem4, btnItem5, btnItem6);
-        itemGrid.addRow(2, btnItem7, btnItem8, btnItem9);
+        itemGrid.addRow(0, btnItems[0], btnItems[1], btnItems[2]);
+        itemGrid.addRow(1, btnItems[3], btnItems[4], btnItems[5]);
+        itemGrid.addRow(2, btnItems[6], btnItems[7], btnItems[8]);
         itemGrid.add(btnNextPage, 2, 3);
         itemGrid.add(btnPreviousPage, 0, 3);
         itemGrid.setAlignment(Pos.CENTER);
@@ -336,13 +353,12 @@ public class Dispenser extends Application {
         customerPane.getChildren().add(customerBorder);
         customerPane.getChildren().add(btnBackToCategories);
         
-        // Set the scene
+        // Set the customer scene
         customerStage.setTitle("Speedy Vend 5000");
         customerStage.setScene(new Scene(customerPane, 710, 500));
 
                 // Admin page not fully implemented. Code below is just filler code
                 Button btnAdmin = new Button("Admin Stage");
-                Stage adminStage = new Stage();
                 adminStage.setTitle("Admin Stage");
                 adminStage.setScene(new Scene(btnAdmin, 300, 300));
                 btnAdmin.setOnAction((ActionEvent event) -> {
@@ -355,171 +371,102 @@ public class Dispenser extends Application {
                 });
                 // End Admin code section
         
-        // Create Button and set text
-        Button btn = new Button();
-        btn.setText(" Welcome to Speedy Vend 5000.\n\n        Click to begin shopping.");
         
-        // Catch key press ctrl-a and set admin mode flag to true
-        btn.setOnKeyPressed((event) -> {
-            if ( event.isControlDown() && event.getText().equalsIgnoreCase("a") ) {
-                System.out.println("enter Admin mode");
-                adminMode = true;
-            }
-            
+        //pop-up window for "my items" button
+        btnMyItems.setOnAction((Event) -> {
+        	final Stage cartStage = new Stage();
+        	cartStage.initModality(Modality.APPLICATION_MODAL);
+        	cartStage.initOwner(primaryStage);
+        	VBox cartVBox = new VBox();
+        	if (IPurchasableProduct.PRODUCTS_SELECTEDFORPURCHASE.isEmpty()) {
+        		cartVBox.getChildren().add(new Text("Your cart is empty"));
+        	}
+        	else {
+        		//add following line when we figure out how to use dynamically added buttons
+        		//cartVBox.getChildren().add(new Text("Click on an item to remove it"));
+        		for (int x = 0; x != IPurchasableProduct.PRODUCTS_SELECTEDFORPURCHASE.size(); x++) {
+        			cartVBox.getChildren().add(new Button(IPurchasableProduct.PRODUCTS_SELECTEDFORPURCHASE.get(x).toString()));
+        		}
+        	}
+        	
+        	Scene cartScene = new Scene(cartVBox);
+        	cartStage.setScene(cartScene);
+        	cartStage.show();
         });
         
-        // Catch button action and enter customer mode or admin mode. reset admin flag to false
-        btn.setOnAction((ActionEvent event) -> {
-            if (adminMode) {
-                System.out.println("Hello admin");
-                adminMode = false;
-                primaryStage.hide();
-                adminStage.show();
-            }
-            else {
-                System.out.println("Hello customer");
-                primaryStage.hide();
-                customerStage.show();
-            }
+        btnCompletePurchase.setOnAction((Event) -> {
+        	final Stage receiptStage = new Stage();
+        	receiptStage.initModality(Modality.APPLICATION_MODAL);
+        	receiptStage.initOwner(primaryStage);
+        	VBox receiptVBox = new VBox();
+        	if (IPurchasableProduct.PRODUCTS_SELECTEDFORPURCHASE.isEmpty()) {
+        		receiptVBox.getChildren().add(new Text("Your receipt is empty"));
+        	}
+        	else {
+        		//add following line when we figure out how to use dynamically added buttons
+        		//receiptVBox.getChildren().add(new Text("Click on an item to remove it"));
+        		for (int x = 0; x != IPurchasableProduct.PRODUCTS_SELECTEDFORPURCHASE.size(); x++) {
+        			receiptVBox.getChildren().add(new Button(IPurchasableProduct.PRODUCTS_SELECTEDFORPURCHASE.get(x).toString()));
+        		}
+        	}
+        	//add the total cost of purchase here
+        	//also add computations subtracting the total cost from funds, or spit an error if not enough funds
+        	Scene receiptScene = new Scene(receiptVBox);
+        	receiptStage.setScene(receiptScene);
+        	receiptStage.show();
         });
         
-        primaryStage.setTitle("Speedy Vend 5000");
-        primaryStage.setScene(new Scene(btn, 710, 500));
-        primaryStage.show();
-        btn.requestFocus();      
-
     }
 
-    /**
-     * @param args the command line arguments
-     */
+    
     public static void main(String[] args) {
         launch(args);
     }
 
-    /**
-     *  @param category product category 1=drink 2=chips 3=candy 4=gum 
-     *  @param page page number to display 1=first page 2=second...
-     */
     private Boolean populateItemGrid() {
         
-        Boolean morePages = false;
-        String category;
-        
-        btnItem1.setText("");
-        btnItem1.setDisable(true);
-        btnItem2.setText("");
-        btnItem2.setDisable(true);
-        btnItem3.setText("");
-        btnItem3.setDisable(true);
-        btnItem4.setText("");
-        btnItem4.setDisable(true);
-        btnItem5.setText("");
-        btnItem5.setDisable(true);
-        btnItem6.setText("");
-        btnItem6.setDisable(true);
-        btnItem7.setText("");
-        btnItem7.setDisable(true);
-        btnItem8.setText("");
-        btnItem8.setDisable(true);
-        btnItem9.setText("");
-        btnItem9.setDisable(true);
-        
+        // Internal usage variables
+        Boolean morePages = false; // return value flag;
+        int indexOfButtonLocationOnTheGrid; // index of the curent button undergoing property modifications.
+
+        // Reset all buttons on item grid back to blank disabled buttons.
+        for (int i = 0; i < 9; i++) {
+            btnItems[i].setText("");
+            btnItems[i].setDisable(true);
+        }
+                
+        // Turn on the Back button on the item grid display.
         btnBackToCategories.setVisible(true);
         
-        switch (itemGridCategory){
-            case 1:
-                category = "Drink";
-                break;
-            case 2:
-                category = "Chips";
-                break;
-            case 3:
-                category = "Candy";
-                break;
-            case 4:
-                category = "Gum";
-                break;
-            default:
-                System.out.println("Category out of range. Please select a range of 1-4, inclusive.");
-                return false;
-        }
-        
+        // iterate through all products
         for (Product p : productList) {
-            if (p.getClass().getSimpleName().equalsIgnoreCase(category) && p.getLocation().startsWith((String.valueOf((char)(64+itemGridPageNumber))))) {
-                switch (String.valueOf(p.getLocation().charAt(1))) {
-                    case "1":
-                        btnItem1.setDisable(false);
-                        btnItem1.setText(p.toString());
-                        if (p.getQuantity() < 1) {
-                            btnItem1.setDisable(true);
-                        }
-                        break;
-                    case "2":
-                        btnItem2.setDisable(false);
-                        btnItem2.setText(p.getName());
-                        if (p.getQuantity() < 1) {
-                            btnItem2.setDisable(true);
-                        }
-                        break;
-                    case "3":
-                        btnItem3.setDisable(false);
-                        btnItem3.setText(p.getName());
-                        if (p.getQuantity() < 1) {
-                            btnItem3.setDisable(true);
-                        }
-                        break;
-                    case "4":
-                        btnItem4.setDisable(false);
-                        btnItem4.setText(p.getName());
-                        if (p.getQuantity() < 1) {
-                            btnItem4.setDisable(true);
-                        }
-                        break;
-                    case "5":
-                        btnItem5.setDisable(false);
-                        btnItem5.setText(p.getName());
-                        if (p.getQuantity() < 1) {
-                            btnItem5.setDisable(true);
-                        }
-                        break;
-                    case "6":
-                        btnItem6.setDisable(false);
-                        btnItem6.setText(p.getName());
-                        if (p.getQuantity() < 1) {
-                            btnItem6.setDisable(true);
-                        }
-                        break;
-                    case "7":
-                        btnItem7.setDisable(false);
-                        btnItem7.setText(p.getName());
-                        if (p.getQuantity() < 1) {
-                            btnItem7.setDisable(true);
-                        }
-                        break;
-                    case "8":
-                        btnItem8.setDisable(false);
-                        btnItem8.setText(p.getName());
-                        if (p.getQuantity() < 1) {
-                            btnItem8.setDisable(true);
-                        }
-                        break;
-                    case "9":
-                        btnItem9.setDisable(false);
-                        btnItem9.setText(p.getName());
-                        if (p.getQuantity() < 1) {
-                            btnItem9.setDisable(true);
-                        }
-                        break;
+            // If the product is in the correct category and in the correct slot to be displayed on this screen.
+            if (p.getClass().getSimpleName().equalsIgnoreCase(itemGridCategory) && p.getLocation().startsWith((String.valueOf((char)(64+itemGridPageNumber))))) {
+
+                // Parse the button index to modify from the Location property of a product
+                indexOfButtonLocationOnTheGrid = Integer.parseInt(String.valueOf(p.getLocation().charAt(1))) - 1; // subtract 1 because button location 1 is index 0.
+                
+                // Modify the item button properties.
+                btnItems[indexOfButtonLocationOnTheGrid].setDisable(false);
+                btnItems[indexOfButtonLocationOnTheGrid].setText(p.toString());
+                if (p.getQuantity() < 1) {
+                    btnItems[indexOfButtonLocationOnTheGrid].setDisable(true);
                 }
+                // Adds an item to the produdct selected for purchase list when user clicks button and updates the cost display with its' price.
+                btnItems[indexOfButtonLocationOnTheGrid].setOnAction((event) -> {  
+                    p.addProductToProductsSelectedForPurchase();
+                    productsCost += p.getPrice();  
+                    updateCost();
+                });
             }
 
-            if (p.getClass().getSimpleName().equalsIgnoreCase(category) && p.getLocation().startsWith((String.valueOf((char)(65+itemGridPageNumber))))) {
+            // Check to see if more pages of products in this category exist.
+            if (p.getClass().getSimpleName().equalsIgnoreCase(itemGridCategory) && p.getLocation().startsWith((String.valueOf((char)(65+itemGridPageNumber))))) {
                 morePages = true;
             }
         }
 
-        
+        // Display the finished item grid
         customerBorder.setCenter(itemGrid);
         return morePages;
     }
@@ -528,48 +475,53 @@ public class Dispenser extends Application {
         String text = String.format("$" + moneyInserted / 100 + ".%02d", moneyInserted % 100);
         txtFundsAmount.setText(text);
     }
+    
+    private void updateCost() {
+    	String text = String.format("$" + productsCost / 100 + ".%02d", productsCost % 100);
+        txtCostAmount.setText(text);
+    }
 
     private void populateProductList() {
         
         // Add some Drinks
         productList.add(new Drink("Pepsi", "A1", 10, 1.25));
         productList.add(new Drink("Diet Pepsi", "A2", 10, 1.25));
-        productList.add(new Drink("Cherry Pepsi", "A3", 10, 1.25));
+        productList.add(new Drink("Cherry Pepsi", "A3", 10, 1.50));
         productList.add(new Drink("Coke", "A4", 10, 1.25));
         productList.add(new Drink("Diet Coke", "A5", 1, 1.25));
-        productList.add(new Drink("Cherry Coke", "A6", 10, 1.25));
+        productList.add(new Drink("Cherry Coke", "A6", 10, 1.50));
         productList.add(new Drink("Dr.Pepper", "A7", 10, 1.25));
         productList.add(new Drink("Diet Dr.Pepper", "A8", 10, 1.25));
-        productList.add(new Drink("Vanillia Dr.Pepper", "A9", 10, 1.25));
+        productList.add(new Drink("Vanillia Dr.Pepper", "A9", 10, 1.50));
         productList.add(new Drink("Fanta Orange", "B1", 10, 1.25));
         productList.add(new Drink("Fanta Grape", "B2", 0, 1.25));
         productList.add(new Drink("Fanta Strawberry", "B3", 10, 1.25));
         productList.add(new Drink("Mug Root Beer", "B4", 10, 1.25));
-        productList.add(new Drink("Mug Cream Soda", "C5", 10, 1.25));
+        productList.add(new Drink("Mug Cream Soda", "B5", 10, 1.00));
         productList.add(new Drink("Sprite", "B6", 10, 1.25));
         productList.add(new Drink("7-Up", "B7", 10, 1.25));
         productList.add(new Drink("Sierra Mist", "B8", 10, 1.25));
         
         // Add some candy
-        productList.add(new Candy("M&M", "A1", 10, 1.25));
-        productList.add(new Candy("Kit Kat", "A2", 10, 1.25));
-        productList.add(new Candy("Reses Pieces", "A4", 10, 1.25));
-        productList.add(new Candy("Baby Ruth", "A5", 10, 1.25));
-        productList.add(new Candy("Snickers", "A6", 10, 1.25));
+        productList.add(new Candy("M&M", "A1", 10, 0.75));
+        productList.add(new Candy("Kit Kat", "A2", 10, 0.75));
+        productList.add(new Candy("Reses Pieces", "A4", 10, 0.75));
+        productList.add(new Candy("Baby Ruth", "A5", 10, 0.50));
+        productList.add(new Candy("Snickers", "A6", 10, 0.75));
         
         // Add some chips
-        productList.add(new Chips("Ruffles", "A1", 1, 1.25));
-        productList.add(new Chips("Cheetoes", "A2", 10, 1.25));
-        productList.add(new Chips("Doritoes", "A3", 10, 1.25));
-        productList.add(new Chips("Hot Fries", "A5", 10, 1.25));
-        productList.add(new Chips("Lays", "B2", 10, 1.25));
+        productList.add(new Chips("Ruffles", "A1", 1, 1.00));
+        productList.add(new Chips("Cheetoes", "A2", 10, 1.00));
+        productList.add(new Chips("Doritoes", "A3", 10, 1.00));
+        productList.add(new Chips("Hot Fries", "A5", 10, 0.75));
+        productList.add(new Chips("Lays", "B2", 10, 1.00));
         
         // Add some gum
-        productList.add(new Gum("Orbits", "A1", 10, 1.25));
-        productList.add(new Gum("Five", "A2", 10, 1.25));
-        productList.add(new Gum("Trident", "A3", 0, 1.25));
-        productList.add(new Gum("Juicy fruit", "A4", 10, 1.25));
-        productList.add(new Gum("Bubble Yum", "A5", 10, 1.25));
+        productList.add(new Gum("Orbit", "A1", 10, 0.50));
+        productList.add(new Gum("Five", "A2", 10, 0.75));
+        productList.add(new Gum("Trident", "A3", 0, 0.50));
+        productList.add(new Gum("Juicy fruit", "A4", 10, 0.25));
+        productList.add(new Gum("Bubble Yum", "A5", 10, 0.50));
     }
 
  }
