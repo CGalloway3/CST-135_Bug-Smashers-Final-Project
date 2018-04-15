@@ -56,6 +56,7 @@ public class Dispenser extends Application {
     private final VBox customerControls = new VBox();
     private final GridPane categoryGrid = new GridPane();
     private final GridPane itemGrid = new GridPane();
+    private final Button btnSplashButton = new Button(" Welcome to Speedy Vend 5000.\n\n        Click to begin shopping.");
     private final Label lblBills = new Label("Bills");
     private final Button btnBackToCategories = new Button("<< Back");
     private final Button btnAddTwentyDollars = new Button("Twenty Dollars");
@@ -94,11 +95,39 @@ public class Dispenser extends Application {
     private final Button btnMyItems = new Button ("My Items");
     private final Button btnFinished = new Button("Finished");
     private final Stage customerStage = new Stage();
+    private final Stage adminStage = new Stage();
+
     
     @Override
     public void start(Stage primaryStage) {
         
         populateProductList();
+        
+        primaryStage.setTitle("Speedy Vend 5000");
+        primaryStage.setScene(new Scene(btnSplashButton, 710, 500));
+        primaryStage.show();
+        btnSplashButton.requestFocus();      
+
+        // Catch key press ctrl-a and set admin mode flag to true
+        btnSplashButton.setOnKeyPressed((event) -> {
+            if ( event.isControlDown() && event.getText().equalsIgnoreCase("a") ) {
+                adminMode = true;
+            }
+            
+        });
+        
+        // Catch button action and enter customer mode or admin mode. reset admin flag to false
+        btnSplashButton.setOnAction((ActionEvent event) -> {
+            if (adminMode) {
+                adminMode = false;
+                primaryStage.hide();
+                adminStage.show();
+            }
+            else {
+                primaryStage.hide();
+                customerStage.show();
+            }
+        });
         
         // Set VBox and HBox spacing and padding.
         largeCoinSlot.setSpacing(8);
@@ -324,13 +353,12 @@ public class Dispenser extends Application {
         customerPane.getChildren().add(customerBorder);
         customerPane.getChildren().add(btnBackToCategories);
         
-        // Set the scene
+        // Set the customer scene
         customerStage.setTitle("Speedy Vend 5000");
         customerStage.setScene(new Scene(customerPane, 710, 500));
 
                 // Admin page not fully implemented. Code below is just filler code
                 Button btnAdmin = new Button("Admin Stage");
-                Stage adminStage = new Stage();
                 adminStage.setTitle("Admin Stage");
                 adminStage.setScene(new Scene(btnAdmin, 300, 300));
                 btnAdmin.setOnAction((ActionEvent event) -> {
@@ -343,36 +371,7 @@ public class Dispenser extends Application {
                 });
                 // End Admin code section
         
-        // Create Button and set text
-        Button btnSplashButton = new Button();
-        btnSplashButton.setText(" Welcome to Speedy Vend 5000.\n\n        Click to begin shopping.");
         
-        // Catch key press ctrl-a and set admin mode flag to true
-        btnSplashButton.setOnKeyPressed((event) -> {
-            if ( event.isControlDown() && event.getText().equalsIgnoreCase("a") ) {
-                adminMode = true;
-            }
-            
-        });
-        
-        // Catch button action and enter customer mode or admin mode. reset admin flag to false
-        btnSplashButton.setOnAction((ActionEvent event) -> {
-            if (adminMode) {
-                adminMode = false;
-                primaryStage.hide();
-                adminStage.show();
-            }
-            else {
-                primaryStage.hide();
-                customerStage.show();
-            }
-        });
-        
-        primaryStage.setTitle("Speedy Vend 5000");
-        primaryStage.setScene(new Scene(btnSplashButton, 710, 500));
-        primaryStage.show();
-        btnSplashButton.requestFocus();      
-
         //pop-up window for "my items" button
         btnMyItems.setOnAction((Event) -> {
         	final Stage cartStage = new Stage();
