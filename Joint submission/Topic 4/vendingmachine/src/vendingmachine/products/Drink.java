@@ -1,36 +1,36 @@
 //CST-135 group assignment for Topic 2, a collaboration of Richard Boyd, Chad Galloway, and Dennis Witt
 /**  Program: Vending Machine
-*    File: Snack.java
-*    Summary: Snack subclass implemented from Product and extendable.
+*    File: Drink.java
+*    Summary: Drink subclass inherited from Product.
 *    Author: Richard Boyd
 *    Date: March 30th, 2018
 **/
 
-package vendingmachine;
+package vendingmachine.products;
 
-public abstract class Snack extends Product implements Comparable<Snack> {
+public class Drink extends Product implements Comparable<Drink> {
 
-    // Public construstors
-    
-        public Snack() {
+    // Public constructors
+        
+        public Drink() {
             super();
 	}
-	public Snack(String name, String location, int quantity, int price) {
-            super(name, location, quantity, price);
+	public Drink(String name, String location, int quantity, double price) {
+            super(name, location, quantity, (int)(price * 100));
 	}
-	public Snack(Product copy) {    //overloaded constructor that copies another objects fields
+	public Drink(Product copy) {    //overloaded constructor that copies another objects fields
             super(copy);
 	}
-	
+        
     // Additional public methods
-
-        @Override
-        public String toString() {     //toString method
-		return String.format(this.getName() + "\n$" + this.getPrice() / 100 + ".%02d", this.getPrice() % 100);
-	}
         
         @Override
-	public int compareTo(Snack o) {
+	public String toString() {     //toString method
+		return String.format(this.getName() + "\n$" + this.getPrice() / 100 + ".%02d", this.getPrice() % 100);
+	}
+
+	@Override
+	public int compareTo(Drink o) {
 		
 		if (getName().compareTo(o.getName()) == 0) {
 			

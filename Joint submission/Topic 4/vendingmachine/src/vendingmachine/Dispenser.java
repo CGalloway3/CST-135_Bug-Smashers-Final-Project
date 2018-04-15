@@ -8,6 +8,12 @@
 
 package vendingmachine;
 
+import vendingmachine.products.IPurchasableProduct;
+import vendingmachine.products.Product;
+import vendingmachine.products.Gum;
+import vendingmachine.products.Drink;
+import vendingmachine.products.Chips;
+import vendingmachine.products.Candy;
 import java.util.ArrayList;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
@@ -79,15 +85,6 @@ public class Dispenser extends Application {
     private final Image imgGumCategory = new Image(getClass().getResourceAsStream("images/gumCategory.png"));
     private final ImageView viewGumCategory = new ImageView(imgGumCategory);
     private final Button btnItems[] = new Button[9];
-//    private final Button btnItem1 = new Button();
-//    private final Button btnItem2 = new Button();
-//    private final Button btnItem3 = new Button();
-//    private final Button btnItem4 = new Button();
-//    private final Button btnItem5 = new Button();
-//    private final Button btnItem6 = new Button();
-//    private final Button btnItem7 = new Button();
-//    private final Button btnItem8 = new Button();
-//    private final Button btnItem9 = new Button();
     private final Label lblFunds = new Label("Funds:");
     private final Text txtFundsAmount = new Text("$0.00");
     private final Label lblCost = new Label("Cost:");
@@ -347,37 +344,34 @@ public class Dispenser extends Application {
                 // End Admin code section
         
         // Create Button and set text
-        Button btn = new Button();
-        btn.setText(" Welcome to Speedy Vend 5000.\n\n        Click to begin shopping.");
+        Button btnSplashButton = new Button();
+        btnSplashButton.setText(" Welcome to Speedy Vend 5000.\n\n        Click to begin shopping.");
         
         // Catch key press ctrl-a and set admin mode flag to true
-        btn.setOnKeyPressed((event) -> {
+        btnSplashButton.setOnKeyPressed((event) -> {
             if ( event.isControlDown() && event.getText().equalsIgnoreCase("a") ) {
-                System.out.println("enter Admin mode");
                 adminMode = true;
             }
             
         });
         
         // Catch button action and enter customer mode or admin mode. reset admin flag to false
-        btn.setOnAction((ActionEvent event) -> {
+        btnSplashButton.setOnAction((ActionEvent event) -> {
             if (adminMode) {
-                System.out.println("Hello admin");
                 adminMode = false;
                 primaryStage.hide();
                 adminStage.show();
             }
             else {
-                System.out.println("Hello customer");
                 primaryStage.hide();
                 customerStage.show();
             }
         });
         
         primaryStage.setTitle("Speedy Vend 5000");
-        primaryStage.setScene(new Scene(btn, 710, 500));
+        primaryStage.setScene(new Scene(btnSplashButton, 710, 500));
         primaryStage.show();
-        btn.requestFocus();      
+        btnSplashButton.requestFocus();      
 
         //pop-up window for "my items" button
         btnMyItems.setOnAction((Event) -> {
@@ -425,9 +419,7 @@ public class Dispenser extends Application {
         
     }
 
-    /**
-     * @param args the command line arguments
-     */
+    
     public static void main(String[] args) {
         launch(args);
     }

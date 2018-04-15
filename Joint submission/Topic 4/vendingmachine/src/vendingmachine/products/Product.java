@@ -6,7 +6,7 @@
 *    Date: March 30th, 2018
 **/
 
-package vendingmachine;
+package vendingmachine.products;
 
 public abstract class Product implements IPurchasableProduct{
 	
