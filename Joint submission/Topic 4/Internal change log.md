@@ -1,5 +1,7 @@
 For internal use only!!
 
+4-15-18 16:42 CST: (Richard) updated build to work as Eclipse Javafx project (not sure if will cause problems in netbeans)
+
 4-15-18 16:15 CST: (Chad) Continue cleaning and commenting code.
 
 4-15-18 15:53 CST: (Chad) Converted all toString mothods to use String.format to eliminate values like "$1.0". Now all monitary values are represented properly in teo decimal places.
