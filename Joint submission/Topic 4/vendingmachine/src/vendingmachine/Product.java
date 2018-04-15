@@ -85,7 +85,7 @@ public abstract class Product implements IPurchasableProduct{
                 
 	@Override
         public String toString() {     //toString method
-		return productName + "\n " + "$" + productPrice / 100 + "." + productPrice % 100;
+		return String.format(this.getName() + "\n$" + this.getPrice() / 100 + ".%02d", this.getPrice() % 100);
 	}
 	
 		

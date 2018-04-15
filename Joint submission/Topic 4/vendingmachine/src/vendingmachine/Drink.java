@@ -26,7 +26,7 @@ public class Drink extends Product implements Comparable<Drink> {
         
         @Override
 	public String toString() {     //toString method
-		return this.getName() + "\n$" + this.getPrice() / 100 + "." + this.getPrice() % 100;
+		return String.format(this.getName() + "\n$" + this.getPrice() / 100 + ".%02d", this.getPrice() % 100);
 	}
 
 	@Override
