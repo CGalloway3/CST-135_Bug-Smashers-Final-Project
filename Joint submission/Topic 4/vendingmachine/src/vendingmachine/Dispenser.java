@@ -1,4 +1,4 @@
-//CST-135 group assignment for Topic 2, a collaboration of Richard Boyd, Chad Galloway, and Dennis Witt
+//CST-135 group assignment for Topic 4, a collaboration of Richard Boyd, Chad Galloway, and Dennis Witt
 /**  Program: Vending Machine
 *    File: Dispenser.java
 *    Summary: Vending Machine GUI elements.
@@ -19,11 +19,6 @@ import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundImage;
-import javafx.scene.layout.BackgroundPosition;
-import javafx.scene.layout.BackgroundRepeat;
-import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -40,7 +35,6 @@ import javafx.stage.Stage;
 public class Dispenser extends Application {
     
     private final ArrayList<Product> productList = new ArrayList<>();
-    private ArrayList<Product> cart = new ArrayList<>(); //list of items currently in cart
     private Boolean adminMode = false;  // adminMode flag
     private int itemGridCategory;
     private int itemGridPageNumber = 1;
@@ -403,14 +397,14 @@ public class Dispenser extends Application {
         	cartStage.initModality(Modality.APPLICATION_MODAL);
         	cartStage.initOwner(primaryStage);
         	VBox cartVBox = new VBox();
-        	if (cart.size() == 0) {
+        	if (IPurchasableProduct.PRODUCTS_SELECTEDFORPURCHASE.isEmpty()) {
         		cartVBox.getChildren().add(new Text("Your cart is empty"));
         	}
         	else {
         		//add following line when we figure out how to use dynamically added buttons
         		//cartVBox.getChildren().add(new Text("Click on an item to remove it"));
-        		for (int x = 0; x != cart.size(); x++) {
-        			cartVBox.getChildren().add(new Button(cart.get(x).toString()));
+        		for (int x = 0; x != IPurchasableProduct.PRODUCTS_SELECTEDFORPURCHASE.size(); x++) {
+        			cartVBox.getChildren().add(new Button(IPurchasableProduct.PRODUCTS_SELECTEDFORPURCHASE.get(x).toString()));
         		}
         	}
         	
@@ -424,14 +418,14 @@ public class Dispenser extends Application {
         	receiptStage.initModality(Modality.APPLICATION_MODAL);
         	receiptStage.initOwner(primaryStage);
         	VBox receiptVBox = new VBox();
-        	if (cart.size() == 0) {
+        	if (IPurchasableProduct.PRODUCTS_SELECTEDFORPURCHASE.isEmpty()) {
         		receiptVBox.getChildren().add(new Text("Your receipt is empty"));
         	}
         	else {
         		//add following line when we figure out how to use dynamically added buttons
         		//receiptVBox.getChildren().add(new Text("Click on an item to remove it"));
-        		for (int x = 0; x != cart.size(); x++) {
-        			receiptVBox.getChildren().add(new Button(cart.get(x).toString()));
+        		for (int x = 0; x != IPurchasableProduct.PRODUCTS_SELECTEDFORPURCHASE.size(); x++) {
+        			receiptVBox.getChildren().add(new Button(IPurchasableProduct.PRODUCTS_SELECTEDFORPURCHASE.get(x).toString()));
         		}
         	}
         	//add the total cost of purchase here
@@ -512,7 +506,7 @@ public class Dispenser extends Application {
                         btnItem1.setOnAction((event) -> {  
                         	productsCost += p.getPrice();  
                         	updateCost();
-                        	cart.add(p);
+                        	p.addProductToProductsSelectedForPurchase();
                         });
                         break;
                         
@@ -525,7 +519,7 @@ public class Dispenser extends Application {
                         btnItem2.setOnAction((event) -> {  
                         	productsCost += p.getPrice();  
                         	updateCost();
-                        	cart.add(p);
+                        	p.addProductToProductsSelectedForPurchase();
                         });
                         break;
                         
@@ -538,7 +532,7 @@ public class Dispenser extends Application {
                         btnItem3.setOnAction((event) -> {  
                         	productsCost += p.getPrice();  
                         	updateCost();
-                        	cart.add(p);
+                        	p.addProductToProductsSelectedForPurchase();
                         });
                         break;
                         
@@ -551,7 +545,7 @@ public class Dispenser extends Application {
                         btnItem4.setOnAction((event) -> {  
                         	productsCost += p.getPrice();  
                         	updateCost();
-                        	cart.add(p);
+                        	p.addProductToProductsSelectedForPurchase();
                         });
                         break;
                         
@@ -564,7 +558,7 @@ public class Dispenser extends Application {
                         btnItem5.setOnAction((event) -> {  
                         	productsCost += p.getPrice();  
                         	updateCost();
-                        	cart.add(p);
+                        	p.addProductToProductsSelectedForPurchase();
                         });
                         break;
                         
@@ -577,7 +571,7 @@ public class Dispenser extends Application {
                         btnItem6.setOnAction((event) -> {  
                         	productsCost += p.getPrice();  
                         	updateCost();
-                        	cart.add(p);
+                        	p.addProductToProductsSelectedForPurchase();
                         });
                         break;
                         
@@ -590,7 +584,7 @@ public class Dispenser extends Application {
                         btnItem7.setOnAction((event) -> {  
                         	productsCost += p.getPrice();  
                         	updateCost();
-                        	cart.add(p);
+                        	p.addProductToProductsSelectedForPurchase();
                         });
                         break;
                         
@@ -603,7 +597,7 @@ public class Dispenser extends Application {
                         btnItem8.setOnAction((event) -> {  
                         	productsCost += p.getPrice();  
                         	updateCost();
-                        	cart.add(p);
+                        	p.addProductToProductsSelectedForPurchase();
                         });
                         break;
                         
@@ -616,7 +610,7 @@ public class Dispenser extends Application {
                         btnItem9.setOnAction((event) -> {  
                         	productsCost += p.getPrice();  
                         	updateCost();
-                        	cart.add(p);
+                        	p.addProductToProductsSelectedForPurchase();
                         });
                         break;
                 }

@@ -19,7 +19,7 @@ import javafx.stage.Stage;
  */
 public interface IPurchasableProduct {
     
-    public static final ArrayList<Product> productsSelectedForPurchase = new ArrayList<>();
+    public static final ArrayList<Product> PRODUCTS_SELECTEDFORPURCHASE = new ArrayList<>();
     
     public void addProductToProductsSelectedForPurchase();
     
