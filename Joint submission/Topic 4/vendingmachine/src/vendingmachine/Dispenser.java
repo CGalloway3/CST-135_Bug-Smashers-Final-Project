@@ -434,28 +434,34 @@ public class Dispenser extends Application {
 
     private Boolean populateItemGrid() {
         
-        Boolean morePages = false;
-        int indexOfButtonLocationOnTheGrid;
+        // Internal usage variables
+        Boolean morePages = false; // return value flag;
+        int indexOfButtonLocationOnTheGrid; // index of the curent button undergoing property modifications.
 
-        // Reset Buttons on item grid back to blank disabled buttons.
+        // Reset all buttons on item grid back to blank disabled buttons.
         for (int i = 0; i < 9; i++) {
             btnItems[i].setText("");
             btnItems[i].setDisable(true);
         }
                 
-        // Turn on the Back button on the item grid
+        // Turn on the Back button on the item grid display.
         btnBackToCategories.setVisible(true);
         
+        // iterate through all products
         for (Product p : productList) {
+            // If the product is in the correct category and in the correct slot to be displayed on this screen.
             if (p.getClass().getSimpleName().equalsIgnoreCase(itemGridCategory) && p.getLocation().startsWith((String.valueOf((char)(64+itemGridPageNumber))))) {
 
-                indexOfButtonLocationOnTheGrid = Integer.parseInt(String.valueOf(p.getLocation().charAt(1))) - 1;
+                // Parse the button index to modify from the Location property of a product
+                indexOfButtonLocationOnTheGrid = Integer.parseInt(String.valueOf(p.getLocation().charAt(1))) - 1; // subtract 1 because button location 1 is index 0.
+                
+                // Modify the item button properties.
                 btnItems[indexOfButtonLocationOnTheGrid].setDisable(false);
                 btnItems[indexOfButtonLocationOnTheGrid].setText(p.toString());
                 if (p.getQuantity() < 1) {
                     btnItems[indexOfButtonLocationOnTheGrid].setDisable(true);
                 }
-                // Adds and item to the produdct selected for purchase list and updatee the cost display with its' price.
+                // Adds an item to the produdct selected for purchase list when user clicks button and updates the cost display with its' price.
                 btnItems[indexOfButtonLocationOnTheGrid].setOnAction((event) -> {  
                     p.addProductToProductsSelectedForPurchase();
                     productsCost += p.getPrice();  
@@ -463,12 +469,13 @@ public class Dispenser extends Application {
                 });
             }
 
+            // Check to see if more pages of products in this category exist.
             if (p.getClass().getSimpleName().equalsIgnoreCase(itemGridCategory) && p.getLocation().startsWith((String.valueOf((char)(65+itemGridPageNumber))))) {
                 morePages = true;
             }
         }
 
-        
+        // Display the finished item grid
         customerBorder.setCenter(itemGrid);
         return morePages;
     }
@@ -499,7 +506,7 @@ public class Dispenser extends Application {
         productList.add(new Drink("Fanta Grape", "B2", 0, 1.25));
         productList.add(new Drink("Fanta Strawberry", "B3", 10, 1.25));
         productList.add(new Drink("Mug Root Beer", "B4", 10, 1.25));
-        productList.add(new Drink("Mug Cream Soda", "B5", 10, 1.25));
+        productList.add(new Drink("Mug Cream Soda", "B5", 10, 1.00));
         productList.add(new Drink("Sprite", "B6", 10, 1.25));
         productList.add(new Drink("7-Up", "B7", 10, 1.25));
         productList.add(new Drink("Sierra Mist", "B8", 10, 1.25));
