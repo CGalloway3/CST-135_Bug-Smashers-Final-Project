@@ -90,6 +90,7 @@ public class Dispenser extends Application {
     private final Text txtFundsAmount = new Text("$0.00");
     private final Label lblCost = new Label("Cost:");
     private final Text txtCostAmount = new Text("$0.00");
+    private final Text txtReceiptAmount = new Text("$0.00");
     private final Button btnReturnMoney = new Button("Coin Return");
     private final Button btnCompletePurchase = new Button("Complete Purchase");
     private final Button btnMyItems = new Button ("My Items");
@@ -330,6 +331,9 @@ public class Dispenser extends Application {
         txtCostAmount.setFont(Font.font("courier", FontWeight.BOLD, FontPosture.REGULAR, 20));
         txtCostAmount.setFill(Paint.valueOf("Black"));
         txtCostAmount.setStroke(Paint.valueOf("Red"));
+        txtReceiptAmount.setFont(Font.font("courier", FontWeight.BOLD, FontPosture.REGULAR, 20));
+        txtReceiptAmount.setFill(Paint.valueOf("Black"));
+        txtReceiptAmount.setStroke(Paint.valueOf("Red"));
         
         customerControls.getChildren().addAll(lblFunds, txtFundsAmount, lblCost, txtCostAmount, lblRightBlank, btnCompletePurchase, btnMyItems, btnReturnMoney, btnFinished);
         customerControls.setAlignment(Pos.BOTTOM_CENTER);
@@ -398,9 +402,17 @@ public class Dispenser extends Application {
         	final Stage receiptStage = new Stage();
         	receiptStage.initModality(Modality.APPLICATION_MODAL);
         	receiptStage.initOwner(primaryStage);
-        	VBox receiptVBox = new VBox();
+        	VBox receiptVBox = new VBox(5);
+        	Scene receiptScene = new Scene(receiptVBox);
+        	receiptStage.setScene(receiptScene);
         	if (IPurchasableProduct.PRODUCTS_SELECTEDFORPURCHASE.isEmpty()) {
         		receiptVBox.getChildren().add(new Text("Your receipt is empty"));
+        		receiptStage.show();
+        	}
+        	else if (moneyInserted < productsCost){
+        		receiptVBox.getChildren().add(new Text("Insufficient Funds"));
+        		receiptVBox.getChildren().add(new Text("Please insert cash before continuing"));
+        		receiptStage.show();
         	}
         	else {
         		//add following line when we figure out how to use dynamically added buttons
@@ -408,13 +420,23 @@ public class Dispenser extends Application {
         		for (Product p : IPurchasableProduct.PRODUCTS_SELECTEDFORPURCHASE) {
         			receiptVBox.getChildren().add(new Button(p.toString()));
         		}
-        		//receiptVBox.getChildren().add(new Text );
+        		receiptVBox.getChildren().add(new Text("Total: "));
+        		receiptVBox.getChildren().add(txtReceiptAmount);
+        		moneyInserted = moneyInserted - productsCost;
+        		updateFunds();
+        		receiptVBox.getChildren().add(new Text("Thank you for shopping with us!"));
+        		receiptVBox.getChildren().add(new Text("Change dispensed:"));
+        		receiptVBox.getChildren().add(txtFundsAmount);
+        		
+        		itemGridPageNumber = 1;
+                btnBackToCategories.setVisible(false);
+                btnNextPage.setDisable(true);
+                btnPreviousPage.setDisable(true);
+                customerStage.hide();
+                customerBorder.setCenter(categoryGrid);
+                primaryStage.show();
+                receiptStage.show();
         	}
-        	//add the total cost of purchase here
-        	//also add computations subtracting the total cost from funds, or spit an error if not enough funds
-        	Scene receiptScene = new Scene(receiptVBox);
-        	receiptStage.setScene(receiptScene);
-        	receiptStage.show();
         });
         
     }
@@ -480,6 +502,7 @@ public class Dispenser extends Application {
     private void updateCost() {
     	String text = String.format("$" + productsCost / 100 + ".%02d", productsCost % 100);
         txtCostAmount.setText(text);
+        txtReceiptAmount.setText(text);
     }
 
     private void populateProductList() {
