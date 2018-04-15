@@ -384,8 +384,8 @@ public class Dispenser extends Application {
         	else {
         		//add following line when we figure out how to use dynamically added buttons
         		//cartVBox.getChildren().add(new Text("Click on an item to remove it"));
-        		for (int x = 0; x != IPurchasableProduct.PRODUCTS_SELECTEDFORPURCHASE.size(); x++) {
-        			cartVBox.getChildren().add(new Button(IPurchasableProduct.PRODUCTS_SELECTEDFORPURCHASE.get(x).toString()));
+        		for (Product p : IPurchasableProduct.PRODUCTS_SELECTEDFORPURCHASE) {
+        			cartVBox.getChildren().add(new Button(p.toString()));
         		}
         	}
         	
@@ -405,9 +405,10 @@ public class Dispenser extends Application {
         	else {
         		//add following line when we figure out how to use dynamically added buttons
         		//receiptVBox.getChildren().add(new Text("Click on an item to remove it"));
-        		for (int x = 0; x != IPurchasableProduct.PRODUCTS_SELECTEDFORPURCHASE.size(); x++) {
-        			receiptVBox.getChildren().add(new Button(IPurchasableProduct.PRODUCTS_SELECTEDFORPURCHASE.get(x).toString()));
+        		for (Product p : IPurchasableProduct.PRODUCTS_SELECTEDFORPURCHASE) {
+        			receiptVBox.getChildren().add(new Button(p.toString()));
         		}
+        		//receiptVBox.getChildren().add(new Text );
         	}
         	//add the total cost of purchase here
         	//also add computations subtracting the total cost from funds, or spit an error if not enough funds
