@@ -22,7 +22,6 @@ in those slot locations. When the user purchases a product the code will trigger
 the item to the user.
   
 Instructions:
-  This is the full package of working netbeans project code. Run the main class, just have them all in the same folder and they should package themselves.
-Click the screen anywhere to enter customer mode and hit ctrl-a on the keyboard before clicking to enter the admin mode. No implemintation is available for administrative 
-mode as of yet. Clicking finish returns you to the splash screen.
+  This is the full package of working netbeans project code. Run the project, just have all source files in the "vendingmachine" folder and the product images in the "images" sub folder they should package themselves.
+Click the splash screen anywhere to enter customer mode and hit ctrl-a on the keyboard before clicking to enter the admin mode. No implemintation is available for administrative mode as of yet. Clicking finish returns you to the splash screen.
 
