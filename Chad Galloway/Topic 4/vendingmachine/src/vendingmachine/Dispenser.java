@@ -286,6 +286,7 @@ public class Dispenser extends Application {
         btnFinished.prefWidthProperty().bind(btnCompletePurchase.widthProperty());
         btnFinished.setOnAction((event) -> {
             itemGridPageNumber = 1;
+            btnBackToCategories.setVisible(false);
             btnNextPage.setDisable(true);
             btnPreviousPage.setDisable(true);
             customerStage.hide();
