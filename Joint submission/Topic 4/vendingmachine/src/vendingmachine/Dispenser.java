@@ -36,7 +36,7 @@ public class Dispenser extends Application {
     
     private final ArrayList<Product> productList = new ArrayList<>();
     private Boolean adminMode = false;  // adminMode flag
-    private int itemGridCategory;
+    private String itemGridCategory;
     private int itemGridPageNumber = 1;
     private int moneyInserted = 0;
     private int productsCost = 0;
@@ -78,15 +78,16 @@ public class Dispenser extends Application {
     private final Button btnGumCategory = new Button("Gum");
     private final Image imgGumCategory = new Image(getClass().getResourceAsStream("images/gumCategory.png"));
     private final ImageView viewGumCategory = new ImageView(imgGumCategory);
-    private final Button btnItem1 = new Button();
-    private final Button btnItem2 = new Button();
-    private final Button btnItem3 = new Button();
-    private final Button btnItem4 = new Button();
-    private final Button btnItem5 = new Button();
-    private final Button btnItem6 = new Button();
-    private final Button btnItem7 = new Button();
-    private final Button btnItem8 = new Button();
-    private final Button btnItem9 = new Button();
+    private final Button btnItems[] = new Button[9];
+//    private final Button btnItem1 = new Button();
+//    private final Button btnItem2 = new Button();
+//    private final Button btnItem3 = new Button();
+//    private final Button btnItem4 = new Button();
+//    private final Button btnItem5 = new Button();
+//    private final Button btnItem6 = new Button();
+//    private final Button btnItem7 = new Button();
+//    private final Button btnItem8 = new Button();
+//    private final Button btnItem9 = new Button();
     private final Label lblFunds = new Label("Funds:");
     private final Text txtFundsAmount = new Text("$0.00");
     private final Label lblCost = new Label("Cost:");
@@ -117,7 +118,13 @@ public class Dispenser extends Application {
         itemGrid.setVgap(10);
         
         // Set button sizes, states, and events
-        btnNextPage.prefWidthProperty().bind(btnItem9.widthProperty());
+        for (int i = 0; i < 9; i++) {
+            btnItems[i] = new Button();
+            btnItems[i].setPrefSize(140, 140);
+            btnItems[i].setDisable(true);
+        }
+
+        btnNextPage.prefWidthProperty().bind(btnItems[8].widthProperty());
         btnNextPage.setDisable(true);
         btnNextPage.setOnAction((event) -> {
             itemGridPageNumber++;
@@ -131,7 +138,7 @@ public class Dispenser extends Application {
             btnPreviousPage.setDisable(false);
         });
         
-        btnPreviousPage.prefWidthProperty().bind(btnItem7.widthProperty());
+        btnPreviousPage.prefWidthProperty().bind(btnItems[6].widthProperty());
         btnPreviousPage.setDisable(true);
         btnPreviousPage.setOnAction((event) -> {
             itemGridPageNumber--;
@@ -163,7 +170,7 @@ public class Dispenser extends Application {
         btnDrinkCategory.setContentDisplay(ContentDisplay.TOP);
         btnDrinkCategory.setGraphic(viewDrinkCategory);
         btnDrinkCategory.setOnAction((event) -> {
-            itemGridCategory = 1;
+            itemGridCategory = "Drink";
             if (populateItemGrid()) {
                 btnNextPage.setDisable(false);
             }
@@ -178,7 +185,7 @@ public class Dispenser extends Application {
         btnChipsCategory.setContentDisplay(ContentDisplay.TOP);
         btnChipsCategory.setGraphic(viewChipsCategory);
         btnChipsCategory.setOnAction((event) -> {
-            itemGridCategory = 2;
+            itemGridCategory = "Chips";
             if (populateItemGrid()) {
                 btnNextPage.setDisable(false);
             }
@@ -190,7 +197,7 @@ public class Dispenser extends Application {
         btnCandyCategory.setContentDisplay(ContentDisplay.TOP);
         btnCandyCategory.setGraphic(viewCandyCategory);
         btnCandyCategory.setOnAction((event) -> {
-            itemGridCategory = 3;
+            itemGridCategory = "Candy";
             if (populateItemGrid()) {
                 btnNextPage.setDisable(false);
             }
@@ -202,31 +209,12 @@ public class Dispenser extends Application {
         btnGumCategory.setContentDisplay(ContentDisplay.TOP);
         btnGumCategory.setGraphic(viewGumCategory);
         btnGumCategory.setOnAction((event) -> {
-            itemGridCategory = 4;
+            itemGridCategory = "Gum";
             if (populateItemGrid()) {
                 btnNextPage.setDisable(false);
             }
         });
-        
-        btnItem1.setPrefSize(140, 140);
-        btnItem1.setDisable(true);
-        btnItem2.setPrefSize(140, 140);
-        btnItem2.setDisable(true);
-        btnItem3.setPrefSize(140, 140);
-        btnItem3.setDisable(true);
-        btnItem4.setPrefSize(140, 140);
-        btnItem4.setDisable(true);
-        btnItem5.setPrefSize(140, 140);
-        btnItem5.setDisable(true);
-        btnItem6.setPrefSize(140, 140);
-        btnItem6.setDisable(true);
-        btnItem7.setPrefSize(140, 140);
-        btnItem7.setDisable(true);
-        btnItem8.setPrefSize(140, 140);
-        btnItem8.setDisable(true);
-        btnItem9.setPrefSize(140, 140);
-        btnItem9.setDisable(true);
-        
+                
         btnAddDime.setOnAction((event) -> {
             moneyInserted += 10;
             updateFunds();
@@ -328,9 +316,9 @@ public class Dispenser extends Application {
         customerBorder.setCenter(categoryGrid);
         
         // build item center section for border pane
-        itemGrid.addRow(0, btnItem1, btnItem2, btnItem3);
-        itemGrid.addRow(1, btnItem4, btnItem5, btnItem6);
-        itemGrid.addRow(2, btnItem7, btnItem8, btnItem9);
+        itemGrid.addRow(0, btnItems[0], btnItems[1], btnItems[2]);
+        itemGrid.addRow(1, btnItems[3], btnItems[4], btnItems[5]);
+        itemGrid.addRow(2, btnItems[6], btnItems[7], btnItems[8]);
         itemGrid.add(btnNextPage, 2, 3);
         itemGrid.add(btnPreviousPage, 0, 3);
         itemGrid.setAlignment(Pos.CENTER);
@@ -444,179 +432,38 @@ public class Dispenser extends Application {
         launch(args);
     }
 
-    /**
-     *  @param category product category 1=drink 2=chips 3=candy 4=gum 
-     *  @param page page number to display 1=first page 2=second...
-     */
     private Boolean populateItemGrid() {
         
         Boolean morePages = false;
-        String category;
-        
-        btnItem1.setText("");
-        btnItem1.setDisable(true);
-        btnItem2.setText("");
-        btnItem2.setDisable(true);
-        btnItem3.setText("");
-        btnItem3.setDisable(true);
-        btnItem4.setText("");
-        btnItem4.setDisable(true);
-        btnItem5.setText("");
-        btnItem5.setDisable(true);
-        btnItem6.setText("");
-        btnItem6.setDisable(true);
-        btnItem7.setText("");
-        btnItem7.setDisable(true);
-        btnItem8.setText("");
-        btnItem8.setDisable(true);
-        btnItem9.setText("");
-        btnItem9.setDisable(true);
-        
+        int indexOfButtonLocationOnTheGrid;
+
+        // Reset Buttons on item grid back to blank disabled buttons.
+        for (int i = 0; i < 9; i++) {
+            btnItems[i].setText("");
+            btnItems[i].setDisable(true);
+        }
+                
+        // Turn on the Back button on the item grid
         btnBackToCategories.setVisible(true);
         
-        switch (itemGridCategory){
-            case 1:
-                category = "Drink";
-                break;
-            case 2:
-                category = "Chips";
-                break;
-            case 3:
-                category = "Candy";
-                break;
-            case 4:
-                category = "Gum";
-                break;
-            default:
-                System.out.println("Category out of range. Please select a range of 1-4, inclusive.");
-                return false;
-        }
-        
         for (Product p : productList) {
-            if (p.getClass().getSimpleName().equalsIgnoreCase(category) && p.getLocation().startsWith((String.valueOf((char)(64+itemGridPageNumber))))) {
-                switch (String.valueOf(p.getLocation().charAt(1))) {
-                    
-                	case "1":
-                        btnItem1.setDisable(false);
-                        btnItem1.setText(p.toString());
-                        if (p.getQuantity() < 1) {
-                            btnItem1.setDisable(true);
-                        }
-                      //adds price to cost and adds item to "cart." see other buttons for same method
-                        btnItem1.setOnAction((event) -> {  
-                        	productsCost += p.getPrice();  
-                        	updateCost();
-                        	p.addProductToProductsSelectedForPurchase();
-                        });
-                        break;
-                        
-                    case "2":
-                        btnItem2.setDisable(false);
-                        btnItem2.setText(p.toString());
-                        if (p.getQuantity() < 1) {
-                            btnItem2.setDisable(true);
-                        }
-                        btnItem2.setOnAction((event) -> {  
-                        	productsCost += p.getPrice();  
-                        	updateCost();
-                        	p.addProductToProductsSelectedForPurchase();
-                        });
-                        break;
-                        
-                    case "3":
-                        btnItem3.setDisable(false);
-                        btnItem3.setText(p.toString());
-                        if (p.getQuantity() < 1) {
-                            btnItem3.setDisable(true);
-                        }
-                        btnItem3.setOnAction((event) -> {  
-                        	productsCost += p.getPrice();  
-                        	updateCost();
-                        	p.addProductToProductsSelectedForPurchase();
-                        });
-                        break;
-                        
-                    case "4":
-                        btnItem4.setDisable(false);
-                        btnItem4.setText(p.toString());
-                        if (p.getQuantity() < 1) {
-                            btnItem4.setDisable(true);
-                        }
-                        btnItem4.setOnAction((event) -> {  
-                        	productsCost += p.getPrice();  
-                        	updateCost();
-                        	p.addProductToProductsSelectedForPurchase();
-                        });
-                        break;
-                        
-                    case "5":
-                        btnItem5.setDisable(false);
-                        btnItem5.setText(p.toString());
-                        if (p.getQuantity() < 1) {
-                            btnItem5.setDisable(true);
-                        }
-                        btnItem5.setOnAction((event) -> {  
-                        	productsCost += p.getPrice();  
-                        	updateCost();
-                        	p.addProductToProductsSelectedForPurchase();
-                        });
-                        break;
-                        
-                    case "6":
-                        btnItem6.setDisable(false);
-                        btnItem6.setText(p.toString());
-                        if (p.getQuantity() < 1) {
-                            btnItem6.setDisable(true);
-                        }
-                        btnItem6.setOnAction((event) -> {  
-                        	productsCost += p.getPrice();  
-                        	updateCost();
-                        	p.addProductToProductsSelectedForPurchase();
-                        });
-                        break;
-                        
-                    case "7":
-                        btnItem7.setDisable(false);
-                        btnItem7.setText(p.toString());
-                        if (p.getQuantity() < 1) {
-                            btnItem7.setDisable(true);
-                        }
-                        btnItem7.setOnAction((event) -> {  
-                        	productsCost += p.getPrice();  
-                        	updateCost();
-                        	p.addProductToProductsSelectedForPurchase();
-                        });
-                        break;
-                        
-                    case "8":
-                        btnItem8.setDisable(false);
-                        btnItem8.setText(p.toString());
-                        if (p.getQuantity() < 1) {
-                            btnItem8.setDisable(true);
-                        }
-                        btnItem8.setOnAction((event) -> {  
-                        	productsCost += p.getPrice();  
-                        	updateCost();
-                        	p.addProductToProductsSelectedForPurchase();
-                        });
-                        break;
-                        
-                    case "9":
-                        btnItem9.setDisable(false);
-                        btnItem9.setText(p.toString());
-                        if (p.getQuantity() < 1) {
-                            btnItem9.setDisable(true);
-                        }
-                        btnItem9.setOnAction((event) -> {  
-                        	productsCost += p.getPrice();  
-                        	updateCost();
-                        	p.addProductToProductsSelectedForPurchase();
-                        });
-                        break;
+            if (p.getClass().getSimpleName().equalsIgnoreCase(itemGridCategory) && p.getLocation().startsWith((String.valueOf((char)(64+itemGridPageNumber))))) {
+
+                indexOfButtonLocationOnTheGrid = Integer.parseInt(String.valueOf(p.getLocation().charAt(1))) - 1;
+                btnItems[indexOfButtonLocationOnTheGrid].setDisable(false);
+                btnItems[indexOfButtonLocationOnTheGrid].setText(p.toString());
+                if (p.getQuantity() < 1) {
+                    btnItems[indexOfButtonLocationOnTheGrid].setDisable(true);
                 }
+                // Adds and item to the produdct selected for purchase list and updatee the cost display with its' price.
+                btnItems[indexOfButtonLocationOnTheGrid].setOnAction((event) -> {  
+                    p.addProductToProductsSelectedForPurchase();
+                    productsCost += p.getPrice();  
+                    updateCost();
+                });
             }
 
-            if (p.getClass().getSimpleName().equalsIgnoreCase(category) && p.getLocation().startsWith((String.valueOf((char)(65+itemGridPageNumber))))) {
+            if (p.getClass().getSimpleName().equalsIgnoreCase(itemGridCategory) && p.getLocation().startsWith((String.valueOf((char)(65+itemGridPageNumber))))) {
                 morePages = true;
             }
         }
