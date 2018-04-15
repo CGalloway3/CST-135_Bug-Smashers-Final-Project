@@ -88,9 +88,10 @@ public class Dispenser extends Application {
     private final Button btnItems[] = new Button[9];
     private final Label lblFunds = new Label("Funds:");
     private final Text txtFundsAmount = new Text("$0.00");
+    private final Text txtReceiptFunds = new Text("$0.00");
     private final Label lblCost = new Label("Cost:");
     private final Text txtCostAmount = new Text("$0.00");
-    private final Text txtReceiptAmount = new Text("$0.00");
+    private final Text txtReceiptCost = new Text("$0.00");
     private final Button btnReturnMoney = new Button("Coin Return");
     private final Button btnCompletePurchase = new Button("Complete Purchase");
     private final Button btnMyItems = new Button ("My Items");
@@ -118,12 +119,19 @@ public class Dispenser extends Application {
         });
         
         // Catch button action and enter customer mode or admin mode. reset admin flag to false
+      //lines added to reset values and lists when splash screen is entered
         btnSplashButton.setOnAction((ActionEvent event) -> {
+        	productsCost = 0;
+    		moneyInserted = 0;
+    		updateFunds();
+    		updateCost();
+    		IPurchasableProduct.PRODUCTS_SELECTEDFORPURCHASE.clear();
             if (adminMode) {
                 adminMode = false;
                 primaryStage.hide();
                 adminStage.show();
             }
+            
             else {
                 primaryStage.hide();
                 customerStage.show();
@@ -327,13 +335,16 @@ public class Dispenser extends Application {
         txtFundsAmount.setFont(Font.font("courier", FontWeight.BOLD, FontPosture.REGULAR, 20));
         txtFundsAmount.setFill(Paint.valueOf("Black"));
         txtFundsAmount.setStroke(Paint.valueOf("Green"));
+        txtReceiptFunds.setFont(Font.font("courier", FontWeight.BOLD, FontPosture.REGULAR, 20));
+        txtReceiptFunds.setFill(Paint.valueOf("Black"));
+        txtReceiptFunds.setStroke(Paint.valueOf("Green"));
         lblCost.setMinHeight(20);
         txtCostAmount.setFont(Font.font("courier", FontWeight.BOLD, FontPosture.REGULAR, 20));
         txtCostAmount.setFill(Paint.valueOf("Black"));
         txtCostAmount.setStroke(Paint.valueOf("Red"));
-        txtReceiptAmount.setFont(Font.font("courier", FontWeight.BOLD, FontPosture.REGULAR, 20));
-        txtReceiptAmount.setFill(Paint.valueOf("Black"));
-        txtReceiptAmount.setStroke(Paint.valueOf("Red"));
+        txtReceiptCost.setFont(Font.font("courier", FontWeight.BOLD, FontPosture.REGULAR, 20));
+        txtReceiptCost.setFill(Paint.valueOf("Black"));
+        txtReceiptCost.setStroke(Paint.valueOf("Red"));
         
         customerControls.getChildren().addAll(lblFunds, txtFundsAmount, lblCost, txtCostAmount, lblRightBlank, btnCompletePurchase, btnMyItems, btnReturnMoney, btnFinished);
         customerControls.setAlignment(Pos.BOTTOM_CENTER);
@@ -421,13 +432,12 @@ public class Dispenser extends Application {
         			receiptVBox.getChildren().add(new Button(p.toString()));
         		}
         		receiptVBox.getChildren().add(new Text("Total: "));
-        		receiptVBox.getChildren().add(txtReceiptAmount);
+        		receiptVBox.getChildren().add(txtReceiptCost);
         		moneyInserted = moneyInserted - productsCost;
         		updateFunds();
         		receiptVBox.getChildren().add(new Text("Thank you for shopping with us!"));
         		receiptVBox.getChildren().add(new Text("Change dispensed:"));
-        		receiptVBox.getChildren().add(txtFundsAmount);
-        		
+        		receiptVBox.getChildren().add(txtReceiptFunds);
         		itemGridPageNumber = 1;
                 btnBackToCategories.setVisible(false);
                 btnNextPage.setDisable(true);
@@ -436,6 +446,7 @@ public class Dispenser extends Application {
                 customerBorder.setCenter(categoryGrid);
                 primaryStage.show();
                 receiptStage.show();
+                
         	}
         });
         
@@ -497,12 +508,13 @@ public class Dispenser extends Application {
     private void updateFunds() {
         String text = String.format("$" + moneyInserted / 100 + ".%02d", moneyInserted % 100);
         txtFundsAmount.setText(text);
+        txtReceiptFunds.setText(text);
     }
     
     private void updateCost() {
     	String text = String.format("$" + productsCost / 100 + ".%02d", productsCost % 100);
         txtCostAmount.setText(text);
-        txtReceiptAmount.setText(text);
+        txtReceiptCost.setText(text);
     }
 
     private void populateProductList() {
