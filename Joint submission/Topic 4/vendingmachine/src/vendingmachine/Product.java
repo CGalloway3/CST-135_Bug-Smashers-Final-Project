@@ -1,4 +1,4 @@
-//CST-135 group assignment for Topic 2, a collaboration of Richard Boyd, Chad Galloway, and Dennis Witt
+//CST-135 group assignment for Topic 4, a collaboration of Richard Boyd, Chad Galloway, and Dennis Witt
 /**  Program: Vending Machine
 *    File: Product.java
 *    Summary: Base class for products to be sold in the dispenser.
@@ -8,7 +8,7 @@
 
 package vendingmachine;
 
-public abstract class Product {
+public abstract class Product implements IPurchasableProduct{
 	
     // Private fields
     
@@ -73,6 +73,16 @@ public abstract class Product {
 	
     // Additional public methods
         
+	@Override
+        public void addProductToProductsSelectedForPurchase() {
+            productsSelectedForPurchase.add(this);
+        }
+        
+        @Override
+        public void removeProductFromProductsForPurchase() {
+            productsSelectedForPurchase.remove(this);
+        }
+                
 	@Override
         public String toString() {     //toString method
 		return productName + "\n " + "$" + productPrice / 100 + "." + productPrice % 100;
