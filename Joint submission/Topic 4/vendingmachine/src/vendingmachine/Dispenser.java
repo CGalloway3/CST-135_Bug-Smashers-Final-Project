@@ -645,44 +645,44 @@ public class Dispenser extends Application {
     private void populateProductList() {
         
         // Add some Drinks
-        productList.add(new Drink("Pepsi", "A1", 10, 125));
-        productList.add(new Drink("Diet Pepsi", "A2", 10, 125));
-        productList.add(new Drink("Cherry Pepsi", "A3", 10, 150));
-        productList.add(new Drink("Coke", "A4", 10, 125));
-        productList.add(new Drink("Diet Coke", "A5", 1, 125));
-        productList.add(new Drink("Cherry Coke", "A6", 10, 150));
-        productList.add(new Drink("Dr.Pepper", "A7", 10, 125));
-        productList.add(new Drink("Diet Dr.Pepper", "A8", 10, 125));
-        productList.add(new Drink("Vanillia Dr.Pepper", "A9", 10, 150));
-        productList.add(new Drink("Fanta Orange", "B1", 10, 125));
-        productList.add(new Drink("Fanta Grape", "B2", 0, 125));
-        productList.add(new Drink("Fanta Strawberry", "B3", 10, 125));
-        productList.add(new Drink("Mug Root Beer", "B4", 10, 125));
-        productList.add(new Drink("Mug Cream Soda", "B5", 10, 125));
-        productList.add(new Drink("Sprite", "B6", 10, 125));
-        productList.add(new Drink("7-Up", "B7", 10, 125));
-        productList.add(new Drink("Sierra Mist", "B8", 10, 125));
+        productList.add(new Drink("Pepsi", "A1", 10, 1.25));
+        productList.add(new Drink("Diet Pepsi", "A2", 10, 1.25));
+        productList.add(new Drink("Cherry Pepsi", "A3", 10, 1.50));
+        productList.add(new Drink("Coke", "A4", 10, 1.25));
+        productList.add(new Drink("Diet Coke", "A5", 1, 1.25));
+        productList.add(new Drink("Cherry Coke", "A6", 10, 1.50));
+        productList.add(new Drink("Dr.Pepper", "A7", 10, 1.25));
+        productList.add(new Drink("Diet Dr.Pepper", "A8", 10, 1.25));
+        productList.add(new Drink("Vanillia Dr.Pepper", "A9", 10, 1.50));
+        productList.add(new Drink("Fanta Orange", "B1", 10, 1.25));
+        productList.add(new Drink("Fanta Grape", "B2", 0, 1.25));
+        productList.add(new Drink("Fanta Strawberry", "B3", 10, 1.25));
+        productList.add(new Drink("Mug Root Beer", "B4", 10, 1.25));
+        productList.add(new Drink("Mug Cream Soda", "B5", 10, 1.25));
+        productList.add(new Drink("Sprite", "B6", 10, 1.25));
+        productList.add(new Drink("7-Up", "B7", 10, 1.25));
+        productList.add(new Drink("Sierra Mist", "B8", 10, 1.25));
         
         // Add some candy
-        productList.add(new Candy("M&M", "A1", 10, 75));
-        productList.add(new Candy("Kit Kat", "A2", 10, 75));
-        productList.add(new Candy("Reses Pieces", "A4", 10, 75));
-        productList.add(new Candy("Baby Ruth", "A5", 10, 50));
-        productList.add(new Candy("Snickers", "A6", 10, 75));
+        productList.add(new Candy("M&M", "A1", 10, 0.75));
+        productList.add(new Candy("Kit Kat", "A2", 10, 0.75));
+        productList.add(new Candy("Reses Pieces", "A4", 10, 0.75));
+        productList.add(new Candy("Baby Ruth", "A5", 10, 0.50));
+        productList.add(new Candy("Snickers", "A6", 10, 0.75));
         
         // Add some chips
-        productList.add(new Chips("Ruffles", "A1", 1, 100));
-        productList.add(new Chips("Cheetoes", "A2", 10, 100));
-        productList.add(new Chips("Doritoes", "A3", 10, 100));
-        productList.add(new Chips("Hot Fries", "A5", 10, 75));
-        productList.add(new Chips("Lays", "B2", 10, 100));
+        productList.add(new Chips("Ruffles", "A1", 1, 1.00));
+        productList.add(new Chips("Cheetoes", "A2", 10, 1.00));
+        productList.add(new Chips("Doritoes", "A3", 10, 1.00));
+        productList.add(new Chips("Hot Fries", "A5", 10, 0.75));
+        productList.add(new Chips("Lays", "B2", 10, 1.00));
         
         // Add some gum
-        productList.add(new Gum("Orbit", "A1", 10, 50));
-        productList.add(new Gum("Five", "A2", 10, 75));
-        productList.add(new Gum("Trident", "A3", 0, 50));
-        productList.add(new Gum("Juicy fruit", "A4", 10, 25));
-        productList.add(new Gum("Bubble Yum", "A5", 10, 50));
+        productList.add(new Gum("Orbit", "A1", 10, 0.50));
+        productList.add(new Gum("Five", "A2", 10, 0.75));
+        productList.add(new Gum("Trident", "A3", 0, 0.50));
+        productList.add(new Gum("Juicy fruit", "A4", 10, 0.25));
+        productList.add(new Gum("Bubble Yum", "A5", 10, 0.50));
     }
 
  }

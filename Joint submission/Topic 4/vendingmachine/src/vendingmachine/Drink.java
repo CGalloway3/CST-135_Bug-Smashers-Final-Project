@@ -15,8 +15,8 @@ public class Drink extends Product implements Comparable<Drink> {
         public Drink() {
             super();
 	}
-	public Drink(String name, String location, int quantity, int price) {
-            super(name, location, quantity, price);
+	public Drink(String name, String location, int quantity, double price) {
+            super(name, location, quantity, (int)(price * 100));
 	}
 	public Drink(Product copy) {    //overloaded constructor that copies another objects fields
             super(copy);
