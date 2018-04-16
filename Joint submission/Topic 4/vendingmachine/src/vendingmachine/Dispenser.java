@@ -331,10 +331,16 @@ public class Dispenser extends Application {
         txtFundsAmount.setFont(Font.font("courier", FontWeight.BOLD, FontPosture.REGULAR, 20));
         txtFundsAmount.setFill(Paint.valueOf("Black"));
         txtFundsAmount.setStroke(Paint.valueOf("Green"));
+        txtReceiptFunds.setFont(Font.font("courier", FontWeight.BOLD, FontPosture.REGULAR, 20));
+        txtReceiptFunds.setFill(Paint.valueOf("Black"));
+        txtReceiptFunds.setStroke(Paint.valueOf("Green"));
         lblCost.setMinHeight(20);
         txtCostAmount.setFont(Font.font("courier", FontWeight.BOLD, FontPosture.REGULAR, 20));
         txtCostAmount.setFill(Paint.valueOf("Black"));
         txtCostAmount.setStroke(Paint.valueOf("Red"));
+        txtReceiptCost.setFont(Font.font("courier", FontWeight.BOLD, FontPosture.REGULAR, 20));
+        txtReceiptCost.setFill(Paint.valueOf("Black"));
+        txtReceiptCost.setStroke(Paint.valueOf("Red"));
         
         customerControls.getChildren().addAll(lblFunds, txtFundsAmount, lblCost, txtCostAmount, lblRightBlank, btnCompletePurchase, btnMyItems, btnReturnMoney, btnExit);
         customerControls.setAlignment(Pos.BOTTOM_CENTER);
