@@ -1,23 +1,8 @@
 For internal use only!!
 
-4-15-18 20:53 CST: (Chad) Removed line "p.restockProduct(p.getQuantity() - 1);" in populateItemGrid in favor of putting the same code into the Product class under addProductToProductsSelectedForPurchase() now the adding and removing od quanitity is handled privately within the Product class itself.
-
-4-15-18 18:56 CST: (Richard) Added line that updates product quantities when added to cart.
-                                -also updates buttons after every click, preventing you from adding more of an item to your cart then                                      there is in stock.
-                              Exit button changes label to "cancel order" when there is something in the cart.
-                              Exit button adds product back to quantities because they weren't actually purchased.
-                              Added padding and spacing to cart and receipt windows for readability.
-                              Adjusted some product locations to look more uniform.
-
-4-15-18 18:19 CST: (Richard) changed "finished" button to "Exit" button
-
-4-15-18 17:38 CST: (Richard) finished funcionality of receiptStage to show cost, update funds, dispense change, and reset primary stage
-
-4-15-18 17:07 CST: (Richard) Changed loop that creates cart and receipt pop ups to operate in the same way the grid buttons populate
-
-4-15-18 16:42 CST: (Richard) updated build to work as Eclipse Javafx project (not sure if will cause problems in netbeans)
-
 4-15-18 22:02 CST: (Richard) Changed the way the my items/cart pop up populates, I tried to add  remove item functionality but I can't seem to figure it out right now. It's not required for this week, so I will come back to it next week. For now, it just brings up the items currently in cart, and everything else works as intended.
+
+4-15-18 20:53 CST: (Chad) Removed line "p.restockProduct(p.getQuantity() - 1);" in populateItemGrid in favor of putting the same code into the Product class under addProductToProductsSelectedForPurchase() now the adding and removing od quanitity is handled privately within the Product class itself.
 
 4-15-18 18:56 CST: (Richard) Added line that updates product quantities when added to cart.
                                 -also updates buttons after every click, preventing you from adding more of an item to your cart then                                      there is in stock.
