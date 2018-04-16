@@ -95,7 +95,7 @@ public class Dispenser extends Application {
     private final Button btnReturnMoney = new Button("Coin Return");
     private final Button btnCompletePurchase = new Button("Complete Purchase");
     private final Button btnMyItems = new Button ("My Items");
-    private final Button btnFinished = new Button("Finished");
+    private final Button btnExit = new Button("Exit");
     private final Stage customerStage = new Stage();
     private final Stage adminStage = new Stage();
 
@@ -309,8 +309,8 @@ public class Dispenser extends Application {
         
         btnMyItems.prefWidthProperty().bind(btnCompletePurchase.widthProperty());
         btnReturnMoney.prefWidthProperty().bind(btnCompletePurchase.widthProperty());
-        btnFinished.prefWidthProperty().bind(btnCompletePurchase.widthProperty());
-        btnFinished.setOnAction((event) -> {
+        btnExit.prefWidthProperty().bind(btnCompletePurchase.widthProperty());
+        btnExit.setOnAction((event) -> {
             itemGridPageNumber = 1;
             btnBackToCategories.setVisible(false);
             btnNextPage.setDisable(true);
@@ -346,7 +346,7 @@ public class Dispenser extends Application {
         txtReceiptCost.setFill(Paint.valueOf("Black"));
         txtReceiptCost.setStroke(Paint.valueOf("Red"));
         
-        customerControls.getChildren().addAll(lblFunds, txtFundsAmount, lblCost, txtCostAmount, lblRightBlank, btnCompletePurchase, btnMyItems, btnReturnMoney, btnFinished);
+        customerControls.getChildren().addAll(lblFunds, txtFundsAmount, lblCost, txtCostAmount, lblRightBlank, btnCompletePurchase, btnMyItems, btnReturnMoney, btnExit);
         customerControls.setAlignment(Pos.BOTTOM_CENTER);
         customerBorder.setRight(customerControls);
         
