@@ -402,9 +402,10 @@ public class Dispenser extends Application {
             else {
                 for (Product p : IPurchasableProduct.PRODUCTS_SELECTEDFORPURCHASE) {
                     Button btnReceiptItem = new Button(p.toString());
-                    receiptVBox.getChildren().add(btnReceiptItem);
+                    receiptVBox.getChildren().add(btnReceiptItem); 
                     btnReceiptItem.prefWidthProperty().bind(receiptVBox.widthProperty());
                 }
+                IPurchasableProduct.PRODUCTS_SELECTEDFORPURCHASE.clear();
                 receiptVBox.getChildren().add(new Text("Total: "));
                 receiptVBox.getChildren().add(txtReceiptCost);
                 moneyInserted = moneyInserted - productsCost;
