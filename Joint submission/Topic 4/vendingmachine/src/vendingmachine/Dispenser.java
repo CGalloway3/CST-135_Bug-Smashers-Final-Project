@@ -307,6 +307,7 @@ public class Dispenser extends Application {
         btnReturnMoney.prefWidthProperty().bind(btnCompletePurchase.widthProperty());
         btnExit.prefWidthProperty().bind(btnCompletePurchase.widthProperty());
         btnExit.setOnAction((event) -> {
+            IPurchasableProduct.PRODUCTS_SELECTEDFORPURCHASE.clear();
             itemGridPageNumber = 1;
             btnBackToCategories.setVisible(false);
             btnNextPage.setDisable(true);
