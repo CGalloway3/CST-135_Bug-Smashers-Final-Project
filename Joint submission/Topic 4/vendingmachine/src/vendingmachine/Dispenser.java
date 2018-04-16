@@ -120,7 +120,13 @@ public class Dispenser extends Application {
         
         // Catch button action and enter customer mode or admin mode. reset admin flag to false
         btnSplashButton.setOnAction((ActionEvent event) -> {
-            if (adminMode) {
+        	productsCost = 0;
+    		moneyInserted = 0;
+    		updateFunds();
+    		updateCost();
+    		btnExit.setText("Exit");
+    		IPurchasableProduct.PRODUCTS_SELECTEDFORPURCHASE.clear();
+        	if (adminMode) {
                 adminMode = false;
                 primaryStage.hide();
                 adminStage.show();
