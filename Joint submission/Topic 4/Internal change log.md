@@ -1,5 +1,7 @@
 For internal use only!!
 
+04-16-18 00:25 CST (Chad) Minor bug fixes due to improper merge on my part.
+
 4-16-18 00:04 CST: (Chad) Got Dynamic buttons functioning. You can click a button in the cart to remove that item. Needs a good testing pass to verify all the products are added and removed from inventory as they should be but the functionallity is in there and working perefectly, graphically anyway.
 
 4-15-18 22:02 CST: (Richard) Changed the way the my items/cart pop up populates, I tried to add  remove item functionality but I can't seem to figure it out right now. It's not required for this week, so I will come back to it next week. For now, it just brings up the items currently in cart, and everything else works as intended.
