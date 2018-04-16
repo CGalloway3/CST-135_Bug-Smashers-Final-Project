@@ -14,6 +14,7 @@ import vendingmachine.products.Gum;
 import vendingmachine.products.Drink;
 import vendingmachine.products.Chips;
 import vendingmachine.products.Candy;
+
 import java.util.ArrayList;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
@@ -86,6 +87,7 @@ public class Dispenser extends Application {
     private final Image imgGumCategory = new Image(getClass().getResourceAsStream("images/gumCategory.png"));
     private final ImageView viewGumCategory = new ImageView(imgGumCategory);
     private final Button btnItems[] = new Button[9];
+    private final Button btnCartItems[] = new Button[1000];
     private final Label lblFunds = new Label("Funds:");
     private final Text txtFundsAmount = new Text("$0.00");
     private final Text txtReceiptFunds = new Text("$0.00");
@@ -159,6 +161,11 @@ public class Dispenser extends Application {
             btnItems[i].setPrefSize(140, 140);
             btnItems[i].setDisable(true);
         }
+        
+        for (int i=0; i < 999; i++) {
+    		btnCartItems[i] = new Button();
+    		btnCartItems[i].setPrefSize(100, 50);
+    	}
 
         btnNextPage.prefWidthProperty().bind(btnItems[8].widthProperty());
         btnNextPage.setDisable(true);
@@ -398,18 +405,26 @@ public class Dispenser extends Application {
         	cartStage.initOwner(primaryStage);
         	VBox cartVBox = new VBox(5);
         	cartVBox.setPadding(new Insets(10));
+        	Scene cartScene = new Scene(cartVBox);
         	if (IPurchasableProduct.PRODUCTS_SELECTEDFORPURCHASE.isEmpty()) {
         		cartVBox.getChildren().add(new Text("Your cart is empty"));
         	}
         	else {
         		//add following line when we figure out how to use dynamically added buttons
         		//cartVBox.getChildren().add(new Text("Click on an item to remove it"));
-        		for (Product p : IPurchasableProduct.PRODUCTS_SELECTEDFORPURCHASE) {
-        			cartVBox.getChildren().add(new Button(p.toString()));
+        		for (int cartbuttonindex = 0; cartbuttonindex < IPurchasableProduct.PRODUCTS_SELECTEDFORPURCHASE.size(); cartbuttonindex++) {
+        			
+        			btnCartItems[cartbuttonindex].setText(IPurchasableProduct.PRODUCTS_SELECTEDFORPURCHASE.get(cartbuttonindex).toString());
+        			btnCartItems[cartbuttonindex].setDisable(false);
+        			cartVBox.getChildren().add(btnCartItems[cartbuttonindex]);
+        			
+        			btnCartItems[cartbuttonindex].setOnAction((event) -> { 
+        				//Will add funcionality to this in the future. Can't figure it out now
+                    });
         		}
         	}
         	
-        	Scene cartScene = new Scene(cartVBox);
+        	
         	cartStage.setScene(cartScene);
         	cartStage.show();
         });
