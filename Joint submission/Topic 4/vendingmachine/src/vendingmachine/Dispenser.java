@@ -95,7 +95,7 @@ public class Dispenser extends Application {
     private final Button btnReturnMoney = new Button("Coin Return");
     private final Button btnCompletePurchase = new Button("Complete Purchase");
     private final Button btnMyItems = new Button ("My Items");
-    private final Button btnExit = new Button("Exit");
+    private final Button btnExit = new Button();
     private final Stage customerStage = new Stage();
     private final Stage adminStage = new Stage();
 
@@ -125,6 +125,7 @@ public class Dispenser extends Application {
     		moneyInserted = 0;
     		updateFunds();
     		updateCost();
+    		btnExit.setText("Exit");
     		IPurchasableProduct.PRODUCTS_SELECTEDFORPURCHASE.clear();
             if (adminMode) {
                 adminMode = false;
@@ -439,8 +440,10 @@ public class Dispenser extends Application {
         		moneyInserted = moneyInserted - productsCost;
         		updateFunds();
         		receiptVBox.getChildren().add(new Text("Thank you for shopping with us!"));
-        		receiptVBox.getChildren().add(new Text("Change dispensed:"));
-        		receiptVBox.getChildren().add(txtReceiptFunds);
+        		if (moneyInserted != 0) {
+        			receiptVBox.getChildren().add(new Text("Change dispensed:"));
+            		receiptVBox.getChildren().add(txtReceiptFunds);
+        		}        		
         		itemGridPageNumber = 1;
                 btnBackToCategories.setVisible(false);
                 btnNextPage.setDisable(true);
