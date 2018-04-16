@@ -1,5 +1,7 @@
 For internal use only!!
 
+4-16-18 00:04 CST: (Chad) Got Dynamic buttons functioning. You can click a button in the cart to remove that item. Needs a good testing pass to verify all the products are added and removed from inventory as they should be but the functionallity is in there and working perefectly, graphically anyway.
+
 4-15-18 22:02 CST: (Richard) Changed the way the my items/cart pop up populates, I tried to add  remove item functionality but I can't seem to figure it out right now. It's not required for this week, so I will come back to it next week. For now, it just brings up the items currently in cart, and everything else works as intended.
 
 4-15-18 20:53 CST: (Chad) Removed line "p.restockProduct(p.getQuantity() - 1);" in populateItemGrid in favor of putting the same code into the Product class under addProductToProductsSelectedForPurchase() now the adding and removing od quanitity is handled privately within the Product class itself.
