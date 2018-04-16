@@ -1,7 +1,5 @@
 For internal use only!!
 
-<<<<<<< Updated upstream
-=======
 4-15-18 20:53 CST: (Chad) Removed line "p.restockProduct(p.getQuantity() - 1);" in populateItemGrid in favor of putting the same code into the Product class under addProductToProductsSelectedForPurchase() now the adding and removing od quanitity is handled privately within the Product class itself.
 
 4-15-18 18:56 CST: (Richard) Added line that updates product quantities when added to cart.
@@ -19,7 +17,6 @@ For internal use only!!
 
 4-15-18 16:42 CST: (Richard) updated build to work as Eclipse Javafx project (not sure if will cause problems in netbeans)
 
->>>>>>> Stashed changes
 4-15-18 16:15 CST: (Chad) Continue cleaning and commenting code.
 
 4-15-18 15:53 CST: (Chad) Converted all toString mothods to use String.format to eliminate values like "$1.0". Now all monitary values are represented properly in teo decimal places.
