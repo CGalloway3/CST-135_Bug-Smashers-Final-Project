@@ -1,5 +1,7 @@
 For internal use only!!
 
+4-15-18 22:02 CST: (Richard) Changed the way the my items/cart pop up populates, I tried to add  remove item functionality but I can't seem to figure it out right now. It's not required for this week, so I will come back to it next week. For now, it just brings up the items currently in cart, and everything else works as intended.
+
 4-15-18 18:56 CST: (Richard) Added line that updates product quantities when added to cart.
                                 -also updates buttons after every click, preventing you from adding more of an item to your cart then                                      there is in stock.
                               Exit button changes label to "cancel order" when there is something in the cart.
