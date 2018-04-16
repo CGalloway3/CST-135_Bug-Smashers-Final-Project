@@ -90,12 +90,12 @@ public class Dispenser extends Application {
     private final Text txtFundsAmount = new Text("$0.00");
     private final Text txtReceiptFunds = new Text("$0.00");
     private final Label lblCost = new Label("Cost:");
-    private final Text txtCostAmount = new Text("$0.00");
     private final Text txtReceiptCost = new Text("$0.00");
+    private final Text txtCostAmount = new Text("$0.00");
     private final Button btnReturnMoney = new Button("Coin Return");
     private final Button btnCompletePurchase = new Button("Complete Purchase");
     private final Button btnMyItems = new Button ("My Items");
-    private final Button btnExit = new Button();
+    private final Button btnExit = new Button("Exit");
     private final Stage customerStage = new Stage();
     private final Stage adminStage = new Stage();
 
@@ -119,20 +119,12 @@ public class Dispenser extends Application {
         });
         
         // Catch button action and enter customer mode or admin mode. reset admin flag to false
-      //lines added to reset values and lists when splash screen is entered
         btnSplashButton.setOnAction((ActionEvent event) -> {
-        	productsCost = 0;
-    		moneyInserted = 0;
-    		updateFunds();
-    		updateCost();
-    		btnExit.setText("Exit");
-    		IPurchasableProduct.PRODUCTS_SELECTEDFORPURCHASE.clear();
             if (adminMode) {
                 adminMode = false;
                 primaryStage.hide();
                 adminStage.show();
             }
-            
             else {
                 primaryStage.hide();
                 customerStage.show();
@@ -315,10 +307,7 @@ public class Dispenser extends Application {
         btnReturnMoney.prefWidthProperty().bind(btnCompletePurchase.widthProperty());
         btnExit.prefWidthProperty().bind(btnCompletePurchase.widthProperty());
         btnExit.setOnAction((event) -> {
-        	for (Product p : IPurchasableProduct.PRODUCTS_SELECTEDFORPURCHASE) {
-        		p.restockProduct(p.getQuantity() + 1);
-        	}
-        	itemGridPageNumber = 1;
+            itemGridPageNumber = 1;
             btnBackToCategories.setVisible(false);
             btnNextPage.setDisable(true);
             btnPreviousPage.setDisable(true);
@@ -342,16 +331,10 @@ public class Dispenser extends Application {
         txtFundsAmount.setFont(Font.font("courier", FontWeight.BOLD, FontPosture.REGULAR, 20));
         txtFundsAmount.setFill(Paint.valueOf("Black"));
         txtFundsAmount.setStroke(Paint.valueOf("Green"));
-        txtReceiptFunds.setFont(Font.font("courier", FontWeight.BOLD, FontPosture.REGULAR, 20));
-        txtReceiptFunds.setFill(Paint.valueOf("Black"));
-        txtReceiptFunds.setStroke(Paint.valueOf("Green"));
         lblCost.setMinHeight(20);
         txtCostAmount.setFont(Font.font("courier", FontWeight.BOLD, FontPosture.REGULAR, 20));
         txtCostAmount.setFill(Paint.valueOf("Black"));
         txtCostAmount.setStroke(Paint.valueOf("Red"));
-        txtReceiptCost.setFont(Font.font("courier", FontWeight.BOLD, FontPosture.REGULAR, 20));
-        txtReceiptCost.setFill(Paint.valueOf("Black"));
-        txtReceiptCost.setStroke(Paint.valueOf("Red"));
         
         customerControls.getChildren().addAll(lblFunds, txtFundsAmount, lblCost, txtCostAmount, lblRightBlank, btnCompletePurchase, btnMyItems, btnReturnMoney, btnExit);
         customerControls.setAlignment(Pos.BOTTOM_CENTER);
@@ -456,7 +439,7 @@ public class Dispenser extends Application {
         launch(args);
     }
 
-            //pop-up window for "my items" button
+    //pop-up window for "my items" button
     private void drawItemsList() {
     
         final Stage cartStage = new Stage();
@@ -499,8 +482,7 @@ public class Dispenser extends Application {
         
         Scene cartScene = new Scene(cartVBox);
         cartStage.setScene(cartScene);
-        cartStage.show();
-        
+        cartStage.show();        
 
     }
     
@@ -538,10 +520,12 @@ public class Dispenser extends Application {
                     p.addProductToProductsSelectedForPurchase();
                     productsCost += p.getPrice();  
                     updateCost();
+
                     populateItemGrid();
                     if (IPurchasableProduct.PRODUCTS_SELECTEDFORPURCHASE.size() > 0) {
                     	btnExit.setText("Cancel Order");
                     }
+
                 });
             }
 
@@ -600,8 +584,8 @@ public class Dispenser extends Application {
         productList.add(new Chips("Ruffles", "A1", 1, 1.00));
         productList.add(new Chips("Cheetoes", "A2", 10, 1.00));
         productList.add(new Chips("Doritoes", "A3", 10, 1.00));
-        productList.add(new Chips("Hot Fries", "A4", 10, 0.75));
-        productList.add(new Chips("Lays", "A5", 10, 1.00));
+        productList.add(new Chips("Hot Fries", "A5", 10, 0.75));
+        productList.add(new Chips("Lays", "B2", 10, 1.00));
         
         // Add some gum
         productList.add(new Gum("Orbit", "A1", 10, 0.50));

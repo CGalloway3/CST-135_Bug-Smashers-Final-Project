@@ -88,12 +88,14 @@ public class Dispenser extends Application {
     private final Button btnItems[] = new Button[9];
     private final Label lblFunds = new Label("Funds:");
     private final Text txtFundsAmount = new Text("$0.00");
+    private final Text txtReceiptFunds = new Text("$0.00");
     private final Label lblCost = new Label("Cost:");
+    private final Text txtReceiptCost = new Text("$0.00");
     private final Text txtCostAmount = new Text("$0.00");
     private final Button btnReturnMoney = new Button("Coin Return");
     private final Button btnCompletePurchase = new Button("Complete Purchase");
     private final Button btnMyItems = new Button ("My Items");
-    private final Button btnFinished = new Button("Finished");
+    private final Button btnExit = new Button("Exit");
     private final Stage customerStage = new Stage();
     private final Stage adminStage = new Stage();
 
@@ -303,8 +305,8 @@ public class Dispenser extends Application {
             drawItemsList();
         });
         btnReturnMoney.prefWidthProperty().bind(btnCompletePurchase.widthProperty());
-        btnFinished.prefWidthProperty().bind(btnCompletePurchase.widthProperty());
-        btnFinished.setOnAction((event) -> {
+        btnExit.prefWidthProperty().bind(btnCompletePurchase.widthProperty());
+        btnExit.setOnAction((event) -> {
             itemGridPageNumber = 1;
             btnBackToCategories.setVisible(false);
             btnNextPage.setDisable(true);
@@ -334,7 +336,7 @@ public class Dispenser extends Application {
         txtCostAmount.setFill(Paint.valueOf("Black"));
         txtCostAmount.setStroke(Paint.valueOf("Red"));
         
-        customerControls.getChildren().addAll(lblFunds, txtFundsAmount, lblCost, txtCostAmount, lblRightBlank, btnCompletePurchase, btnMyItems, btnReturnMoney, btnFinished);
+        customerControls.getChildren().addAll(lblFunds, txtFundsAmount, lblCost, txtCostAmount, lblRightBlank, btnCompletePurchase, btnMyItems, btnReturnMoney, btnExit);
         customerControls.setAlignment(Pos.BOTTOM_CENTER);
         customerBorder.setRight(customerControls);
         
@@ -374,52 +376,6 @@ public class Dispenser extends Application {
                 });
                 // End Admin code section
         
-<<<<<<< Updated upstream
-        
-        //pop-up window for "my items" button
-        btnMyItems.setOnAction((Event) -> {
-        	final Stage cartStage = new Stage();
-        	cartStage.initModality(Modality.APPLICATION_MODAL);
-        	cartStage.initOwner(primaryStage);
-        	VBox cartVBox = new VBox();
-        	if (IPurchasableProduct.PRODUCTS_SELECTEDFORPURCHASE.isEmpty()) {
-        		cartVBox.getChildren().add(new Text("Your cart is empty"));
-        	}
-        	else {
-        		//add following line when we figure out how to use dynamically added buttons
-        		//cartVBox.getChildren().add(new Text("Click on an item to remove it"));
-        		for (int x = 0; x != IPurchasableProduct.PRODUCTS_SELECTEDFORPURCHASE.size(); x++) {
-        			cartVBox.getChildren().add(new Button(IPurchasableProduct.PRODUCTS_SELECTEDFORPURCHASE.get(x).toString()));
-        		}
-        	}
-        	
-        	Scene cartScene = new Scene(cartVBox);
-        	cartStage.setScene(cartScene);
-        	cartStage.show();
-        });
-        
-        btnCompletePurchase.setOnAction((Event) -> {
-        	final Stage receiptStage = new Stage();
-        	receiptStage.initModality(Modality.APPLICATION_MODAL);
-        	receiptStage.initOwner(primaryStage);
-        	VBox receiptVBox = new VBox();
-        	if (IPurchasableProduct.PRODUCTS_SELECTEDFORPURCHASE.isEmpty()) {
-        		receiptVBox.getChildren().add(new Text("Your receipt is empty"));
-        	}
-        	else {
-        		//add following line when we figure out how to use dynamically added buttons
-        		//receiptVBox.getChildren().add(new Text("Click on an item to remove it"));
-        		for (int x = 0; x != IPurchasableProduct.PRODUCTS_SELECTEDFORPURCHASE.size(); x++) {
-        			receiptVBox.getChildren().add(new Button(IPurchasableProduct.PRODUCTS_SELECTEDFORPURCHASE.get(x).toString()));
-        		}
-        	}
-        	//add the total cost of purchase here
-        	//also add computations subtracting the total cost from funds, or spit an error if not enough funds
-        	Scene receiptScene = new Scene(receiptVBox);
-        	receiptStage.setScene(receiptScene);
-        	receiptStage.show();
-        });
-=======
         btnCompletePurchase.setOnAction((Event) -> {
             
             final Stage receiptStage = new Stage();
@@ -464,7 +420,6 @@ public class Dispenser extends Application {
             Button btnSeperator = new Button();
             btnSeperator.setVisible(false);
             receiptVBox.getChildren().add(btnSeperator);
->>>>>>> Stashed changes
         
             Button btnClose = new Button("Close");
             btnClose.prefWidthProperty().bind(receiptVBox.widthProperty());
@@ -484,7 +439,7 @@ public class Dispenser extends Application {
         launch(args);
     }
 
-            //pop-up window for "my items" button
+    //pop-up window for "my items" button
     private void drawItemsList() {
     
         final Stage cartStage = new Stage();
@@ -527,8 +482,7 @@ public class Dispenser extends Application {
         
         Scene cartScene = new Scene(cartVBox);
         cartStage.setScene(cartScene);
-        cartStage.show();
-        
+        cartStage.show();        
 
     }
     
@@ -566,13 +520,12 @@ public class Dispenser extends Application {
                     p.addProductToProductsSelectedForPurchase();
                     productsCost += p.getPrice();  
                     updateCost();
-<<<<<<< Updated upstream
-=======
+
                     populateItemGrid();
                     if (IPurchasableProduct.PRODUCTS_SELECTEDFORPURCHASE.size() > 0) {
                     	btnExit.setText("Cancel Order");
                     }
->>>>>>> Stashed changes
+
                 });
             }
 
@@ -590,11 +543,13 @@ public class Dispenser extends Application {
     private void updateFunds() {
         String text = String.format("$" + moneyInserted / 100 + ".%02d", moneyInserted % 100);
         txtFundsAmount.setText(text);
+        txtReceiptFunds.setText(text);
     }
     
     private void updateCost() {
     	String text = String.format("$" + productsCost / 100 + ".%02d", productsCost % 100);
         txtCostAmount.setText(text);
+        txtReceiptCost.setText(text);
     }
 
     private void populateProductList() {
