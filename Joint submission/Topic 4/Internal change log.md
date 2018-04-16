@@ -1,5 +1,7 @@
 For internal use only!!
 
+4-15-18 18:19 CST: (Richard) changed "finished" button to "Exit" button
+
 4-15-18 17:38 CST: (Richard) finished funcionality of receiptStage to show cost, update funds, dispense change, and reset primary stage
 
 4-15-18 17:07 CST: (Richard) Changed loop that creates cart and receipt pop ups to operate in the same way the grid buttons populate
