@@ -1,7 +1,5 @@
 For internal use only!!
 
-4-15-18 20:53 CST: (Chad) Removed line "p.restockProduct(p.getQuantity() - 1);" in populateItemGrid in favor of putting the same code into the Product class under addProductToProductsSelectedForPurchase() now the adding and removing od quanitity is handled privately within the Product class itself.
-
 4-15-18 18:56 CST: (Richard) Added line that updates product quantities when added to cart.
                                 -also updates buttons after every click, preventing you from adding more of an item to your cart then                                      there is in stock.
                               Exit button changes label to "cancel order" when there is something in the cart.

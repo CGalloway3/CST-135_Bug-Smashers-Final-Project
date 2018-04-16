@@ -297,8 +297,11 @@ public class Dispenser extends Application {
         btnAddFiveDollars.prefWidthProperty().bind(smallCoinSlot.widthProperty());
         btnAddTenDollars.prefWidthProperty().bind(smallCoinSlot.widthProperty());
         btnAddTwentyDollars.prefWidthProperty().bind(smallCoinSlot.widthProperty());
-        
+
         btnMyItems.prefWidthProperty().bind(btnCompletePurchase.widthProperty());
+        btnMyItems.setOnAction((Event) -> {
+            drawItemsList();
+        });
         btnReturnMoney.prefWidthProperty().bind(btnCompletePurchase.widthProperty());
         btnFinished.prefWidthProperty().bind(btnCompletePurchase.widthProperty());
         btnFinished.setOnAction((event) -> {
@@ -371,6 +374,7 @@ public class Dispenser extends Application {
                 });
                 // End Admin code section
         
+<<<<<<< Updated upstream
         
         //pop-up window for "my items" button
         btnMyItems.setOnAction((Event) -> {
@@ -415,7 +419,64 @@ public class Dispenser extends Application {
         	receiptStage.setScene(receiptScene);
         	receiptStage.show();
         });
+=======
+        btnCompletePurchase.setOnAction((Event) -> {
+            
+            final Stage receiptStage = new Stage();
+            receiptStage.initModality(Modality.APPLICATION_MODAL);
+            
+            VBox receiptVBox = new VBox(5);
+            receiptVBox.setPadding(new Insets(10));
+            
+            if (IPurchasableProduct.PRODUCTS_SELECTEDFORPURCHASE.isEmpty()) {
+                receiptVBox.getChildren().add(new Text("Your have not selected anything to buy."));
+            }
+            
+            else if (moneyInserted < productsCost) {
+                receiptVBox.getChildren().add(new Text("Insufficient Funds"));
+                receiptVBox.getChildren().add(new Text("Please insert cash before continuing"));
+            }
+            
+            else {
+                for (Product p : IPurchasableProduct.PRODUCTS_SELECTEDFORPURCHASE) {
+                    Button btnReceiptItem = new Button(p.toString());
+                    receiptVBox.getChildren().add(btnReceiptItem);
+                    btnReceiptItem.prefWidthProperty().bind(receiptVBox.widthProperty());
+                }
+                receiptVBox.getChildren().add(new Text("Total: "));
+                receiptVBox.getChildren().add(txtReceiptCost);
+                moneyInserted = moneyInserted - productsCost;
+                updateFunds();
+                receiptVBox.getChildren().add(new Text("Thank you for shopping with us!"));
+                if (moneyInserted != 0) {
+                       receiptVBox.getChildren().add(new Text("Change dispensed:"));
+                    receiptVBox.getChildren().add(txtReceiptFunds);
+                }        		
+                itemGridPageNumber = 1;
+                btnBackToCategories.setVisible(false);
+                btnNextPage.setDisable(true);
+                btnPreviousPage.setDisable(true);
+                customerStage.hide();
+                primaryStage.show();
+                customerBorder.setCenter(categoryGrid);
+            }
         
+            Button btnSeperator = new Button();
+            btnSeperator.setVisible(false);
+            receiptVBox.getChildren().add(btnSeperator);
+>>>>>>> Stashed changes
+        
+            Button btnClose = new Button("Close");
+            btnClose.prefWidthProperty().bind(receiptVBox.widthProperty());
+            btnClose.setOnAction((event) -> {
+                receiptStage.close();
+            });
+            receiptVBox.getChildren().add(btnClose);
+
+            Scene receiptScene = new Scene(receiptVBox);
+            receiptStage.setScene(receiptScene);
+            receiptStage.show();
+        });
     }
 
     
@@ -423,6 +484,54 @@ public class Dispenser extends Application {
         launch(args);
     }
 
+            //pop-up window for "my items" button
+    private void drawItemsList() {
+    
+        final Stage cartStage = new Stage();
+        cartStage.initModality(Modality.APPLICATION_MODAL);
+        VBox cartVBox = new VBox(5);
+        cartVBox.setPadding(new Insets(10));
+        if (IPurchasableProduct.PRODUCTS_SELECTEDFORPURCHASE.isEmpty()) {
+                cartVBox.getChildren().add(new Text("Your cart is empty"));
+        }
+        else {
+                // Added functionallity for dynamically added and removed buttons.
+                cartVBox.getChildren().add(new Text("Click on an item to remove it"));
+                for (Product p : IPurchasableProduct.PRODUCTS_SELECTEDFORPURCHASE) {
+                    Button btnCartItem = new Button(p.toString());
+                    btnCartItem.prefWidthProperty().bind(cartVBox.widthProperty());
+                    cartVBox.getChildren().add(btnCartItem);
+                    btnCartItem.setOnAction((event) -> {
+                        cartVBox.getChildren().remove(btnCartItem);
+                        p.removeProductFromProductsForPurchase();
+                        productsCost -= p.getPrice();
+                        updateCost();
+                        populateItemGrid();
+                        cartStage.hide();
+                        drawItemsList();
+                    });
+                }
+        }
+        
+        Button btnSeperator = new Button();
+        btnSeperator.setVisible(false);
+        cartVBox.getChildren().add(btnSeperator);
+        
+        Button btnClose = new Button("Close");
+        btnClose.prefWidthProperty().bind(cartVBox.widthProperty());
+        btnClose.setOnAction((event) -> {
+            cartStage.close();
+        });
+        cartVBox.getChildren().add(btnClose);
+        
+        
+        Scene cartScene = new Scene(cartVBox);
+        cartStage.setScene(cartScene);
+        cartStage.show();
+        
+
+    }
+    
     private Boolean populateItemGrid() {
         
         // Internal usage variables
@@ -457,6 +566,13 @@ public class Dispenser extends Application {
                     p.addProductToProductsSelectedForPurchase();
                     productsCost += p.getPrice();  
                     updateCost();
+<<<<<<< Updated upstream
+=======
+                    populateItemGrid();
+                    if (IPurchasableProduct.PRODUCTS_SELECTEDFORPURCHASE.size() > 0) {
+                    	btnExit.setText("Cancel Order");
+                    }
+>>>>>>> Stashed changes
                 });
             }
 

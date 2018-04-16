@@ -76,11 +76,13 @@ public abstract class Product implements IPurchasableProduct{
 	@Override
         public void addProductToProductsSelectedForPurchase() {
             PRODUCTS_SELECTEDFORPURCHASE.add(this);
+            this.productQuantity -= 1;
         }
         
         @Override
         public void removeProductFromProductsForPurchase() {
             PRODUCTS_SELECTEDFORPURCHASE.remove(this);
+            this.productQuantity += 1;
         }
                 
 	@Override
