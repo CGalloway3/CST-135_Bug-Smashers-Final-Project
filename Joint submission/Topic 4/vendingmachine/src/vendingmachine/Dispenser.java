@@ -311,7 +311,10 @@ public class Dispenser extends Application {
         btnReturnMoney.prefWidthProperty().bind(btnCompletePurchase.widthProperty());
         btnExit.prefWidthProperty().bind(btnCompletePurchase.widthProperty());
         btnExit.setOnAction((event) -> {
-            itemGridPageNumber = 1;
+        	for (Product p : IPurchasableProduct.PRODUCTS_SELECTEDFORPURCHASE) {
+        		p.restockProduct(p.getQuantity() + 1);
+        	}
+        	itemGridPageNumber = 1;
             btnBackToCategories.setVisible(false);
             btnNextPage.setDisable(true);
             btnPreviousPage.setDisable(true);
@@ -392,7 +395,8 @@ public class Dispenser extends Application {
         	final Stage cartStage = new Stage();
         	cartStage.initModality(Modality.APPLICATION_MODAL);
         	cartStage.initOwner(primaryStage);
-        	VBox cartVBox = new VBox();
+        	VBox cartVBox = new VBox(5);
+        	cartVBox.setPadding(new Insets(10));
         	if (IPurchasableProduct.PRODUCTS_SELECTEDFORPURCHASE.isEmpty()) {
         		cartVBox.getChildren().add(new Text("Your cart is empty"));
         	}
@@ -414,6 +418,7 @@ public class Dispenser extends Application {
         	receiptStage.initModality(Modality.APPLICATION_MODAL);
         	receiptStage.initOwner(primaryStage);
         	VBox receiptVBox = new VBox(5);
+        	receiptVBox.setPadding(new Insets(10));
         	Scene receiptScene = new Scene(receiptVBox);
         	receiptStage.setScene(receiptScene);
         	if (IPurchasableProduct.PRODUCTS_SELECTEDFORPURCHASE.isEmpty()) {
@@ -426,8 +431,6 @@ public class Dispenser extends Application {
         		receiptStage.show();
         	}
         	else {
-        		//add following line when we figure out how to use dynamically added buttons
-        		//receiptVBox.getChildren().add(new Text("Click on an item to remove it"));
         		for (Product p : IPurchasableProduct.PRODUCTS_SELECTEDFORPURCHASE) {
         			receiptVBox.getChildren().add(new Button(p.toString()));
         		}
@@ -491,6 +494,11 @@ public class Dispenser extends Application {
                     p.addProductToProductsSelectedForPurchase();
                     productsCost += p.getPrice();  
                     updateCost();
+                    p.restockProduct(p.getQuantity() - 1);
+                    populateItemGrid();
+                    if (IPurchasableProduct.PRODUCTS_SELECTEDFORPURCHASE.size() > 0) {
+                    	btnExit.setText("Cancel Order");
+                    }
                 });
             }
 
@@ -549,8 +557,8 @@ public class Dispenser extends Application {
         productList.add(new Chips("Ruffles", "A1", 1, 1.00));
         productList.add(new Chips("Cheetoes", "A2", 10, 1.00));
         productList.add(new Chips("Doritoes", "A3", 10, 1.00));
-        productList.add(new Chips("Hot Fries", "A5", 10, 0.75));
-        productList.add(new Chips("Lays", "B2", 10, 1.00));
+        productList.add(new Chips("Hot Fries", "A4", 10, 0.75));
+        productList.add(new Chips("Lays", "A5", 10, 1.00));
         
         // Add some gum
         productList.add(new Gum("Orbit", "A1", 10, 0.50));
