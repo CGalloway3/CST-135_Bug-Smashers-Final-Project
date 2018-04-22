@@ -85,6 +85,8 @@ public class Dispenser extends Application {
     private final Button btnGumCategory = new Button("Gum");
     private final Image imgGumCategory = new Image(getClass().getResourceAsStream("images/gumCategory.png"));
     private final ImageView viewGumCategory = new ImageView(imgGumCategory);
+    private final Image imgCart = new Image(getClass().getResourceAsStream("images/cart.png"));
+    private final ImageView viewCart = new ImageView(imgCart);
     private final Button btnItems[] = new Button[9];
     private final Label lblFunds = new Label("Funds:");
     private final Text txtFundsAmount = new Text("$0.00");
@@ -307,6 +309,8 @@ public class Dispenser extends Application {
         btnAddTwentyDollars.prefWidthProperty().bind(smallCoinSlot.widthProperty());
 
         btnMyItems.prefWidthProperty().bind(btnCompletePurchase.widthProperty());
+        btnMyItems.setContentDisplay(ContentDisplay.TOP);
+        btnMyItems.setGraphic(viewCart);
         btnMyItems.setOnAction((Event) -> {
             drawItemsList();
         });
