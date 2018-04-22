@@ -8,12 +8,13 @@
 
 package vendingmachine;
 
-import vendingmachine.products.IPurchasableProduct;
+
 import vendingmachine.products.Product;
 import vendingmachine.products.Gum;
 import vendingmachine.products.Drink;
 import vendingmachine.products.Chips;
 import vendingmachine.products.Candy;
+
 
 import java.awt.MouseInfo;
 import java.util.ArrayList;
@@ -45,7 +46,7 @@ import javafx.util.Duration;
 
 public class Dispenser extends Application {
     
-    private final ArrayList<Product> productList = new ArrayList<>();
+    private InventoryManager inventoryManager = new InventoryManager();
     private Boolean adminMode = false;  // adminMode flag
     private String itemGridCategory;
     private int itemGridPageNumber = 1;
@@ -132,7 +133,7 @@ public class Dispenser extends Application {
     		updateFunds();
     		updateCost();
     		btnExit.setText("Exit");
-    		IPurchasableProduct.PRODUCTS_SELECTEDFORPURCHASE.clear();
+    		inventoryManager.clearProductsSelectedForPurchase();
         	if (adminMode) {
                 adminMode = false;
                 primaryStage.hide();
@@ -323,7 +324,7 @@ public class Dispenser extends Application {
         btnReturnMoney.prefWidthProperty().bind(btnCompletePurchase.widthProperty());
         btnExit.prefWidthProperty().bind(btnCompletePurchase.widthProperty());
         btnExit.setOnAction((event) -> {
-            IPurchasableProduct.PRODUCTS_SELECTEDFORPURCHASE.clear();
+            inventoryManager.clearProductsSelectedForPurchase();
             itemGridPageNumber = 1;
             btnBackToCategories.setVisible(false);
             btnNextPage.setDisable(true);
@@ -407,7 +408,7 @@ public class Dispenser extends Application {
             VBox receiptVBox = new VBox(5);
             receiptVBox.setPadding(new Insets(10));
             
-            if (IPurchasableProduct.PRODUCTS_SELECTEDFORPURCHASE.isEmpty()) {
+            if (inventoryManager.getProductsSelectedForPurchase().isEmpty()) {
                 receiptVBox.getChildren().add(new Text("Your have not selected anything to buy."));
             }
             
@@ -417,12 +418,12 @@ public class Dispenser extends Application {
             }
             
             else {
-                for (Product p : IPurchasableProduct.PRODUCTS_SELECTEDFORPURCHASE) {
+                for (Product p : inventoryManager.getProductsSelectedForPurchase()) {
                     Button btnReceiptItem = new Button(p.toString());
                     receiptVBox.getChildren().add(btnReceiptItem); 
                     btnReceiptItem.prefWidthProperty().bind(receiptVBox.widthProperty());
                 }
-                IPurchasableProduct.PRODUCTS_SELECTEDFORPURCHASE.clear();
+                inventoryManager.clearProductsSelectedForPurchase();
                 receiptVBox.getChildren().add(new Text("Total: "));
                 receiptVBox.getChildren().add(txtReceiptCost);
                 moneyInserted = moneyInserted - productsCost;
@@ -470,20 +471,20 @@ public class Dispenser extends Application {
         cartStage.initModality(Modality.APPLICATION_MODAL);
         VBox cartVBox = new VBox(5);
         cartVBox.setPadding(new Insets(10));
-        if (IPurchasableProduct.PRODUCTS_SELECTEDFORPURCHASE.isEmpty()) {
+        if (inventoryManager.getProductsSelectedForPurchase().isEmpty()) {
                 cartVBox.getChildren().add(new Text("Your cart is empty"));
         }
         else {
                 // Added functionallity for dynamically added and removed buttons.
                 cartVBox.getChildren().add(new Text("Click on an item to remove it"));
-                for (Product p : IPurchasableProduct.PRODUCTS_SELECTEDFORPURCHASE) {
+                for (Product p : inventoryManager.getProductsSelectedForPurchase()) {
                     Button btnCartItem = new Button(p.toString());
                     btnCartItem.prefWidthProperty().bind(cartVBox.widthProperty());
                     btnCartItem.setContentDisplay(ContentDisplay.TOP);                                     
                     cartVBox.getChildren().add(btnCartItem);
                     btnCartItem.setOnAction((event) -> {
                         cartVBox.getChildren().remove(btnCartItem);
-                        p.removeProductFromProductsForPurchase();
+                        inventoryManager.removeProductFromProductsSelectedForPurchase(p);
                         productsCost -= p.getPrice();
                         updateCost();
                         populateItemGrid();
@@ -527,7 +528,7 @@ public class Dispenser extends Application {
         btnBackToCategories.setVisible(true);
         
         // iterate through all products
-        for (Product p : productList) {
+        for (Product p : inventoryManager.getMasterProductList()) {
             // If the product is in the correct category and in the correct slot to be displayed on this screen.
             if (p.getClass().getSimpleName().equalsIgnoreCase(itemGridCategory) && p.getLocation().startsWith((String.valueOf((char)(64+itemGridPageNumber))))) {
 
@@ -550,7 +551,8 @@ public class Dispenser extends Application {
                 }
                 // Adds an item to the produdct selected for purchase list when user clicks button and updates the cost display with its' price.
                 btnItems[indexOfButtonLocationOnTheGrid].setOnAction((event) -> {  
-                    p.addProductToProductsSelectedForPurchase();
+
+					inventoryManager.addProductToProductsSelectedForPurchase(p);
                     
                     Line path = new Line();
                     final java.awt.Point click = MouseInfo.getPointerInfo().getLocation();
@@ -560,11 +562,14 @@ public class Dispenser extends Application {
                     path.setEndY(btnMyItems.getLayoutY());
                     
                     
+
+                    
+
                     productsCost += p.getPrice();  
                     updateCost();
 
                     populateItemGrid();
-                    if (IPurchasableProduct.PRODUCTS_SELECTEDFORPURCHASE.size() > 0) {
+                    if (inventoryManager.getProductsSelectedForPurchase().size() > 0) {
                     	btnExit.setText("Cancel Order");
                     }
 
@@ -597,43 +602,43 @@ public class Dispenser extends Application {
     private void populateProductList() {
         
         // Add some Drinks
-        productList.add(new Drink("Pepsi", "A1", 10, 1.25));
-        productList.add(new Drink("Diet Pepsi", "A2", 10, 1.25));
-        productList.add(new Drink("Cherry Pepsi", "A3", 10, 1.50));
-        productList.add(new Drink("Coke", "A4", 10, 1.25));
-        productList.add(new Drink("Diet Coke", "A5", 1, 1.25));
-        productList.add(new Drink("Cherry Coke", "A6", 10, 1.50));
-        productList.add(new Drink("Dr.Pepper", "A7", 10, 1.25));
-        productList.add(new Drink("Diet Dr.Pepper", "A8", 10, 1.25));
-        productList.add(new Drink("Cherry Vanillia Dr.Pepper", "A9", 10, 1.50));
-        productList.add(new Drink("Fanta Orange", "B1", 10, 1.25));
-        productList.add(new Drink("Fanta Grape", "B2", 0, 1.25));
-        productList.add(new Drink("Fanta Strawberry", "B3", 10, 1.25));
-        productList.add(new Drink("Mug Root Beer", "B4", 10, 1.25));
-        productList.add(new Drink("Mug Cream Soda", "B5", 10, 1.00));
-        productList.add(new Drink("Sprite", "B6", 10, 1.25));
-        productList.add(new Drink("7-Up", "B7", 10, 1.25));
+        inventoryManager.getMasterProductList().add(new Drink("Pepsi", "A1", 10, 1.25));
+        inventoryManager.getMasterProductList().add(new Drink("Diet Pepsi", "A2", 10, 1.25));
+        inventoryManager.getMasterProductList().add(new Drink("Cherry Pepsi", "A3", 10, 1.50));
+        inventoryManager.getMasterProductList().add(new Drink("Coke", "A4", 10, 1.25));
+        inventoryManager.getMasterProductList().add(new Drink("Diet Coke", "A5", 1, 1.25));
+        inventoryManager.getMasterProductList().add(new Drink("Cherry Coke", "A6", 10, 1.50));
+        inventoryManager.getMasterProductList().add(new Drink("Dr.Pepper", "A7", 10, 1.25));
+        inventoryManager.getMasterProductList().add(new Drink("Diet Dr.Pepper", "A8", 10, 1.25));
+        inventoryManager.getMasterProductList().add(new Drink("Cherry Vanillia Dr.Pepper", "A9", 10, 1.50));
+        inventoryManager.getMasterProductList().add(new Drink("Fanta Orange", "B1", 10, 1.25));
+        inventoryManager.getMasterProductList().add(new Drink("Fanta Grape", "B2", 0, 1.25));
+        inventoryManager.getMasterProductList().add(new Drink("Fanta Strawberry", "B3", 10, 1.25));
+        inventoryManager.getMasterProductList().add(new Drink("Mug Root Beer", "B4", 10, 1.25));
+        inventoryManager.getMasterProductList().add(new Drink("Mug Cream Soda", "B5", 10, 1.00));
+        inventoryManager.getMasterProductList().add(new Drink("Sprite", "B6", 10, 1.25));
+        inventoryManager.getMasterProductList().add(new Drink("7-Up", "B7", 10, 1.25));
         
         // Add some candy
-        productList.add(new Candy("M&M", "A1", 10, 0.75));
-        productList.add(new Candy("Kit Kat", "A2", 10, 0.75));
-        productList.add(new Candy("Reeses Pieces", "A4", 10, 0.75));
-        productList.add(new Candy("Baby Ruth", "A5", 10, 0.50));
-        productList.add(new Candy("Snickers", "A6", 10, 0.75));
+        inventoryManager.getMasterProductList().add(new Candy("M&M", "A1", 10, 0.75));
+        inventoryManager.getMasterProductList().add(new Candy("Kit Kat", "A2", 10, 0.75));
+        inventoryManager.getMasterProductList().add(new Candy("Reeses Pieces", "A4", 10, 0.75));
+        inventoryManager.getMasterProductList().add(new Candy("Baby Ruth", "A5", 10, 0.50));
+        inventoryManager.getMasterProductList().add(new Candy("Snickers", "A6", 10, 0.75));
         
         // Add some chips
-        productList.add(new Chips("Ruffles", "A1", 1, 1.00));
-        productList.add(new Chips("Cheetoes", "A2", 10, 1.00));
-        productList.add(new Chips("Doritos", "A3", 10, 1.00));
-        productList.add(new Chips("Hot Fries", "A5", 10, 0.75));
-        productList.add(new Chips("Lays", "B2", 10, 1.00));
+        inventoryManager.getMasterProductList().add(new Chips("Ruffles", "A1", 1, 1.00));
+        inventoryManager.getMasterProductList().add(new Chips("Cheetoes", "A2", 10, 1.00));
+        inventoryManager.getMasterProductList().add(new Chips("Doritos", "A3", 10, 1.00));
+        inventoryManager.getMasterProductList().add(new Chips("Hot Fries", "A5", 10, 0.75));
+        inventoryManager.getMasterProductList().add(new Chips("Lays", "B2", 10, 1.00));
         
         // Add some gum
-        productList.add(new Gum("Orbit", "A1", 10, 0.50));
-        productList.add(new Gum("Five", "A2", 10, 0.75));
-        productList.add(new Gum("Trident", "A3", 0, 0.50));//
-        productList.add(new Gum("Juicy Fruit", "A4", 10, 0.25));
-        productList.add(new Gum("Bubble Yum", "A5", 10, 0.50));
+        inventoryManager.getMasterProductList().add(new Gum("Orbit", "A1", 10, 0.50));
+        inventoryManager.getMasterProductList().add(new Gum("Five", "A2", 10, 0.75));
+        inventoryManager.getMasterProductList().add(new Gum("Trident", "A3", 0, 0.50));//
+        inventoryManager.getMasterProductList().add(new Gum("Juicy Fruit", "A4", 10, 0.25));
+        inventoryManager.getMasterProductList().add(new Gum("Bubble Yum", "A5", 10, 0.50));
     }
 
  }

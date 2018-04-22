@@ -2,6 +2,9 @@ For Internal use only!!
 
 4-22-18 10:25 MST: (Richard) Added code to create a dynamic path for animation
 
+4-22-18 11:59 CST: (Chad) Initial implementation of inventory manager class and removal of IPurchasableProduct Interface. code compiles and runs need to play through several passes to check for errors in wuantity tracking.
+
+
 4-22-18 10:34 CST: (Chad) changed item image icon code to allow easier use and catch file not found errors.
 
 
