@@ -533,7 +533,12 @@ public class Dispenser extends Application {
                 // Modify the item button properties.
                 btnItems[indexOfButtonLocationOnTheGrid].setDisable(false);
                 btnItems[indexOfButtonLocationOnTheGrid].setContentDisplay(ContentDisplay.TOP);
-                btnItems[indexOfButtonLocationOnTheGrid].setGraphic(new ImageView(new Image(getClass().getResourceAsStream("images/noImage.png"))));
+                try {
+                    btnItems[indexOfButtonLocationOnTheGrid].setGraphic(new ImageView(new Image(getClass().getResourceAsStream("images/" + p.getName() + ".png"), 75, 75, true, true)));
+                }
+                catch (Exception error) {
+                    btnItems[indexOfButtonLocationOnTheGrid].setGraphic(new ImageView(new Image(getClass().getResourceAsStream("images/noImage.png"), 75, 75, true, true)));
+                }
                 btnItems[indexOfButtonLocationOnTheGrid].setText(p.toString());
                 
                 if (p.getQuantity() < 1) {
