@@ -12,7 +12,10 @@ public class InventoryManager {
     }
 
     void clearProductsSelectedForPurchase() {
-        this.productsSelectedForPurchase.clear();
+        productsSelectedForPurchase.forEach((p) -> {
+            p.restockOne();
+        });
+        productsSelectedForPurchase.clear();
     }
 
     ArrayList<Product> getProductsSelectedForPurchase() {
