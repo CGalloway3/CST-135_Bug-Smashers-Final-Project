@@ -8,6 +8,9 @@
 
 package vendingmachine.products;
 
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+
 public abstract class Product implements IPurchasableProduct{
 	
     // Private fields
@@ -16,6 +19,8 @@ public abstract class Product implements IPurchasableProduct{
 	private String productLocation;
 	private int productQuantity;
 	private int productPrice;
+	//private Image image;
+	//private ImageView imageview;
 	
     // Public constructors
         
@@ -31,6 +36,8 @@ public abstract class Product implements IPurchasableProduct{
 		productLocation = location;
 		productQuantity = quantity;
 		productPrice = price;
+		//image = new Image(getClass().getResourceAsStream("images/" + this.productName + ".png"));
+		//imageview = new ImageView(image);
 	}
 	
 	public Product(Product copy) {    //overloaded constructor that copies another objects fields
@@ -38,6 +45,8 @@ public abstract class Product implements IPurchasableProduct{
 		productLocation = copy.getLocation();
 		productQuantity = copy.getQuantity();
 		productPrice = copy.getPrice();
+		//image = new Image(getClass().getResourceAsStream("images/" + this.productName + ".png"));
+		//imageview = new ImageView(image);
 	}
 	
 	
@@ -55,6 +64,9 @@ public abstract class Product implements IPurchasableProduct{
 	public int getPrice() {
 		return this.productPrice;
 	}
+	//public ImageView getImageView() {
+	//	return this.imageview;
+	//}
         
     // Public inventory management methods
         
