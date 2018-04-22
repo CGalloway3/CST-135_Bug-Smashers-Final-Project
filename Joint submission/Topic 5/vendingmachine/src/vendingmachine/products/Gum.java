@@ -15,8 +15,8 @@ public class Gum extends Snack{
 	public Gum() {
 		super();
 	}
-	public Gum(String name, String location, int quantity, double price) {
-		super(name, location, quantity, (int)(price * 100));
+	public Gum(String name, double price) {
+		super(name, (int)(price * 100));
 	}
 	public Gum(Product copy) {    //overloaded constructor that copies another objects fields
 		super(copy);

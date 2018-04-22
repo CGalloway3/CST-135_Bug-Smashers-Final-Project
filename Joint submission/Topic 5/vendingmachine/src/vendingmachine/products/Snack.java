@@ -17,8 +17,8 @@ public abstract class Snack extends Product implements Comparable<Snack> {
         public Snack() {
             super();
 	}
-	public Snack(String name, String location, int quantity, int price) {
-            super(name, location, quantity, price);
+	public Snack(String name, int price) {
+            super(name, price);
 	}
 	public Snack(Product copy) {    //overloaded constructor that copies another objects fields
             super(copy);

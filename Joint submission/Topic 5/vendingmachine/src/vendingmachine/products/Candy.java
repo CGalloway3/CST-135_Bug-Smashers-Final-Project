@@ -15,8 +15,8 @@ public class Candy extends Snack {
 	public Candy() {
 		super();
 	}
-	public Candy(String name, String location, int quantity, double price) {
-		super(name, location, quantity, (int)(price * 100));
+	public Candy(String name, double price) {
+		super(name, (int)(price * 100));
 		
 	}
 	public Candy(Product copy) {    //overloaded constructor that copies another objects fields

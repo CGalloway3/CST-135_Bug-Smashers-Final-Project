@@ -13,8 +13,6 @@ public abstract class Product {
     // Private fields
     
 	private String productName;          
-	private String productLocation;
-	private int productQuantity;
 	private int productPrice;
 	
 	
@@ -22,22 +20,16 @@ public abstract class Product {
         
         public Product() {	//no argument constructor
             productName = "";
-            productLocation = "";
-            productQuantity = 0;
             productPrice = 0;
         }
 	
-	public Product(String name, String location, int quantity, int price) {   //overloaded constructor with parameters
+	public Product(String name, int price) {   //overloaded constructor with parameters
 		productName = name;
-		productLocation = location;
-		productQuantity = quantity;
 		productPrice = price;
 	}
 	
 	public Product(Product copy) {    //overloaded constructor that copies another objects fields
 		productName = copy.getName();
-		productLocation = copy.getLocation();
-		productQuantity = copy.getQuantity();
 		productPrice = copy.getPrice();		
 	}
 	
@@ -47,34 +39,15 @@ public abstract class Product {
 	public String getName() {
 		return this.productName;
 	}
-	public String getLocation() {
-		return this.productLocation;
-	}
-	public int getQuantity() {
-		return this.productQuantity;
-	}
 	public int getPrice() {
 		return this.productPrice;
 	}
-	
 	public void renameProduct(String newName) {    
 		this.productName = newName;
-	}
-	public void relocateProduct(String newLocation) {
-		this.productLocation = newLocation;
-	}
-	public void restockProduct(int newQuantity) {     //restock and reprice methods
-		this.productQuantity = newQuantity;
 	}
         public void repriceProduct(int newPrice) {
 		this.productPrice = newPrice;
 	}
-        public void sellOne() {
-            this.productQuantity -= 1;
-        }
-	public void restockOne() {
-            this.productQuantity += 1;
-        }
         
     // Additional public methods
 

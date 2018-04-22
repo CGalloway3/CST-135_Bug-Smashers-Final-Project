@@ -15,8 +15,8 @@ public class Chips extends Snack{
 	public Chips() {
 		super();
 	}
-	public Chips(String name, String location, int quantity, double price) {
-		super(name, location, quantity, (int)(price * 100));
+	public Chips(String name, double price) {
+		super(name, (int)(price * 100));
 		
 	}
 	public Chips(Product copy) {    //overloaded constructor that copies another objects fields
