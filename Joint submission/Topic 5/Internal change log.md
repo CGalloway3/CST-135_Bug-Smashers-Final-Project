@@ -1,6 +1,8 @@
 For Internal use only!!
 
-4-22-18 09:34 CST: (Richard) Removed old code, added try catch for images. Added one example image for pepsi, and black image to catch. Feel free to replace Pepsi.png, just keep name format and dimensions.
+
+4-22-18 10:34 CST: (Chad) changed item image icon code to allow easier use and catch file not found errors.
+
 
 4-22-18 08:14 CST: (Richard) Added code I think will work when we have images working. It's commented though, so the build still runs.
 
