@@ -69,7 +69,13 @@ public abstract class Product {
         public void repriceProduct(int newPrice) {
 		this.productPrice = newPrice;
 	}
-	
+        public void sellOne() {
+            this.productQuantity -= 1;
+        }
+	public void restockOne() {
+            this.productQuantity += 1;
+        }
+        
     // Additional public methods
 
         @Override

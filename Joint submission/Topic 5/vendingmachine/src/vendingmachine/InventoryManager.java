@@ -24,10 +24,12 @@ public class InventoryManager {
     }
 
     void addProductToProductsSelectedForPurchase(Product p) {
+        p.sellOne();
         this.productsSelectedForPurchase.add(p);
     }
 	
     void removeProductFromProductsSelectedForPurchase(Product p) {
+        p.restockOne();
         this.productsSelectedForPurchase.remove(p);
     }
 

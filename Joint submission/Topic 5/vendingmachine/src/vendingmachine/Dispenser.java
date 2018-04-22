@@ -516,6 +516,7 @@ public class Dispenser extends Application {
         for (int i = 0; i < 9; i++) {
             btnItems[i].setText("");
             btnItems[i].setDisable(true);
+            btnItems[i].setGraphic(new ImageView(new Image(getClass().getResourceAsStream("images/empty.png"), 90, 90, true, true)));
         }
                 
         // Turn on the Back button on the item grid display.
@@ -533,16 +534,13 @@ public class Dispenser extends Application {
                 btnItems[indexOfButtonLocationOnTheGrid].setDisable(false);
                 btnItems[indexOfButtonLocationOnTheGrid].setContentDisplay(ContentDisplay.TOP);
                 try {
-                    btnItems[indexOfButtonLocationOnTheGrid].setGraphic(new ImageView(new Image(getClass().getResourceAsStream("images/" + p.getName() + ".png"), 75, 75, true, true)));
+                    btnItems[indexOfButtonLocationOnTheGrid].setGraphic(new ImageView(new Image(getClass().getResourceAsStream("images/" + p.getClass().getSimpleName() + "/" + p.getName() + ".png"), 90, 90, true, true)));
                 }
                 catch (Exception error) {
-                    btnItems[indexOfButtonLocationOnTheGrid].setGraphic(new ImageView(new Image(getClass().getResourceAsStream("images/noImage.png"), 75, 75, true, true)));
+                    btnItems[indexOfButtonLocationOnTheGrid].setGraphic(new ImageView(new Image(getClass().getResourceAsStream("images/noImage.png"), 90, 90, true, true)));
                 }
                 btnItems[indexOfButtonLocationOnTheGrid].setText(p.toString());
                 
-                if (p.getQuantity() < 1) {
-                    btnItems[indexOfButtonLocationOnTheGrid].setDisable(true);
-                }
                 // Adds an item to the produdct selected for purchase list when user clicks button and updates the cost display with its' price.
                 btnItems[indexOfButtonLocationOnTheGrid].setOnAction((event) -> {  
                     inventoryManager.addProductToProductsSelectedForPurchase(p);
@@ -555,6 +553,22 @@ public class Dispenser extends Application {
                     }
 
                 });
+                
+                if (p.getQuantity() < 1) {
+                    btnItems[indexOfButtonLocationOnTheGrid].setOnAction((event) -> {  
+                    
+                });
+btnItems[indexOfButtonLocationOnTheGrid].setDisable(false);
+                    StackPane imageStack = new StackPane();
+                    try {
+                        imageStack.getChildren().addAll(new ImageView(new Image(getClass().getResourceAsStream("images/" + p.getClass().getSimpleName() + "/" + p.getName() + ".png"), 90, 90, true, true)), new ImageView(new Image(getClass().getResourceAsStream("images/OutOfStock.png"), 90, 90, true, true)));
+                    }
+                    catch (Exception error)
+                    {
+                        imageStack.getChildren().add(new ImageView(new Image(getClass().getResourceAsStream("images/OutOfStock.png"), 90, 90, true, true)));
+                    }
+                    btnItems[indexOfButtonLocationOnTheGrid].setGraphic(imageStack);
+                }
             }
 
             // Check to see if more pages of products in this category exist.
@@ -592,7 +606,7 @@ public class Dispenser extends Application {
         inventoryManager.getMasterProductList().add(new Drink("Dr.Pepper", "A7", 10, 1.25));
         inventoryManager.getMasterProductList().add(new Drink("Diet Dr.Pepper", "A8", 10, 1.25));
         inventoryManager.getMasterProductList().add(new Drink("Cherry Vanillia Dr.Pepper", "A9", 10, 1.50));
-        inventoryManager.getMasterProductList().add(new Drink("Fanta Orange", "B1", 10, 1.25));
+        inventoryManager.getMasterProductList().add(new Drink("Fanta Orange", "C1", 10, 1.25));
         inventoryManager.getMasterProductList().add(new Drink("Fanta Grape", "B2", 0, 1.25));
         inventoryManager.getMasterProductList().add(new Drink("Fanta Strawberry", "B3", 10, 1.25));
         inventoryManager.getMasterProductList().add(new Drink("Mug Root Beer", "B4", 10, 1.25));
