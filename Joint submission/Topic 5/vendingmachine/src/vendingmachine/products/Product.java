@@ -8,7 +8,7 @@
 
 package vendingmachine.products;
 
-public abstract class Product implements IPurchasableProduct{
+public abstract class Product {
 	
     // Private fields
     
@@ -66,25 +66,13 @@ public abstract class Product implements IPurchasableProduct{
 	public void restockProduct(int newQuantity) {     //restock and reprice methods
 		this.productQuantity = newQuantity;
 	}
-    public void repriceProduct(int newPrice) {
+        public void repriceProduct(int newPrice) {
 		this.productPrice = newPrice;
 	}
 	
     // Additional public methods
-        
-	@Override
-        public void addProductToProductsSelectedForPurchase() {
-            PRODUCTS_SELECTEDFORPURCHASE.add(this);
-            this.productQuantity -= 1;
-        }
-        
+
         @Override
-        public void removeProductFromProductsForPurchase() {
-            PRODUCTS_SELECTEDFORPURCHASE.remove(this);
-            this.productQuantity += 1;
-        }
-                
-	@Override
         public String toString() {     //toString method
 		return String.format(this.getName() + "\n$" + this.getPrice() / 100 + ".%02d", this.getPrice() % 100);
 	}
