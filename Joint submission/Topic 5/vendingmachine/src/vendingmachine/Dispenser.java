@@ -20,6 +20,7 @@ import java.awt.MouseInfo;
 import java.util.ArrayList;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
+import javafx.geometry.Bounds;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -553,14 +554,8 @@ public class Dispenser extends Application {
                 btnItems[indexOfButtonLocationOnTheGrid].setOnAction((event) -> {  
 
 					inventoryManager.addProductToProductsSelectedForPurchase(p);
-                    
-                    Line path = new Line();
-                    final java.awt.Point click = MouseInfo.getPointerInfo().getLocation();
-                    path.setStartX(click.getX());
-                    path.setStartY(click.getY());
-                    path.setEndX(btnMyItems.getLayoutX());
-                    path.setEndY(btnMyItems.getLayoutY());
-                    
+					
+					
                     
 
                     
