@@ -1,5 +1,7 @@
 For Internal use only!!
 
+4-22-18 15:44 CST: (Chad) moved some functionallity from product class, like product locations and quantities, to the inventory mamager class. Beginning work on an Icon builder class to remove the complicated task of generating button graphics off the main dispenser class.
+
 4-22-18 13:47 CST: (Chad) Bug fix when pressing cancel order. also some previous changes for button images.
 
 4-22-18 10:25 MST: (Richard) Added code to create a dynamic path for animation
