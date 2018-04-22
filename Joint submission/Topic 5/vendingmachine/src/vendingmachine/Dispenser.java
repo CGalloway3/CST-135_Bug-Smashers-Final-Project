@@ -14,6 +14,7 @@ import vendingmachine.products.Gum;
 import vendingmachine.products.Drink;
 import vendingmachine.products.Chips;
 import vendingmachine.products.Candy;
+
 import java.util.ArrayList;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
@@ -474,8 +475,7 @@ public class Dispenser extends Application {
                 for (Product p : IPurchasableProduct.PRODUCTS_SELECTEDFORPURCHASE) {
                     Button btnCartItem = new Button(p.toString());
                     btnCartItem.prefWidthProperty().bind(cartVBox.widthProperty());
-                    btnCartItem.setContentDisplay(ContentDisplay.TOP);
-                    //btnCartItem.setGraphic(p.getImageView());
+                    btnCartItem.setContentDisplay(ContentDisplay.TOP);                                     
                     cartVBox.getChildren().add(btnCartItem);
                     btnCartItem.setOnAction((event) -> {
                         cartVBox.getChildren().remove(btnCartItem);
@@ -532,7 +532,10 @@ public class Dispenser extends Application {
                 
                 // Modify the item button properties.
                 btnItems[indexOfButtonLocationOnTheGrid].setDisable(false);
+                btnItems[indexOfButtonLocationOnTheGrid].setContentDisplay(ContentDisplay.TOP);
+                btnItems[indexOfButtonLocationOnTheGrid].setGraphic(new ImageView(new Image(getClass().getResourceAsStream("images/noImage.png"))));
                 btnItems[indexOfButtonLocationOnTheGrid].setText(p.toString());
+                
                 if (p.getQuantity() < 1) {
                     btnItems[indexOfButtonLocationOnTheGrid].setDisable(true);
                 }

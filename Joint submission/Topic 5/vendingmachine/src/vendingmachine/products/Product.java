@@ -8,9 +8,6 @@
 
 package vendingmachine.products;
 
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-
 public abstract class Product implements IPurchasableProduct{
 	
     // Private fields
@@ -36,7 +33,7 @@ public abstract class Product implements IPurchasableProduct{
 		productLocation = location;
 		productQuantity = quantity;
 		productPrice = price;
-		//image = new Image(getClass().getResourceAsStream("images/" + this.productName + ".png"));
+		//image = new Image(getClass().getResourceAsStream("images/Pepsi.png"));
 		//imageview = new ImageView(image);
 	}
 	
