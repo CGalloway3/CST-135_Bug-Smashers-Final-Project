@@ -1,5 +1,6 @@
 For Internal use only!!
 
+4-22-18 10:25 MST: (Richard) Added code to create a dynamic path for animation
 
 4-22-18 10:34 CST: (Chad) changed item image icon code to allow easier use and catch file not found errors.
 

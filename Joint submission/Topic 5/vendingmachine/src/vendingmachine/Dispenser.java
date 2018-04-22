@@ -15,6 +15,7 @@ import vendingmachine.products.Drink;
 import vendingmachine.products.Chips;
 import vendingmachine.products.Candy;
 
+import java.awt.MouseInfo;
 import java.util.ArrayList;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
@@ -38,6 +39,9 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.scene.shape.Line;
+import javafx.animation.*;
+import javafx.util.Duration;
 
 public class Dispenser extends Application {
     
@@ -547,6 +551,15 @@ public class Dispenser extends Application {
                 // Adds an item to the produdct selected for purchase list when user clicks button and updates the cost display with its' price.
                 btnItems[indexOfButtonLocationOnTheGrid].setOnAction((event) -> {  
                     p.addProductToProductsSelectedForPurchase();
+                    
+                    Line path = new Line();
+                    final java.awt.Point click = MouseInfo.getPointerInfo().getLocation();
+                    path.setStartX(click.getX());
+                    path.setStartY(click.getY());
+                    path.setEndX(btnMyItems.getLayoutX());
+                    path.setEndY(btnMyItems.getLayoutY());
+                    
+                    
                     productsCost += p.getPrice();  
                     updateCost();
 
