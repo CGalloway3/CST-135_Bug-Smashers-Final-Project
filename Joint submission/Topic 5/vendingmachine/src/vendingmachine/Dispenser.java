@@ -9,10 +9,12 @@
 package vendingmachine;
 
 
+import javafx.animation.TranslateTransition;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ContentDisplay;
@@ -31,6 +33,7 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 public class Dispenser extends Application {
     
@@ -550,7 +553,18 @@ public class Dispenser extends Application {
                 
                 // Adds an item to the produdct selected for purchase list when user clicks button and updates the cost display with its' price.
                 btnItems[indexOfButtonLocationOnTheGrid].setOnAction((event) -> {  
-                    inventoryManager.addItemToProductsSelectedForPurchase(i);
+                                        
+                    TranslateTransition tt = new TranslateTransition(Duration.seconds(3.0), (Node)(event.getSource()));
+                    tt.setToX(200);
+                    tt.setToY(100);
+                    
+                    tt.play();
+                    tt.setOnFinished((e) -> {
+                        System.out.println("it is over");
+                        tt.jumpTo(Duration.ZERO);
+                    });
+                    
+inventoryManager.addItemToProductsSelectedForPurchase(i);
                     productsCost += i.getPrice();  
                     updateCost();
 
