@@ -555,6 +555,7 @@ public class Dispenser extends Application {
                 btnItems[indexOfButtonLocationOnTheGrid].setOnAction((event) -> {  
                                         
                     Button button = (Button)event.getSource();
+                    button.toFront();
                     
                     TranslateTransition tt = new TranslateTransition(Duration.seconds(2.0), button);
                     tt.setToX(btnMyItems.getLocalToSceneTransform().getTx() - button.getLocalToSceneTransform().getTx());
