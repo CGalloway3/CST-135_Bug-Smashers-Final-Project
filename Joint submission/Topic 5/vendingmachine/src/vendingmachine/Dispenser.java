@@ -554,25 +554,25 @@ public class Dispenser extends Application {
                 // Adds an item to the produdct selected for purchase list when user clicks button and updates the cost display with its' price.
                 btnItems[indexOfButtonLocationOnTheGrid].setOnAction((event) -> {  
                                         
-                    TranslateTransition tt = new TranslateTransition(Duration.seconds(3.0), (Node)(event.getSource()));
-                    tt.setToX(200);
-                    tt.setToY(100);
+                    Button button = (Button)event.getSource();
                     
+                    TranslateTransition tt = new TranslateTransition(Duration.seconds(2.0), button);
+                    tt.setToX(btnMyItems.getLocalToSceneTransform().getTx() - button.getLocalToSceneTransform().getTx());
+                    tt.setToY(btnMyItems.getLocalToSceneTransform().getTy() - button.getLocalToSceneTransform().getTy());
+                    tt.setAutoReverse(false);
                     tt.play();
                     tt.setOnFinished((e) -> {
-                        System.out.println("it is over");
-                        tt.jumpTo(Duration.ZERO);
+                        button.setTranslateX(0);
+                        button.setTranslateY(0);
+                        inventoryManager.addItemToProductsSelectedForPurchase(i);
+                        productsCost += i.getPrice();  
+                        updateCost();
+
+                        populateItemGrid();
+                        if (inventoryManager.getItemsSelectedForPurchase().size() > 0) {
+                            btnExit.setText("Cancel Order");
+                        }
                     });
-                    
-inventoryManager.addItemToProductsSelectedForPurchase(i);
-                    productsCost += i.getPrice();  
-                    updateCost();
-
-                    populateItemGrid();
-                    if (inventoryManager.getItemsSelectedForPurchase().size() > 0) {
-                    	btnExit.setText("Cancel Order");
-                    }
-
                 });
                 
                 if (i.getQuantity() < 1) {
@@ -613,6 +613,9 @@ inventoryManager.addItemToProductsSelectedForPurchase(i);
     	String text = String.format("$" + productsCost / 100 + ".%02d", productsCost % 100);
         txtCostAmount.setText(text);
         txtReceiptCost.setText(text);
+    }
+
+    private void animateButton(Button button) {
     }
 
  }
