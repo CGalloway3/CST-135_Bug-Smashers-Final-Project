@@ -63,18 +63,18 @@ public class InventoryManager {
         addInventoryItem(new Drink("Pepsi", 1.25), "A1", 10);
         addInventoryItem(new Drink("Diet Pepsi", 1.25), "A2", 10);
         addInventoryItem(new Drink("Cherry Pepsi", 1.50), "A3", 10);
-        addInventoryItem(new Drink("Coke", 1.25), "A4", 10);
-        addInventoryItem(new Drink("Diet Coke", 1.25), "A5", 1);
-        addInventoryItem(new Drink("Cherry Coke", 1.50), "A6", 10);
+        addInventoryItem(new Drink("Pepsi Vanilla", 1.25), "A4", 10);
+        addInventoryItem(new Drink("Mountain Dew", 1.25), "A5", 1);
+        addInventoryItem(new Drink("Mountain Dew Code Red", 1.50), "A6", 10);
         addInventoryItem(new Drink("Dr.Pepper", 1.25), "A7", 10);
         addInventoryItem(new Drink("Diet Dr.Pepper", 1.25), "A8", 10);
-        addInventoryItem(new Drink("Cherry Vanillia Dr.Pepper", 1.50), "A9", 10);
-        addInventoryItem(new Drink("Fanta Orange", 1.25), "C1", 10);
-        addInventoryItem(new Drink("Fanta Grape", 1.25), "B2", 0);
-        addInventoryItem(new Drink("Fanta Strawberry", 1.25), "B3", 10);
-        addInventoryItem(new Drink("Mug Root Beer", 1.25), "B4", 10);
-        addInventoryItem(new Drink("Mug Cream Soda", 1.00), "B5", 10);
-        addInventoryItem(new Drink("Sprite", 1.25), "B6", 10);
+        addInventoryItem(new Drink("Dr. Pepper Cherry", 1.50), "A9", 10);
+        addInventoryItem(new Drink("Fuze Ice Tea", 1.00), "B1", 10);
+        addInventoryItem(new Drink("Lipton Peach Ice Tea", 1.00), "B2", 10);
+        addInventoryItem(new Drink("Minute Maid Lemonade", 1.00), "B3", 10);
+        addInventoryItem(new Drink("Monster", 1.75), "B4", 10);
+        addInventoryItem(new Drink("Rockstar", 1.75), "B5", 10);
+        addInventoryItem(new Drink("Sierra Mist", 1.25), "B6", 10);
         addInventoryItem(new Drink("7-Up", 1.25), "B7", 10);
         
         // Add some candy
