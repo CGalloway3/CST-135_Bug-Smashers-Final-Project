@@ -574,8 +574,7 @@ public class Dispenser extends Application {
                     try {
                         imageStack.getChildren().addAll(new ImageView(new Image(getClass().getResourceAsStream("images/" + i.getInventoryItemType() + "/" + i.getName() + ".png"), 90, 90, true, true)), new ImageView(new Image(getClass().getResourceAsStream("images/OutOfStock.png"), 90, 90, true, true)));
                     }
-                    catch (Exception error)
-                    {
+                    catch (Exception error) {
                         imageStack.getChildren().add(new ImageView(new Image(getClass().getResourceAsStream("images/OutOfStock.png"), 90, 90, true, true)));
                     }
                     btnItems[indexOfButtonLocationOnTheGrid].setGraphic(imageStack);
