@@ -9,8 +9,6 @@
 package vendingmachine;
 
 
-import vendingmachine.products.Product;
-
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
@@ -371,7 +369,7 @@ public class Dispenser extends Application {
         customerPane.getChildren().add(btnBackToCategories);
         
         // Set the customer scene
-        customerStage.setTitle("Speedy Vend 5000");
+        customerStage.setTitle("Speedy Vend 5000");  
         customerStage.setScene(new Scene(customerPane, 710, 500));
 
                 // Admin page not fully implemented. Code below is just filler code
@@ -553,7 +551,6 @@ public class Dispenser extends Application {
                 // Adds an item to the produdct selected for purchase list when user clicks button and updates the cost display with its' price.
                 btnItems[indexOfButtonLocationOnTheGrid].setOnAction((event) -> {  
                     inventoryManager.addItemToProductsSelectedForPurchase(i);
-
                     productsCost += i.getPrice();  
                     updateCost();
 
