@@ -1,5 +1,7 @@
 For Internal use only!!
 
+4-22-18 20:00 CST: (Chad) Implemented some icon building code to build item button graphics for an improved icon look, feel, and operation. Curently handles empty slots, out of stock items, and items with no image available.
+
 4-22-18 15:44 CST: (Chad) moved some functionallity from product class, like product locations and quantities, to the inventory mamager class. Beginning work on an Icon builder class to remove the complicated task of generating button graphics off the main dispenser class.
 
 4-22-18 13:47 CST: (Chad) Bug fix when pressing cancel order. also some previous changes for button images.
