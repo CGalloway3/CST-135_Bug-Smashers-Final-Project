@@ -527,13 +527,28 @@ public class Dispenser extends Application {
                 // Modify the item button properties.
                 btnItems[indexOfButtonLocationOnTheGrid].setDisable(false);
                 btnItems[indexOfButtonLocationOnTheGrid].setContentDisplay(ContentDisplay.TOP);
+                
+                // Build button icon
+                StackPane imageStack = new StackPane();
+                BorderPane imageBorder = new BorderPane();
+                Text nameText = new Text(i.getName());
+                Text priceText = new Text(String.format("$" + i.getPrice() / 100 + ".%02d", i.getPrice() % 100));
+                
+                BorderPane.setAlignment(nameText, Pos.TOP_CENTER);
+                BorderPane.setAlignment(priceText, Pos.BOTTOM_CENTER);
+
+                imageBorder.setTop(nameText);
+                imageBorder.setBottom(priceText);
+                        
+
                 try {
-                    btnItems[indexOfButtonLocationOnTheGrid].setGraphic(new ImageView(new Image(getClass().getResourceAsStream("images/" + i.getInventoryItemType() + "/" + i.getName() + ".png"), 90, 90, true, true)));
+                    imageStack.getChildren().add(new ImageView(new Image(getClass().getResourceAsStream("images/" + i.getInventoryItemType() + "/" + i.getName() + ".png"), 90, 90, true, true)));
                 }
                 catch (Exception error) {
-                    btnItems[indexOfButtonLocationOnTheGrid].setGraphic(new ImageView(new Image(getClass().getResourceAsStream("images/noImage.png"), 90, 90, true, true)));
+                    imageStack.getChildren().add(new ImageView(new Image(getClass().getResourceAsStream("images/noImage.png"), 90, 90, true, true)));
                 }
-                btnItems[indexOfButtonLocationOnTheGrid].setText(i.getProduct().toString());
+                imageStack.getChildren().add(imageBorder);
+                btnItems[indexOfButtonLocationOnTheGrid].setGraphic(imageStack);
                 
                 // Adds an item to the produdct selected for purchase list when user clicks button and updates the cost display with its' price.
                 btnItems[indexOfButtonLocationOnTheGrid].setOnAction((event) -> {  
@@ -555,7 +570,7 @@ public class Dispenser extends Application {
                     });
                     
                     btnItems[indexOfButtonLocationOnTheGrid].setDisable(false);
-                    StackPane imageStack = new StackPane();
+                    imageStack = new StackPane();
                     try {
                         imageStack.getChildren().addAll(new ImageView(new Image(getClass().getResourceAsStream("images/" + i.getInventoryItemType() + "/" + i.getName() + ".png"), 90, 90, true, true)), new ImageView(new Image(getClass().getResourceAsStream("images/OutOfStock.png"), 90, 90, true, true)));
                     }
