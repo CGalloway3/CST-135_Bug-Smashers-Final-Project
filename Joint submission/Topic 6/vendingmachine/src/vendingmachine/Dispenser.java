@@ -3,18 +3,19 @@
 *    File: Dispenser.java
 *    Summary: Vending Machine GUI elements.
 *    Author: Chad Galloway
-*    Date: April 9th, 2018
+*    Date Created: April 9th, 2018
+*    Last Update: April 24th, 2018
 **/
 
 package vendingmachine;
 
-
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.animation.TranslateTransition;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ContentDisplay;
@@ -554,26 +555,17 @@ public class Dispenser extends Application {
                 // Adds an item to the produdct selected for purchase list when user clicks button and updates the cost display with its' price.
                 btnItems[indexOfButtonLocationOnTheGrid].setOnAction((event) -> {  
                                         
-                    Button button = (Button)event.getSource();
-                    button.toFront();
+                    AnimationController.animateButtonToCart((Button)event.getSource(), btnMyItems);
                     
-                    TranslateTransition tt = new TranslateTransition(Duration.seconds(2.0), button);
-                    tt.setToX(btnMyItems.getLocalToSceneTransform().getTx() - button.getLocalToSceneTransform().getTx());
-                    tt.setToY(btnMyItems.getLocalToSceneTransform().getTy() - button.getLocalToSceneTransform().getTy());
-                    tt.setAutoReverse(false);
-                    tt.play();
-                    tt.setOnFinished((e) -> {
-                        button.setTranslateX(0);
-                        button.setTranslateY(0);
-                        inventoryManager.addItemToProductsSelectedForPurchase(i);
-                        productsCost += i.getPrice();  
-                        updateCost();
+                    inventoryManager.addItemToProductsSelectedForPurchase(i);
+                    productsCost += i.getPrice();  
+                    updateCost();
 
-                        populateItemGrid();
-                        if (inventoryManager.getItemsSelectedForPurchase().size() > 0) {
-                            btnExit.setText("Cancel Order");
-                        }
-                    });
+                    populateItemGrid();
+                    if (inventoryManager.getItemsSelectedForPurchase().size() > 0) {
+                        btnExit.setText("Cancel Order");
+                    }
+                    
                 });
                 
                 if (i.getQuantity() < 1) {
@@ -616,7 +608,4 @@ public class Dispenser extends Application {
         txtReceiptCost.setText(text);
     }
 
-    private void animateButton(Button button) {
-    }
-
- }
+}
