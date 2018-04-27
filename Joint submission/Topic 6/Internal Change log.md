@@ -1,5 +1,7 @@
 CST-135 Topic 6 Change log
 
+04-27-18 17:42 CST (Chad) Commented several files better.
+
 04-27-18 00:09 CST (Chad) Moved quite a few things around. No new functionallity implemented. Transactions are now in their own class, inventory control is now it's own class, 			animations are now in their own class this has removed some of the clutter from the Dispenser class. Commenting and code clean up is still needed and on  			going. Next i will begin working on file read and write for inventory.
 
 04-24-18 23:43 CST (Chad) I DID IT!!!!!  Animations are sorted, maybe a little tweeking of speed and size reduction are in order for later but as of now the animations 					are better looking than I could have expected. I added a few new classes, one for the animations and one for transactions. Also, created a files folder 				for all the csv files we are going to need this week.

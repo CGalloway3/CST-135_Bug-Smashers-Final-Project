@@ -1,4 +1,4 @@
-//CST-135 group assignment for Topic 4, a collaboration of Richard Boyd, Chad Galloway, and Dennis Witt
+//CST-135 group assignment for Topic 6, a collaboration of Richard Boyd, Chad Galloway, and Dennis Witt
 /**  Program: Vending Machine
 *    File: Dispenser.java
 *    Summary: Vending Machine GUI elements.
@@ -29,11 +29,11 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class Dispenser extends Application {
     
+    // Managers, Controllers, and flags.
     private final InventoryManager inventoryManager = new InventoryManager();
     private final AnimationController animationController = new AnimationController();
     private final TransactionManager transactionManager = new TransactionManager(this);
@@ -98,13 +98,14 @@ public class Dispenser extends Application {
     @Override
     public void start(Stage primaryStage) {
         
+        // Store primaryStage in a private class variable for later access.
         applicationStage = primaryStage;
         applicationStage.setTitle("Speedy Vend 5000");
         applicationStage.setScene(new Scene(btnSplashButton, 710, 500));
         applicationStage.show();
-        btnSplashButton.requestFocus();      
 
         // Catch key press ctrl-a and set admin mode flag to true
+        btnSplashButton.requestFocus();      
         btnSplashButton.setOnKeyPressed((event) -> {
             if ( event.isControlDown() && event.getText().equalsIgnoreCase("a") ) {
                 adminMode = true;
@@ -183,6 +184,8 @@ public class Dispenser extends Application {
             }
         });
         
+        // Category buttons
+        // back button for categories
         btnBackToCategories.setTranslateY(-225);
         btnBackToCategories.setTranslateX(-260);
         btnBackToCategories.setVisible(false);
@@ -244,60 +247,36 @@ public class Dispenser extends Application {
             }
         });
                 
-        btnAddDime.setOnAction((event) -> {
-            transactionManager.addMoneyInserted(10);
-        });
-        
-        btnAddFiftyCentCoin.setOnAction((event) -> {
-            transactionManager.addMoneyInserted(50);
-        });
-        
-        btnAddFiveDollars.setOnAction((event) -> {
-            transactionManager.addMoneyInserted(500);
-        });
-        
-        btnAddNickle.setOnAction((event) -> {
-            transactionManager.addMoneyInserted(5);
-        });
-        
-        btnAddOneDollar.setOnAction((event) -> {
-            transactionManager.addMoneyInserted(100);
-        });
-        
-        btnAddOneDollarCoin.setOnAction((event) -> {
-            transactionManager.addMoneyInserted(100);
-        });
-        
-        btnAddQuater.setOnAction((event) -> {
-            transactionManager.addMoneyInserted(25);
-        });
-        
-        btnAddTenDollars.setOnAction((event) -> {
-            transactionManager.addMoneyInserted(1000);
-        });
-        
-        btnAddTwentyDollars.setOnAction((event) -> {
-            transactionManager.addMoneyInserted(2000);
-        });
-        
-        btnReturnMoney.setOnAction((event) -> {   //returns funds to 0 when "coin return" is clicked
-            transactionManager.setMoneyInserted(0);
-        });
-        
-        
-        
+        // Money adding buttons to eventually be replaced by and actual mechanical coin slot and bill collector.
+        btnAddDime.setOnAction((event) -> {transactionManager.addMoneyInserted(10);});
+        btnAddFiftyCentCoin.setOnAction((event) -> {transactionManager.addMoneyInserted(50);});
+        btnAddFiveDollars.setOnAction((event) -> {transactionManager.addMoneyInserted(500);});
+        btnAddNickle.setOnAction((event) -> {transactionManager.addMoneyInserted(5);});
+        btnAddOneDollar.setOnAction((event) -> {transactionManager.addMoneyInserted(100);});
+        btnAddOneDollarCoin.setOnAction((event) -> {transactionManager.addMoneyInserted(100);});
+        btnAddQuater.setOnAction((event) -> {transactionManager.addMoneyInserted(25);});
+        btnAddTenDollars.setOnAction((event) -> {transactionManager.addMoneyInserted(1000);});
+        btnAddTwentyDollars.setOnAction((event) -> {transactionManager.addMoneyInserted(2000);});
         btnAddOneDollar.prefWidthProperty().bind(smallCoinSlot.widthProperty());
         btnAddFiveDollars.prefWidthProperty().bind(smallCoinSlot.widthProperty());
         btnAddTenDollars.prefWidthProperty().bind(smallCoinSlot.widthProperty());
         btnAddTwentyDollars.prefWidthProperty().bind(smallCoinSlot.widthProperty());
+        
+        // Coin Return button
+        btnReturnMoney.setOnAction((event) -> {   //returns funds to 0 when "coin return" is clicked
+            transactionManager.setMoneyInserted(0);
+        });
+        btnReturnMoney.prefWidthProperty().bind(btnCompletePurchase.widthProperty());
 
+        // My items / cart button
         btnMyItems.prefWidthProperty().bind(btnCompletePurchase.widthProperty());
         btnMyItems.setContentDisplay(ContentDisplay.TOP);
         btnMyItems.setGraphic(viewCart);
         btnMyItems.setOnAction((Event) -> {
             transactionManager.displayCart(inventoryManager);
         });
-        btnReturnMoney.prefWidthProperty().bind(btnCompletePurchase.widthProperty());
+
+        /// Exit button
         btnExit.prefWidthProperty().bind(btnCompletePurchase.widthProperty());
         btnExit.setOnAction((event) -> {
             nextCustomerReset();
@@ -401,7 +380,7 @@ public class Dispenser extends Application {
         btnBackToCategories.setVisible(true);
         
         // iterate through all products
-        for (InventoryManager.InventoryItem i : inventoryManager.getMasterInventoryList()) {
+        for (InventoryManager.InventoryItem i : inventoryManager.getDispenserInventoryList()) {
             // If the product is in the correct category and in the correct slot to be displayed on this screen.
             if (i.getProduct().getClass().getSimpleName().equalsIgnoreCase(itemGridCategory) && i.getLocation().startsWith((String.valueOf((char)(64+itemGridPageNumber))))) {
 
