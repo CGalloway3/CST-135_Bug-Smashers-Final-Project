@@ -9,9 +9,6 @@
 
 package vendingmachine;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javafx.animation.TranslateTransition;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
@@ -34,16 +31,15 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 
 public class Dispenser extends Application {
     
     private final InventoryManager inventoryManager = new InventoryManager();
+    private final AnimationController animationController = new AnimationController();
+    private final TransactionManager transactionManager = new TransactionManager(this);
     private Boolean adminMode = false;  // adminMode flag
     private String itemGridCategory;
     private int itemGridPageNumber = 1;
-    private int moneyInserted = 0;
-    private int productsCost = 0;
     
     // GUI node declarations
     private final StackPane customerPane = new StackPane();
@@ -88,9 +84,7 @@ public class Dispenser extends Application {
     private final Button btnItems[] = new Button[9];
     private final Label lblFunds = new Label("Funds:");
     private final Text txtFundsAmount = new Text("$0.00");
-    private final Text txtReceiptFunds = new Text("$0.00");
     private final Label lblCost = new Label("Cost:");
-    private final Text txtReceiptCost = new Text("$0.00");
     private final Text txtCostAmount = new Text("$0.00");
     private final Button btnReturnMoney = new Button("Coin Return");
     private final Button btnCompletePurchase = new Button("Complete Purchase");
@@ -98,14 +92,16 @@ public class Dispenser extends Application {
     private final Button btnExit = new Button("Exit");
     private final Stage customerStage = new Stage();
     private final Stage adminStage = new Stage();
+    private Stage applicationStage = new Stage();
 
     
     @Override
     public void start(Stage primaryStage) {
         
-        primaryStage.setTitle("Speedy Vend 5000");
-        primaryStage.setScene(new Scene(btnSplashButton, 710, 500));
-        primaryStage.show();
+        applicationStage = primaryStage;
+        applicationStage.setTitle("Speedy Vend 5000");
+        applicationStage.setScene(new Scene(btnSplashButton, 710, 500));
+        applicationStage.show();
         btnSplashButton.requestFocus();      
 
         // Catch key press ctrl-a and set admin mode flag to true
@@ -118,19 +114,17 @@ public class Dispenser extends Application {
         
         // Catch button action and enter customer mode or admin mode. reset admin flag to false
         btnSplashButton.setOnAction((ActionEvent event) -> {
-        	productsCost = 0;
-    		moneyInserted = 0;
-    		updateFunds();
-    		updateCost();
+        	transactionManager.setProductsCost(0);
+    		transactionManager.setMoneyInserted(0);
     		btnExit.setText("Exit");
     		inventoryManager.returnItemsSelectedForPurchase();
         	if (adminMode) {
                 adminMode = false;
-                primaryStage.hide();
+                applicationStage.hide();
                 adminStage.show();
             }
             else {
-                primaryStage.hide();
+                applicationStage.hide();
                 customerStage.show();
             }
         });
@@ -148,6 +142,9 @@ public class Dispenser extends Application {
         categoryGrid.setHgap(10);
         itemGrid.setHgap(10);
         itemGrid.setVgap(10);
+        
+        txtCostAmount.textProperty().bind(transactionManager.productCostProperty());
+        txtFundsAmount.textProperty().bind(transactionManager.moneyInsertedProperty());
         
         // Set button sizes, states, and events
         for (int i = 0; i < 9; i++) {
@@ -248,54 +245,43 @@ public class Dispenser extends Application {
         });
                 
         btnAddDime.setOnAction((event) -> {
-            moneyInserted += 10;
-            updateFunds();
+            transactionManager.addMoneyInserted(10);
         });
         
         btnAddFiftyCentCoin.setOnAction((event) -> {
-            moneyInserted += 50;
-            updateFunds();
+            transactionManager.addMoneyInserted(50);
         });
         
         btnAddFiveDollars.setOnAction((event) -> {
-            moneyInserted += 500;
-            updateFunds();
+            transactionManager.addMoneyInserted(500);
         });
         
         btnAddNickle.setOnAction((event) -> {
-            moneyInserted += 5;
-            updateFunds();
+            transactionManager.addMoneyInserted(5);
         });
         
         btnAddOneDollar.setOnAction((event) -> {
-            moneyInserted += 100;
-            updateFunds();
-            
+            transactionManager.addMoneyInserted(100);
         });
         
         btnAddOneDollarCoin.setOnAction((event) -> {
-            moneyInserted += 100;
-            updateFunds();
+            transactionManager.addMoneyInserted(100);
         });
         
         btnAddQuater.setOnAction((event) -> {
-            moneyInserted += 25;
-            updateFunds();
+            transactionManager.addMoneyInserted(25);
         });
         
         btnAddTenDollars.setOnAction((event) -> {
-            moneyInserted += 1000;
-            updateFunds();
+            transactionManager.addMoneyInserted(1000);
         });
         
         btnAddTwentyDollars.setOnAction((event) -> {
-            moneyInserted += 2000;
-            updateFunds();
+            transactionManager.addMoneyInserted(2000);
         });
         
         btnReturnMoney.setOnAction((event) -> {   //returns funds to 0 when "coin return" is clicked
-        	moneyInserted = 0;
-        	updateFunds();
+            transactionManager.setMoneyInserted(0);
         });
         
         
@@ -309,19 +295,12 @@ public class Dispenser extends Application {
         btnMyItems.setContentDisplay(ContentDisplay.TOP);
         btnMyItems.setGraphic(viewCart);
         btnMyItems.setOnAction((Event) -> {
-            drawItemsList();
+            transactionManager.displayCart(inventoryManager);
         });
         btnReturnMoney.prefWidthProperty().bind(btnCompletePurchase.widthProperty());
         btnExit.prefWidthProperty().bind(btnCompletePurchase.widthProperty());
         btnExit.setOnAction((event) -> {
-            inventoryManager.returnItemsSelectedForPurchase();
-            itemGridPageNumber = 1;
-            btnBackToCategories.setVisible(false);
-            btnNextPage.setDisable(true);
-            btnPreviousPage.setDisable(true);
-            customerStage.hide();
-            customerBorder.setCenter(categoryGrid);
-            primaryStage.show();
+            nextCustomerReset();
         });
         
 
@@ -339,16 +318,10 @@ public class Dispenser extends Application {
         txtFundsAmount.setFont(Font.font("courier", FontWeight.BOLD, FontPosture.REGULAR, 20));
         txtFundsAmount.setFill(Paint.valueOf("Black"));
         txtFundsAmount.setStroke(Paint.valueOf("Green"));
-        txtReceiptFunds.setFont(Font.font("courier", FontWeight.BOLD, FontPosture.REGULAR, 20));
-        txtReceiptFunds.setFill(Paint.valueOf("Black"));
-        txtReceiptFunds.setStroke(Paint.valueOf("Green"));
         lblCost.setMinHeight(20);
         txtCostAmount.setFont(Font.font("courier", FontWeight.BOLD, FontPosture.REGULAR, 20));
         txtCostAmount.setFill(Paint.valueOf("Black"));
         txtCostAmount.setStroke(Paint.valueOf("Red"));
-        txtReceiptCost.setFont(Font.font("courier", FontWeight.BOLD, FontPosture.REGULAR, 20));
-        txtReceiptCost.setFill(Paint.valueOf("Black"));
-        txtReceiptCost.setStroke(Paint.valueOf("Red"));
         
         customerControls.getChildren().addAll(lblFunds, txtFundsAmount, lblCost, txtCostAmount, lblRightBlank, btnCompletePurchase, btnMyItems, btnReturnMoney, btnExit);
         customerControls.setAlignment(Pos.BOTTOM_CENTER);
@@ -382,7 +355,7 @@ public class Dispenser extends Application {
                 adminStage.setScene(new Scene(btnAdmin, 300, 300));
                 btnAdmin.setOnAction((ActionEvent event) -> {
                     adminStage.hide();
-                    primaryStage.show();
+                    applicationStage.show();
                 });
                 adminStage.setOnShowing((event) -> {
                     System.out.println("password accepted");
@@ -391,61 +364,7 @@ public class Dispenser extends Application {
                 // End Admin code section
         
         btnCompletePurchase.setOnAction((Event) -> {
-            
-            final Stage receiptStage = new Stage();
-            receiptStage.initModality(Modality.APPLICATION_MODAL);
-            
-            VBox receiptVBox = new VBox(5);
-            receiptVBox.setPadding(new Insets(10));
-            
-            if (inventoryManager.getItemsSelectedForPurchase().isEmpty()) {
-                receiptVBox.getChildren().add(new Text("Your have not selected anything to buy."));
-            }
-            
-            else if (moneyInserted < productsCost) {
-                receiptVBox.getChildren().add(new Text("Insufficient Funds"));
-                receiptVBox.getChildren().add(new Text("Please insert cash before continuing"));
-            }
-            
-            else {
-                for (InventoryManager.InventoryItem i : inventoryManager.getItemsSelectedForPurchase()) {
-                    Button btnReceiptItem = new Button(i.getProduct().toString());
-                    receiptVBox.getChildren().add(btnReceiptItem); 
-                    btnReceiptItem.prefWidthProperty().bind(receiptVBox.widthProperty());
-                }
-                inventoryManager.completePurchase();
-                receiptVBox.getChildren().add(new Text("Total: "));
-                receiptVBox.getChildren().add(txtReceiptCost);
-                moneyInserted = moneyInserted - productsCost;
-                updateFunds();
-                receiptVBox.getChildren().add(new Text("Thank you for shopping with us!"));
-                if (moneyInserted != 0) {
-                       receiptVBox.getChildren().add(new Text("Change dispensed:"));
-                    receiptVBox.getChildren().add(txtReceiptFunds);
-                }        		
-                itemGridPageNumber = 1;
-                btnBackToCategories.setVisible(false);
-                btnNextPage.setDisable(true);
-                btnPreviousPage.setDisable(true);
-                customerStage.hide();
-                primaryStage.show();
-                customerBorder.setCenter(categoryGrid);
-            }
-        
-            Button btnSeperator = new Button();
-            btnSeperator.setVisible(false);
-            receiptVBox.getChildren().add(btnSeperator);
-        
-            Button btnClose = new Button("Close");
-            btnClose.prefWidthProperty().bind(receiptVBox.widthProperty());
-            btnClose.setOnAction((event) -> {
-                receiptStage.close();
-            });
-            receiptVBox.getChildren().add(btnClose);
-
-            Scene receiptScene = new Scene(receiptVBox);
-            receiptStage.setScene(receiptScene);
-            receiptStage.show();
+            transactionManager.completeTransaction(inventoryManager);
         });
     }
 
@@ -453,56 +372,19 @@ public class Dispenser extends Application {
     public static void main(String[] args) {
         launch(args);
     }
-
-    //pop-up window for "my items" button
-    private void drawItemsList() {
     
-        final Stage cartStage = new Stage();
-        cartStage.initModality(Modality.APPLICATION_MODAL);
-        VBox cartVBox = new VBox(5);
-        cartVBox.setPadding(new Insets(10));
-        if (inventoryManager.getItemsSelectedForPurchase().isEmpty()) {
-                cartVBox.getChildren().add(new Text("Your cart is empty"));
-        }
-        else {
-                // Added functionallity for dynamically added and removed buttons.
-                cartVBox.getChildren().add(new Text("Click on an item to remove it"));
-                for (InventoryManager.InventoryItem i : inventoryManager.getItemsSelectedForPurchase()) {
-                    Button btnCartItem = new Button(i.getProduct().toString());
-                    btnCartItem.prefWidthProperty().bind(cartVBox.widthProperty());
-                    btnCartItem.setContentDisplay(ContentDisplay.TOP);                                     
-                    cartVBox.getChildren().add(btnCartItem);
-                    btnCartItem.setOnAction((event) -> {
-                        cartVBox.getChildren().remove(btnCartItem);
-                        inventoryManager.removeItemFromProductsSelectedForPurchase(i);
-                        productsCost -= i.getProduct().getPrice();
-                        updateCost();
-                        populateItemGrid();
-                        cartStage.hide();
-                        drawItemsList();
-                    });
-                }
-        }
+    public void nextCustomerReset(){
+        inventoryManager.returnItemsSelectedForPurchase();
+        itemGridPageNumber = 1;
+        btnBackToCategories.setVisible(false);
+        btnNextPage.setDisable(true);
+        btnPreviousPage.setDisable(true);
+        customerStage.hide();
+        applicationStage.show();
+        customerBorder.setCenter(categoryGrid);
         
-        Button btnSeperator = new Button();
-        btnSeperator.setVisible(false);
-        cartVBox.getChildren().add(btnSeperator);
-        
-        Button btnClose = new Button("Close");
-        btnClose.prefWidthProperty().bind(cartVBox.widthProperty());
-        btnClose.setOnAction((event) -> {
-            cartStage.close();
-        });
-        cartVBox.getChildren().add(btnClose);
-        
-        
-        Scene cartScene = new Scene(cartVBox);
-        cartStage.setScene(cartScene);
-        cartStage.show();        
-
     }
-    
-    private Boolean populateItemGrid() {
+    public Boolean populateItemGrid() {
         
         // Internal usage variables
         Boolean morePages = false; // return value flag;
@@ -555,11 +437,10 @@ public class Dispenser extends Application {
                 // Adds an item to the produdct selected for purchase list when user clicks button and updates the cost display with its' price.
                 btnItems[indexOfButtonLocationOnTheGrid].setOnAction((event) -> {  
                                         
-                    AnimationController.animateButtonToCart((Button)event.getSource(), btnMyItems);
+                    animationController.animateButtonToCart((Button)event.getSource(), btnMyItems);
                     
                     inventoryManager.addItemToProductsSelectedForPurchase(i);
-                    productsCost += i.getPrice();  
-                    updateCost();
+                    transactionManager.addProductsCost(i.getPrice());  
 
                     populateItemGrid();
                     if (inventoryManager.getItemsSelectedForPurchase().size() > 0) {
@@ -594,18 +475,6 @@ public class Dispenser extends Application {
         // Display the finished item grid
         customerBorder.setCenter(itemGrid);
         return morePages;
-    }
-
-    private void updateFunds() {
-        String text = String.format("$" + moneyInserted / 100 + ".%02d", moneyInserted % 100);
-        txtFundsAmount.setText(text);
-        txtReceiptFunds.setText(text);
-    }
-    
-    private void updateCost() {
-    	String text = String.format("$" + productsCost / 100 + ".%02d", productsCost % 100);
-        txtCostAmount.setText(text);
-        txtReceiptCost.setText(text);
     }
 
 }

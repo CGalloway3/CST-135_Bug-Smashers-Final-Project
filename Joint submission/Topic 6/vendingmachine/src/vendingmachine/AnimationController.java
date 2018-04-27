@@ -17,7 +17,7 @@ import javafx.util.Duration;
 
 public class AnimationController {
     
-    public static void animateButtonToCart(Button startButton, Button endButton) {
+    public void animateButtonToCart(Button startButton, Button endButton) {
         
         // Find the Parent of the button we will be animating.
         GridPane animationGrid = (GridPane)startButton.getParent();
@@ -35,13 +35,13 @@ public class AnimationController {
         animationGrid.add(animation, (int)(animationGrid.getChildren().indexOf(startButton) % 3), (int)(animationGrid.getChildren().indexOf(startButton) / 3));
         
         // Difine the animations.
-        ScaleTransition st = new ScaleTransition(Duration.seconds(1.5), animation);
-        st.setToX(.25);
-        st.setToY(.25);
+        ScaleTransition st = new ScaleTransition(Duration.seconds(1.1), animation);
+        st.setToX(.35);
+        st.setToY(.35);
         
-        TranslateTransition tt = new TranslateTransition(Duration.seconds(2.0), animation);
-        tt.setToX(endButton.getLocalToSceneTransform().getTx() - startButton.getLocalToSceneTransform().getTx());
-        tt.setToY(endButton.getLocalToSceneTransform().getTy() - startButton.getLocalToSceneTransform().getTy());
+        TranslateTransition tt = new TranslateTransition(Duration.seconds(1.5), animation);
+        tt.setToX(endButton.getLocalToSceneTransform().getTx() - startButton.getLocalToSceneTransform().getTx()-5);
+        tt.setToY(endButton.getLocalToSceneTransform().getTy() - startButton.getLocalToSceneTransform().getTy()-30);
         tt.setAutoReverse(false);
         
         // Play animation
