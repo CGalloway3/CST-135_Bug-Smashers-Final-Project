@@ -10,6 +10,7 @@
 package vendingmachine;
 
 import java.util.ArrayList;
+import java.util.Scanner;
 import vendingmachine.products.Candy;
 import vendingmachine.products.Chips;
 import vendingmachine.products.Drink;
@@ -21,11 +22,15 @@ public class InventoryManager {
     // Private array lists for storing inventory items and items selected by the user for purchase.
     private final ArrayList<InventoryItem> dispenserInventoryList = new ArrayList<>();
     private final ArrayList<InventoryItem> itemsSelectedForPurchase = new ArrayList<>();
+    private int drinkItemSlot = -1;
+    private int candyItemSlot = -1;
+    private int chipsItemSlot = -1;
+    private int gumItemSlot = -1;
 
     // Public default constructor that reads in the inventory file
     public InventoryManager(){
         // Read in inventory list from file.
-        generateInventoryList(); // file access not currently implemented generateInventoryList is a place holder method.
+        loadInventoryList(); // Proposed inventory file loading method
     }
 
     // Add an item to inventory
@@ -67,50 +72,61 @@ public class InventoryManager {
     // Clears the array list of items the user selected for purchase because the user paid for them.
     public void completePurchase() {
         itemsSelectedForPurchase.clear();
+        // saveInventoryList(); // Proposed inventory file saving method.
     }
 
-    // Place holder method to temporarily load inventory items until file access is implemented.
-    private void generateInventoryList() {
-        // Add some Drinks
-        addInventoryItem(new Drink("Pepsi", 1.25), "A1", 10);
-        addInventoryItem(new Drink("Diet Pepsi", 1.25), "A2", 10);
-        addInventoryItem(new Drink("Cherry Pepsi", 1.50), "A3", 10);
-        addInventoryItem(new Drink("Pepsi Vanilla", 1.25), "A4", 10);
-        addInventoryItem(new Drink("Mountain Dew", 1.25), "A5", 1);
-        addInventoryItem(new Drink("Mountain Dew Code Red", 1.50), "A6", 10);
-        addInventoryItem(new Drink("Dr.Pepper", 1.25), "A7", 10);
-        addInventoryItem(new Drink("Diet Dr.Pepper", 1.25), "A8", 10);
-        addInventoryItem(new Drink("Dr. Pepper Cherry", 1.50), "A9", 10);
-        addInventoryItem(new Drink("Fuze Ice Tea", 1.00), "B1", 10);
-        addInventoryItem(new Drink("Lipton Peach Ice Tea", 1.00), "B2", 10);
-        addInventoryItem(new Drink("Minute Maid Lemonade", 1.00), "B3", 10);
-        addInventoryItem(new Drink("Monster", 1.75), "B4", 10);
-        addInventoryItem(new Drink("Rockstar", 1.75), "B5", 10);
-        addInventoryItem(new Drink("Sierra Mist", 1.25), "B6", 10);
-        addInventoryItem(new Drink("7-Up", 1.25), "B7", 10);
-        
-        // Add some candy
-        addInventoryItem(new Candy("M&M", 0.75), "A1", 10);
-        addInventoryItem(new Candy("Kit Kat", 0.75), "A2", 10);
-        addInventoryItem(new Candy("Reeses Pieces", 0.75), "A4", 10);
-        addInventoryItem(new Candy("Baby Ruth", 0.50), "A5", 10);
-        addInventoryItem(new Candy("Snickers", 0.75), "A6", 10);
-        
-        // Add some chips
-        addInventoryItem(new Chips("Ruffles", 1.00), "A1", 1);
-        addInventoryItem(new Chips("Cheetoes", 1.00), "A2", 10);
-        addInventoryItem(new Chips("Doritos", 1.00), "A3", 10);
-        addInventoryItem(new Chips("Hot Fries", 0.75), "A5", 10);
-        addInventoryItem(new Chips("Lays", 1.00), "B2", 10);
-        
-        // Add some gum
-        addInventoryItem(new Gum("Orbit", 0.50), "A1", 10);
-        addInventoryItem(new Gum("Five", 0.75), "A2", 10);
-        addInventoryItem(new Gum("Trident", 0.50), "A3", 0);
-        addInventoryItem(new Gum("Juicy Fruit", 0.25), "A4", 10);
-        addInventoryItem(new Gum("Bubble Yum", 0.50), "A5", 10);
-        
+    // Loads inventory from the file.
+    private void loadInventoryList() {
+        Scanner inventoryFileScanner = new Scanner(getClass().getResourceAsStream("files/product lists/Bug Smashers Product List.csv"));
+        while (inventoryFileScanner.hasNextLine()) {
+            String scannedLine = inventoryFileScanner.nextLine();
+            String[] scannedLineArray = scannedLine.split(",");
+            switch ( scannedLineArray[1] ) {
+                case "Drink":
+                    addInventoryItem(new Drink(scannedLineArray[0], Double.parseDouble(scannedLineArray[3])), setItemsLocation("Drink"), Integer.parseInt(scannedLineArray[2]));
+                    break;
+                case "Candy":
+                    addInventoryItem(new Candy(scannedLineArray[0], Double.parseDouble(scannedLineArray[3])), setItemsLocation("Candy"), Integer.parseInt(scannedLineArray[2]));
+                    break;
+                case "Chips":
+                    addInventoryItem(new Chips(scannedLineArray[0], Double.parseDouble(scannedLineArray[3])), setItemsLocation("Chips"), Integer.parseInt(scannedLineArray[2]));
+                    break;
+                case "Gum":
+                    addInventoryItem(new Gum(scannedLineArray[0], Double.parseDouble(scannedLineArray[3])), setItemsLocation("Gum"), Integer.parseInt(scannedLineArray[2]));
+                    break;
+                default:
+                    throw new UnsupportedOperationException("Unsupported file type.");
+            }
+        }
     }
+
+    private void saveInventoryList() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    private String setItemsLocation(String category) {
+        switch ( category ) {
+            case "Drink":
+                drinkItemSlot++;
+                System.out.println("Drink: " +(String.valueOf((char)(65+drinkItemSlot / 9))) + (drinkItemSlot % 9 + 1));
+                return (String.valueOf((char)(65+drinkItemSlot / 9))) + (drinkItemSlot % 9 + 1);
+            case "Candy":
+                candyItemSlot++;
+                System.out.println("Candy: " + (String.valueOf((char)(65+candyItemSlot / 9))) + (candyItemSlot % 9 + 1));
+                return (String.valueOf((char)(65+candyItemSlot / 9))) + (candyItemSlot % 9 + 1);
+            case "Chips":
+                chipsItemSlot++;
+                System.out.println("Chips: " + (String.valueOf((char)(65+chipsItemSlot / 9))) + (chipsItemSlot % 9 + 1));
+                return (String.valueOf((char)(65+chipsItemSlot / 9))) + (chipsItemSlot % 9 + 1);
+            case "Gum":
+                gumItemSlot++;
+                System.out.println("Gum: " + (String.valueOf((char)(65+gumItemSlot / 9))) + (gumItemSlot % 9 + 1));
+                return (String.valueOf((char)(65+gumItemSlot / 9))) + (gumItemSlot % 9 + 1);
+            default:
+                return "ERROR";
+        }
+    }
+
 
     // Public inner Class InventoryItem turns products into items in the machines inventory.
     public class InventoryItem {

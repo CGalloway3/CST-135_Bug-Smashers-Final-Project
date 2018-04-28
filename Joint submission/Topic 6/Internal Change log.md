@@ -1,5 +1,7 @@
 CST-135 Topic 6 Change log
 
+04-28-18 00:57 CST (Chad) Got file loading working. I need to work on file saving tomorrow goodnight guys.
+
 04-27-18 17:42 CST (Chad) Commented several files better.
 
 04-27-18 00:09 CST (Chad) Moved quite a few things around. No new functionallity implemented. Transactions are now in their own class, inventory control is now it's own class, 			animations are now in their own class this has removed some of the clutter from the Dispenser class. Commenting and code clean up is still needed and on  			going. Next i will begin working on file read and write for inventory.

@@ -385,7 +385,7 @@ public class Dispenser extends Application {
             if (i.getProduct().getClass().getSimpleName().equalsIgnoreCase(itemGridCategory) && i.getLocation().startsWith((String.valueOf((char)(64+itemGridPageNumber))))) {
 
                 // Parse the button index to modify from the Location property of a product
-                indexOfButtonLocationOnTheGrid = Integer.parseInt(String.valueOf(i.getLocation().charAt(1))) - 1; // subtract 1 because button location 1 is index 0.
+                indexOfButtonLocationOnTheGrid = Integer.parseInt(String.valueOf(i.getLocation().charAt(1))) -1; // subtract 1 because button location 1 is index 0.
                 
                 // Modify the item button properties.
                 btnItems[indexOfButtonLocationOnTheGrid].setDisable(false);
