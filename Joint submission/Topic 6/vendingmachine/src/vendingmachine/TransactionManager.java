@@ -81,7 +81,7 @@ public class TransactionManager {
         return moneyInsertedPropertyString;
     }
     
-    public void completeTransaction (InventoryManager iM) {
+    public void completeTransaction (Global_Inventory_Management iM) {
         final Stage receiptStage = new Stage();
         receiptStage.initModality(Modality.APPLICATION_MODAL);
         receiptStage.setAlwaysOnTop(true);
@@ -99,7 +99,7 @@ public class TransactionManager {
         }
 
         else {
-            for (InventoryManager.InventoryItem i : iM.getItemsSelectedForPurchase()) {
+            for (Global_Inventory_Management.InventoryItem i : iM.getItemsSelectedForPurchase()) {
                 Button btnReceiptItem = new Button(i.getProduct().toString());
                 receiptVBox.getChildren().add(btnReceiptItem); 
                 btnReceiptItem.prefWidthProperty().bind(receiptVBox.widthProperty());
@@ -133,7 +133,7 @@ public class TransactionManager {
         receiptStage.show();
             
     }
-    public void displayCart (InventoryManager iM) {
+    public void displayCart (Global_Inventory_Management iM) {
         final Stage cartStage = new Stage();
         cartStage.initModality(Modality.APPLICATION_MODAL);
         VBox cartVBox = new VBox(5);
@@ -144,7 +144,7 @@ public class TransactionManager {
         else {
                 // Added functionallity for dynamically added and removed buttons.
                 cartVBox.getChildren().add(new Text("Click on an item to remove it"));
-                for (InventoryManager.InventoryItem i : iM.getItemsSelectedForPurchase()) {
+                for (Global_Inventory_Management.InventoryItem i : iM.getItemsSelectedForPurchase()) {
                     Button btnCartItem = new Button(i.getProduct().toString());
                     btnCartItem.prefWidthProperty().bind(cartVBox.widthProperty());
                     btnCartItem.setContentDisplay(ContentDisplay.TOP);                                     

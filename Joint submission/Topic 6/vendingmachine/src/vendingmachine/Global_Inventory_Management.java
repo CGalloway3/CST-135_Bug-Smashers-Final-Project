@@ -34,9 +34,14 @@ public class Global_Inventory_Management {
         loadInventoryList(); // Proposed inventory file loading method
     }
 
-    // Add an item to inventory
-    public void addInventoryItem(Product product, String location, int quantity){
+    // Add an item to local inventory
+    public void addLocalInventoryItem(Product product, String location, int quantity){
         localInventoryList.add(new InventoryItem(product, location, quantity));
+    }
+    
+    // Add an item to remote inventory
+    public void addRemoteInventoryItem(Product product, String location, int quantity){
+        remoteInventoryList.add(new InventoryItem(product, location, quantity));
     }
     
     // Returns items in the itemsSelectedForPurchase array list to the localinventoryList.
@@ -53,9 +58,13 @@ public class Global_Inventory_Management {
         return this.itemsSelectedForPurchase;
     }
 
-    // Returns the array list of items in the dispensers inventory.
-    public ArrayList<InventoryItem> getlocalinventoryList() {
+    // Returns the array list of items in the local dispensers inventory.
+    public ArrayList<InventoryItem> getLocalInventoryList() {
         return this.localInventoryList;
+    }
+    
+    public ArrayList<InventoryItem> getRemoteInventoryList(){
+    	return this.remoteInventoryList;
     }
 
     // Adds user selected item to the list of items they have selected for purchase.
@@ -78,22 +87,43 @@ public class Global_Inventory_Management {
 
     // Loads inventory from the file.
     private void loadInventoryList() {
-        Scanner inventoryFileScanner = new Scanner(getClass().getResourceAsStream("files/product lists/Bug Smashers Product List.csv"));
-        while (inventoryFileScanner.hasNextLine()) {
-            String scannedLine = inventoryFileScanner.nextLine();
+        Scanner localInventoryFileScanner = new Scanner(getClass().getResourceAsStream("files/product lists/Bug Smashers Product List.csv"));
+        while (localInventoryFileScanner.hasNextLine()) {
+            String scannedLine = localInventoryFileScanner.nextLine();
             String[] scannedLineArray = scannedLine.split(",");
             switch ( scannedLineArray[1] ) {
                 case "Drink":
-                    addInventoryItem(new Drink(scannedLineArray[0], Double.parseDouble(scannedLineArray[3])), setItemsLocation("Drink"), Integer.parseInt(scannedLineArray[2]));
+                    addLocalInventoryItem(new Drink(scannedLineArray[0], Double.parseDouble(scannedLineArray[3])), setItemsLocation("Drink"), Integer.parseInt(scannedLineArray[2]));
                     break;
                 case "Candy":
-                    addInventoryItem(new Candy(scannedLineArray[0], Double.parseDouble(scannedLineArray[3])), setItemsLocation("Candy"), Integer.parseInt(scannedLineArray[2]));
+                    addLocalInventoryItem(new Candy(scannedLineArray[0], Double.parseDouble(scannedLineArray[3])), setItemsLocation("Candy"), Integer.parseInt(scannedLineArray[2]));
                     break;
                 case "Chips":
-                    addInventoryItem(new Chips(scannedLineArray[0], Double.parseDouble(scannedLineArray[3])), setItemsLocation("Chips"), Integer.parseInt(scannedLineArray[2]));
+                    addLocalInventoryItem(new Chips(scannedLineArray[0], Double.parseDouble(scannedLineArray[3])), setItemsLocation("Chips"), Integer.parseInt(scannedLineArray[2]));
                     break;
                 case "Gum":
-                    addInventoryItem(new Gum(scannedLineArray[0], Double.parseDouble(scannedLineArray[3])), setItemsLocation("Gum"), Integer.parseInt(scannedLineArray[2]));
+                    addLocalInventoryItem(new Gum(scannedLineArray[0], Double.parseDouble(scannedLineArray[3])), setItemsLocation("Gum"), Integer.parseInt(scannedLineArray[2]));
+                    break;
+                default:
+                    throw new UnsupportedOperationException("Unsupported file type.");
+            }
+        }
+        Scanner remoteInventoryFileScanner = new Scanner(getClass().getResourceAsStream("files/product lists/Clean Coders Product List.csv"));
+        while (remoteInventoryFileScanner.hasNextLine()) {
+            String scannedLine = remoteInventoryFileScanner.nextLine();
+            String[] scannedLineArray = scannedLine.split(",");
+            switch ( scannedLineArray[1] ) {
+                case "Drink":
+                    addRemoteInventoryItem(new Drink(scannedLineArray[0], Double.parseDouble(scannedLineArray[3])), setItemsLocation("Drink"), Integer.parseInt(scannedLineArray[2]));
+                    break;
+                case "Candy":
+                    addRemoteInventoryItem(new Candy(scannedLineArray[0], Double.parseDouble(scannedLineArray[3])), setItemsLocation("Candy"), Integer.parseInt(scannedLineArray[2]));
+                    break;
+                case "Chips":
+                    addRemoteInventoryItem(new Chips(scannedLineArray[0], Double.parseDouble(scannedLineArray[3])), setItemsLocation("Chips"), Integer.parseInt(scannedLineArray[2]));
+                    break;
+                case "Gum":
+                    addRemoteInventoryItem(new Gum(scannedLineArray[0], Double.parseDouble(scannedLineArray[3])), setItemsLocation("Gum"), Integer.parseInt(scannedLineArray[2]));
                     break;
                 default:
                     throw new UnsupportedOperationException("Unsupported file type.");

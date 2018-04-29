@@ -34,7 +34,7 @@ import javafx.stage.Stage;
 public class Dispenser extends Application {
     
     // Managers, Controllers, and flags.
-    private final InventoryManager inventoryManager = new InventoryManager();
+    private final Global_Inventory_Management inventoryManager = new Global_Inventory_Management();
     private final AnimationController animationController = new AnimationController();
     private final TransactionManager transactionManager = new TransactionManager(this);
     private Boolean adminMode = false;  // adminMode flag
@@ -380,7 +380,7 @@ public class Dispenser extends Application {
         btnBackToCategories.setVisible(true);
         
         // iterate through all products
-        for (InventoryManager.InventoryItem i : inventoryManager.getDispenserInventoryList()) {
+        for (Global_Inventory_Management.InventoryItem i : inventoryManager.getLocalInventoryList()) {
             // If the product is in the correct category and in the correct slot to be displayed on this screen.
             if (i.getProduct().getClass().getSimpleName().equalsIgnoreCase(itemGridCategory) && i.getLocation().startsWith((String.valueOf((char)(64+itemGridPageNumber))))) {
 
