@@ -1,5 +1,7 @@
 CST-135 Topic 6 Change log
 
+04-29-18 16:11 CST (Richard) Copied InventoryManager into new Global_Inventory_Management, began adding new list to populate from remote inventory list
+
 04-28-18 00:57 CST (Chad) Got file loading working. I need to work on file saving tomorrow goodnight guys.
 
 04-27-18 17:42 CST (Chad) Commented several files better.
