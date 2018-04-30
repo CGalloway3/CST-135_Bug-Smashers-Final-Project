@@ -22,7 +22,6 @@ public class Global_Inventory_Management {
     // Private array lists for storing inventory items and items selected by the user for purchase.
     private final ArrayList<InventoryItem> localInventoryList = new ArrayList<>();
     private final ArrayList<InventoryItem> remoteInventoryList = new ArrayList<>();
-    private final ArrayList<InventoryItem> itemsSelectedForPurchase = new ArrayList<>();
     private int drinkItemSlot = -1;
     private int candyItemSlot = -1;
     private int chipsItemSlot = -1;
