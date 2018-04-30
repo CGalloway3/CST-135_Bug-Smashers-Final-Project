@@ -1,5 +1,7 @@
 package vendingmachine;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
@@ -34,7 +36,11 @@ public class Restock extends Global_Inventory_Management{
         final Stage restockStage = new Stage();
         restockStage.initModality(Modality.APPLICATION_MODAL);
         restockStage.setAlwaysOnTop(true); 
-
+        Button btnLocalRestock = new Button("Click to order products to fill");
+        VBox localRestock = new VBox(15);
+        localRestock.setAlignment(Pos.CENTER);
+        localRestock.setPadding(new Insets(10));
+        
         TableView<InventoryManager.InventoryItem> restockTableLocal = new TableView<>(FXCollections.observableArrayList(lowLocal));
 
         TableColumn<InventoryManager.InventoryItem, String> itemNameColumnLocal = new TableColumn<>("Product Name");
@@ -49,9 +55,19 @@ public class Restock extends Global_Inventory_Management{
         restockTableLocal.getColumns().addAll(itemNameColumnLocal, itemLocationColumnLocal, itemQuantityColumnLocal);
         restockTableLocal.setItems(FXCollections.observableArrayList(lowLocal));
 
-        Scene restockSceneLocal = new Scene(restockTableLocal, 400, 400);
+        localRestock.getChildren().addAll(restockTableLocal, btnLocalRestock);
+        Scene restockSceneLocal = new Scene(localRestock, 350, 500);
         restockStage.setScene(restockSceneLocal);
         restockStage.show();
+        
+        btnLocalRestock.setOnAction((ActionEvent event)-> {
+        	try {
+				generatePurchaseOrder(lowLocal);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+        });
     }
 
     public void getLowRemote() {
@@ -90,15 +106,30 @@ public class Restock extends Global_Inventory_Management{
         restockStage.show();
         
         btnRemoteRestock.setOnAction((ActionEvent event)-> {
-        	generatePurchaseOrder();
+        	try {
+				generatePurchaseOrder(lowRemote);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
         });
         
     }
     
     
     
-    public static void generatePurchaseOrder() {
-        
+    public void generatePurchaseOrder(ArrayList<InventoryManager.InventoryItem> list) throws IOException {
+        FileWriter writer = new FileWriter("Purchase Order.csv");
+        try {
+        	writer.append("Item Name,Quantity Ordered\n");
+        	for (int i=0; i < list.size(); i++) {
+        		writer.append(list.get(i).getName() + " , " + Integer.toString(10 - list.get(i).getQuantity()) + "\n");
+        	}
+			writer.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }
 	
 }

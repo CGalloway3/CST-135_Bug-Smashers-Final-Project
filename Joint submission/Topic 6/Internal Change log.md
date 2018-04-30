@@ -1,5 +1,7 @@
 CST-135 Topic 6 Change log
 
+04-30-18 17:50 CST (Richard) Creating Purchase Order is fully funcional!!!
+
 04-30-18 15:21 CST (Richard) Button functionallity added for quantity sort. quicksort code spliced in as placeholder, not currently working. Once sort code works, tableview will display like alpha sort.
 
 04-30-18 15:01 CST (Richard) Alphabetization fully implemented.
