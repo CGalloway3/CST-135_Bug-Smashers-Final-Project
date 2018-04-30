@@ -10,33 +10,62 @@ package vendingmachine;
 import java.util.ArrayList;
 
 public class Quicksort {
-    private static void sortAlpha(ArrayList<Global_Inventory_Management.InventoryItem> a) {
+    public static void sortAlpha(ArrayList<InventoryManager.InventoryItem> a) {
+        System.out.println(a.size());
         sort(a, 0, a.size() - 1, 0);
+        System.out.println(a.size());
     }
 
-    private static void sort(ArrayList<Global_Inventory_Management.InventoryItem> a, int low, int high, int d) {
+    private static void sort(ArrayList<InventoryManager.InventoryItem> a, int low, int high, int d) {
         if (high <= low) return;
-        int lt = low, gt = high;
+        int lt = low, ht = high;
+        if ( a.get(low).getName().length() <= d ) return;
         int v = a.get(low).getName().charAt(d);
         int i = low + 1;
-        while (i <= gt)
+        while (i <= ht)
         {
+            if ( a.get(i).getName().length() <= d ) return;
             int t = a.get(i).getName().charAt(d);
             if (t < v) exchange(a, lt++, i++);
-            else if (t > v) exchange(a, i, gt--);
+            else if (t > v) exchange(a, i, ht--);
             else
                 i++;
         }
 
         // Recursive call
         sort(a, low, lt-1, d);
-        if(v >= 0) sort(a, lt, gt, d+1);
-        sort(a, gt+1, high, d);
+        if(v >= 0) sort(a, lt, ht, d+1);
+        sort(a, ht+1, high, d);
     }
  
-    private static void exchange(ArrayList<Global_Inventory_Management.InventoryItem> a, int i, int i1) {
-        Global_Inventory_Management.InventoryItem temp = a.get(i);
-        a.add(i, a.get(i1));
-        a.add(i1, temp);
+    private static void exchange(ArrayList<InventoryManager.InventoryItem> a, int i, int i1) {
+        InventoryManager.InventoryItem temp = a.get(i);
+        a.set(i, a.get(i1));
+        a.set(i1, temp);
+    }
+
+    static void sortNum(ArrayList<InventoryManager.InventoryItem> a) {
+        numericSort(a, 0, a.size() - 1);
+    }
+
+    private static void numericSort(ArrayList<InventoryManager.InventoryItem> a, int low, int high) {
+        if (high <= low) return;
+        int lt = low, ht = high;
+        int v = a.get(low).getQuantity();
+        int i = low + 1;
+        while (i <= ht)
+        {
+            int t = a.get(i).getQuantity();
+            if (t < v) exchange(a, lt++, i++);
+            else if (t > v) exchange(a, i, ht--);
+            else
+                i++;
+        }
+
+        // Recursive call
+        numericSort(a, low, lt-1);
+        //if(v >= 0) numericSort(a, lt, ht);
+        numericSort(a, ht+1, high);
+    
     }
 }
