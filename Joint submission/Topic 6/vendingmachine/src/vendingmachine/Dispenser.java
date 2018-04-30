@@ -388,7 +388,9 @@ public class Dispenser extends Application {
                 btnRemoteReturn.setOnAction((ActionEvent event) -> {
                 	adminStage.setScene(adminScene);
                 });
-                
+                btnRemoteLow.setOnAction((ActionEvent event) -> {
+                	Restock.getLowRemote();
+                });
                                 
                 
                 btnAdminReturn.setOnAction((ActionEvent event) -> {
