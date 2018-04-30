@@ -17,11 +17,10 @@ import vendingmachine.products.Drink;
 import vendingmachine.products.Gum;
 import vendingmachine.products.Product;
 
-public class Global_Inventory_Management {
+public class InventoryManager {
 
     // Private array lists for storing inventory items and items selected by the user for purchase.
     private final ArrayList<InventoryItem> localInventoryList = new ArrayList<>();
-    private final ArrayList<InventoryItem> remoteInventoryList = new ArrayList<>();
     private final ArrayList<InventoryItem> itemsSelectedForPurchase = new ArrayList<>();
     private int drinkItemSlot = -1;
     private int candyItemSlot = -1;
@@ -29,7 +28,7 @@ public class Global_Inventory_Management {
     private int gumItemSlot = -1;
 
     // Public default constructor that reads in the inventory file
-    public Global_Inventory_Management(){
+    public InventoryManager(){
         // Read in inventory list from file.
         loadInventoryList(); // Proposed inventory file loading method
     }
@@ -38,19 +37,42 @@ public class Global_Inventory_Management {
     public void addLocalInventoryItem(Product product, String location, int quantity){
         localInventoryList.add(new InventoryItem(product, location, quantity));
     }
-    
-    // Add an item to remote inventory
-    public void addRemoteInventoryItem(Product product, String location, int quantity){
-        remoteInventoryList.add(new InventoryItem(product, location, quantity));
+      
+    // Returns items in the itemsSelectedForPurchase array list to the localinventoryList.
+    // Used for cases where the user cancels a transaction.
+    public void returnItemsSelectedForPurchase() {
+        itemsSelectedForPurchase.forEach((i) -> {
+            i.addOneItemToStock();
+        });
+        itemsSelectedForPurchase.clear();
+    }
+
+    // Returns the array list of the items selected for purchase.
+    public ArrayList<InventoryItem> getItemsSelectedForPurchase() {
+        return this.itemsSelectedForPurchase;
     }
 
     // Returns the array list of items in the local dispensers inventory.
     public ArrayList<InventoryItem> getLocalInventoryList() {
         return this.localInventoryList;
     }
-    
-    public ArrayList<InventoryItem> getRemoteInventoryList(){
-    	return this.remoteInventoryList;
+
+    // Adds user selected item to the list of items they have selected for purchase.
+    public void addItemToProductsSelectedForPurchase(InventoryItem i) {
+        itemsSelectedForPurchase.add(i);
+        i.getOneItemFromStock();
+    }
+	
+    // Removes an item from the list of items the user has selected for purchase.
+    public void removeItemFromProductsSelectedForPurchase(InventoryItem i) {
+        itemsSelectedForPurchase.remove(i);
+        i.addOneItemToStock();
+    }
+
+    // Clears the array list of items the user selected for purchase because the user paid for them.
+    public void completePurchase() {
+        itemsSelectedForPurchase.clear();
+        // saveInventoryList(); // Proposed inventory file saving method.
     }
 
     // Loads inventory from the file.
@@ -71,27 +93,6 @@ public class Global_Inventory_Management {
                     break;
                 case "Gum":
                     addLocalInventoryItem(new Gum(scannedLineArray[0], Double.parseDouble(scannedLineArray[3])), setItemsLocation("Gum"), Integer.parseInt(scannedLineArray[2]));
-                    break;
-                default:
-                    throw new UnsupportedOperationException("Unsupported file type.");
-            }
-        }
-        Scanner remoteInventoryFileScanner = new Scanner(getClass().getResourceAsStream("files/product lists/Clean Coders Product List.csv"));
-        while (remoteInventoryFileScanner.hasNextLine()) {
-            String scannedLine = remoteInventoryFileScanner.nextLine();
-            String[] scannedLineArray = scannedLine.split(",");
-            switch ( scannedLineArray[1] ) {
-                case "Drink":
-                    addRemoteInventoryItem(new Drink(scannedLineArray[0], Double.parseDouble(scannedLineArray[3])), "Not in local machine", Integer.parseInt(scannedLineArray[2]));
-                    break;
-                case "Candy":
-                    addRemoteInventoryItem(new Candy(scannedLineArray[0], Double.parseDouble(scannedLineArray[3])), "Not in local machine", Integer.parseInt(scannedLineArray[2]));
-                    break;
-                case "Chips":
-                    addRemoteInventoryItem(new Chips(scannedLineArray[0], Double.parseDouble(scannedLineArray[3])), "Not in local machine", Integer.parseInt(scannedLineArray[2]));
-                    break;
-                case "Gum":
-                    addRemoteInventoryItem(new Gum(scannedLineArray[0], Double.parseDouble(scannedLineArray[3])), "Not in local machine", Integer.parseInt(scannedLineArray[2]));
                     break;
                 default:
                     throw new UnsupportedOperationException("Unsupported file type.");
@@ -143,7 +144,17 @@ public class Global_Inventory_Management {
            this.location = location;
            this.quantity = quantity;
         }
-                
+       
+        // Add one item to the quantity of items in the machine
+        public void addOneItemToStock() {
+            this.quantity += 1;
+        }
+        
+        // Remove on item from the quantity of items in the machine.
+        public void getOneItemFromStock() {
+            this.quantity -= 1;
+        }
+        
         // Gets the product that is this current inventory item.
         public Product getProduct() {
             return this.product;

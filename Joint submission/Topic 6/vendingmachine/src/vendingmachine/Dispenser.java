@@ -30,11 +30,12 @@ import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import vendingmachine.InventoryManager.InventoryItem;
 
 public class Dispenser extends Application {
     
     // Managers, Controllers, and flags.
-    private final Global_Inventory_Management inventoryManager = new Global_Inventory_Management();
+    private final InventoryManager inventoryManager = new InventoryManager();
     private final AnimationController animationController = new AnimationController();
     private final TransactionManager transactionManager = new TransactionManager(this);
     private final Restock Restock = new Restock();
@@ -441,7 +442,7 @@ public class Dispenser extends Application {
         btnBackToCategories.setVisible(true);
         
         // iterate through all products
-        for (Global_Inventory_Management.InventoryItem i : inventoryManager.getLocalInventoryList()) {
+        for (InventoryManager.InventoryItem i : inventoryManager.getLocalInventoryList()) {
             // If the product is in the correct category and in the correct slot to be displayed on this screen.
             if (i.getProduct().getClass().getSimpleName().equalsIgnoreCase(itemGridCategory) && i.getLocation().startsWith((String.valueOf((char)(64+itemGridPageNumber))))) {
 

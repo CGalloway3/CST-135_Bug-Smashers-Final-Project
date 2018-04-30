@@ -1,5 +1,7 @@
 CST-135 Topic 6 Change log
 
+4-30-18  12:45 CST (Richard) Restored InventoryManager and seperated its funcionality from Global_Inventory_Management. Also changed remote tableview to match local tableview.
+
 04-29-18 20:51 CST (Richard) Added Restock class, trying to implement sorting functionallity
 
 04-29-18 19:41 CST (Richard) Added some scenes to Admin Stage, still in progress

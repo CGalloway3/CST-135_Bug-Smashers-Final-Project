@@ -63,15 +63,18 @@ public class Restock extends Global_Inventory_Management{
         restockStage.initModality(Modality.APPLICATION_MODAL);
         restockStage.setAlwaysOnTop(true); 
 
-        TableView<Global_Inventory_Management.InventoryItem> restockTable = new TableView<>(FXCollections.observableArrayList(lowLocal));
+        TableView<Global_Inventory_Management.InventoryItem> restockTable = new TableView<>(FXCollections.observableArrayList(lowRemote));
 
         TableColumn<Global_Inventory_Management.InventoryItem, String> itemNameColumn = new TableColumn<>("Product Name");
         itemNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+        
+        TableColumn<Global_Inventory_Management.InventoryItem, String> itemLocationColumn = new TableColumn<>("Location");
+        itemLocationColumn.setCellValueFactory(new PropertyValueFactory<>("location"));
 
         TableColumn<Global_Inventory_Management.InventoryItem, String> itemQuantityColumn = new TableColumn<>("Quantity");
         itemQuantityColumn.setCellValueFactory(new PropertyValueFactory<>("quantity"));            
 
-        restockTable.getColumns().addAll(itemNameColumn, itemQuantityColumn);
+        restockTable.getColumns().addAll(itemNameColumn, itemLocationColumn, itemQuantityColumn);
         restockTable.setItems(FXCollections.observableArrayList(lowLocal));
 
         Scene restockScene = new Scene(restockTable);

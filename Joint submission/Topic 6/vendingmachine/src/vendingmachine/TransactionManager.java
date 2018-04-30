@@ -81,7 +81,7 @@ public class TransactionManager {
         return moneyInsertedPropertyString;
     }
     
-    public void completeTransaction (Global_Inventory_Management iM) {
+    public void completeTransaction (InventoryManager inventoryManager) {
         final Stage receiptStage = new Stage();
         receiptStage.initModality(Modality.APPLICATION_MODAL);
         receiptStage.setAlwaysOnTop(true);
@@ -89,7 +89,7 @@ public class TransactionManager {
         VBox receiptVBox = new VBox(5);
         receiptVBox.setPadding(new Insets(10));
 
-        if (iM.getItemsSelectedForPurchase().isEmpty()) {
+        if (inventoryManager.getItemsSelectedForPurchase().isEmpty()) {
             receiptVBox.getChildren().add(new Text("You have not selected anything to buy."));
         }
 
@@ -99,12 +99,12 @@ public class TransactionManager {
         }
 
         else {
-            for (Global_Inventory_Management.InventoryItem i : iM.getItemsSelectedForPurchase()) {
+            for (InventoryManager.InventoryItem i : inventoryManager.getItemsSelectedForPurchase()) {
                 Button btnReceiptItem = new Button(i.getProduct().toString());
                 receiptVBox.getChildren().add(btnReceiptItem); 
                 btnReceiptItem.prefWidthProperty().bind(receiptVBox.widthProperty());
             }
-            iM.completePurchase();
+            inventoryManager.completePurchase();
             receiptVBox.getChildren().add(new Text("Total: "));
             receiptVBox.getChildren().add(txtReceiptCost);
             setMoneyInserted(getMoneyInserted() - getProductsCost());
@@ -133,29 +133,29 @@ public class TransactionManager {
         receiptStage.show();
             
     }
-    public void displayCart (Global_Inventory_Management iM) {
+    public void displayCart (InventoryManager inventoryManager) {
         final Stage cartStage = new Stage();
         cartStage.initModality(Modality.APPLICATION_MODAL);
         VBox cartVBox = new VBox(5);
         cartVBox.setPadding(new Insets(10));
-        if (iM.getItemsSelectedForPurchase().isEmpty()) {
+        if (inventoryManager.getItemsSelectedForPurchase().isEmpty()) {
                 cartVBox.getChildren().add(new Text("Your cart is empty"));
         }
         else {
                 // Added functionallity for dynamically added and removed buttons.
                 cartVBox.getChildren().add(new Text("Click on an item to remove it"));
-                for (Global_Inventory_Management.InventoryItem i : iM.getItemsSelectedForPurchase()) {
+                for (InventoryManager.InventoryItem i : inventoryManager.getItemsSelectedForPurchase()) {
                     Button btnCartItem = new Button(i.getProduct().toString());
                     btnCartItem.prefWidthProperty().bind(cartVBox.widthProperty());
                     btnCartItem.setContentDisplay(ContentDisplay.TOP);                                     
                     cartVBox.getChildren().add(btnCartItem);
                     btnCartItem.setOnAction((event) -> {
                         cartVBox.getChildren().remove(btnCartItem);
-                        iM.removeItemFromProductsSelectedForPurchase(i);
+                        inventoryManager.removeItemFromProductsSelectedForPurchase(i);
                         removeProductsCost(i.getProduct().getPrice());
                         dispenser.populateItemGrid();
                         cartStage.hide();
-                        displayCart(iM);
+                        displayCart(inventoryManager);
                     });
                 }
         Button btnSeperator = new Button();
