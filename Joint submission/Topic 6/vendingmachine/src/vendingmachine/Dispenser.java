@@ -328,11 +328,35 @@ public class Dispenser extends Application {
         customerStage.setTitle("Speedy Vend 5000");  
         customerStage.setScene(new Scene(customerPane, 710, 500));
 
-                // Admin page not fully implemented. Code below is just filler code
-                Button btnAdmin = new Button("Admin Stage");
+                // Admin page
+                Button btnAdminReturn = new Button("Back to customer mode");
                 adminStage.setTitle("Admin Stage");
-                adminStage.setScene(new Scene(btnAdmin, 300, 300));
+                VBox adminVBox = new VBox();
+                Text adminTitle = new Text("Select a machine to access options");
+                Button btnLocal = new Button("Local Machine");
+                Button btnRemote = new Button("Remote Machine");
+                adminVBox.getChildren().addAll(adminTitle, btnLocal, btnRemote, btnAdminReturn);
+                Scene adminScene = new Scene(adminVBox, 710, 500);
+                adminStage.setScene(adminScene);
+                
+                Button btnLocalAz = new Button("View all items in alphebetical order");
+                Button btnLocal12 = new Button("View all items sorted by quantity");
+                Button btnLocalLow = new Button("View items with low inventory");
+                Button btnAdmin = new Button("<< Back");
+                VBox localVBox = new VBox();
+                localVBox.getChildren().addAll(btnLocalAz, btnLocal12, btnLocalLow, btnAdmin);
+                Scene localScene = new Scene(localVBox, 710, 500);
+                btnLocal.setOnAction((ActionEvent event) -> {
+                	adminStage.setScene(localScene);
+                });
+                
+                
+                
                 btnAdmin.setOnAction((ActionEvent event) -> {
+                	adminStage.setScene(adminScene);
+                });
+                
+                btnAdminReturn.setOnAction((ActionEvent event) -> {
                     adminStage.hide();
                     applicationStage.show();
                 });

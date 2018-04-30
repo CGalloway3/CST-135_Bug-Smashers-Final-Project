@@ -139,19 +139,19 @@ public class Global_Inventory_Management {
         switch ( category ) {
             case "Drink":
                 drinkItemSlot++;
-                System.out.println("Drink: " +(String.valueOf((char)(65+drinkItemSlot / 9))) + (drinkItemSlot % 9 + 1));
+                //System.out.println("Drink: " +(String.valueOf((char)(65+drinkItemSlot / 9))) + (drinkItemSlot % 9 + 1));
                 return (String.valueOf((char)(65+drinkItemSlot / 9))) + (drinkItemSlot % 9 + 1);
             case "Candy":
                 candyItemSlot++;
-                System.out.println("Candy: " + (String.valueOf((char)(65+candyItemSlot / 9))) + (candyItemSlot % 9 + 1));
+                //System.out.println("Candy: " + (String.valueOf((char)(65+candyItemSlot / 9))) + (candyItemSlot % 9 + 1));
                 return (String.valueOf((char)(65+candyItemSlot / 9))) + (candyItemSlot % 9 + 1);
             case "Chips":
                 chipsItemSlot++;
-                System.out.println("Chips: " + (String.valueOf((char)(65+chipsItemSlot / 9))) + (chipsItemSlot % 9 + 1));
+                //System.out.println("Chips: " + (String.valueOf((char)(65+chipsItemSlot / 9))) + (chipsItemSlot % 9 + 1));
                 return (String.valueOf((char)(65+chipsItemSlot / 9))) + (chipsItemSlot % 9 + 1);
             case "Gum":
                 gumItemSlot++;
-                System.out.println("Gum: " + (String.valueOf((char)(65+gumItemSlot / 9))) + (gumItemSlot % 9 + 1));
+                //System.out.println("Gum: " + (String.valueOf((char)(65+gumItemSlot / 9))) + (gumItemSlot % 9 + 1));
                 return (String.valueOf((char)(65+gumItemSlot / 9))) + (gumItemSlot % 9 + 1);
             default:
                 return "ERROR";
