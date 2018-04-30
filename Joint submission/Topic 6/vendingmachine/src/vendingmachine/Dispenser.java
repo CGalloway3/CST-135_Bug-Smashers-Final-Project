@@ -389,6 +389,9 @@ public class Dispenser extends Application {
                 	adminStage.setTitle("Remote Machine");
                 	adminStage.setScene(remoteScene);
                 });
+                btnRemoteAz.setOnAction((ActionEvent event) -> {
+                	Global_Inventory_Management.sortAlphaRemote();
+                });
                 btnRemoteReturn.setOnAction((ActionEvent event) -> {
                 	adminStage.setScene(adminScene);
                 });

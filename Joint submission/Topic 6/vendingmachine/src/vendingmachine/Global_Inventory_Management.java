@@ -10,6 +10,7 @@
 package vendingmachine;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Scanner;
 
 import javafx.collections.FXCollections;
@@ -110,38 +111,38 @@ public class Global_Inventory_Management {
     	sortAlpha(getLocalInventoryList());
     }
     
+    public void sortAlphaRemote() {
+    	sortAlpha(getRemoteInventoryList());
+    }
+    
     public void sortAlpha(ArrayList<InventoryItem> a) {
-        sort(a, 0, a.size() - 1, 0);
+        Collections.sort(a);
         
+        final Stage alphaStage = new Stage();
+        alphaStage.initModality(Modality.APPLICATION_MODAL);
+        alphaStage.setAlwaysOnTop(true); 
+
+        TableView<InventoryItem> alphaTable = new TableView<>(FXCollections.observableArrayList(a));
+
+        TableColumn<InventoryItem, String> itemNameColumn = new TableColumn<>("Product Name");
+        itemNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         
+        TableColumn<InventoryItem, String> itemLocationColumn = new TableColumn<>("Location");
+        itemLocationColumn.setCellValueFactory(new PropertyValueFactory<>("location"));                  
+
+        TableColumn<InventoryItem, String> itemQuantityColumn = new TableColumn<>("Quantity");
+        itemQuantityColumn.setCellValueFactory(new PropertyValueFactory<>("quantity"));            
+
+        alphaTable.getColumns().addAll(itemNameColumn, itemLocationColumn, itemQuantityColumn);
+        alphaTable.setItems(FXCollections.observableArrayList(a));
+
+        Scene alphaScene = new Scene(alphaTable);
+        alphaStage.setScene(alphaScene);
+        alphaStage.show();
         
     }
 
-    private static void sort(ArrayList<InventoryItem> a, int low, int high, int d) {
-        if (high <= low) return;
-        int lt = low, gt = high;
-        int v = a.get(low).getName().charAt(d);
-        int i = low + 1;
-        while (i <= gt)
-        {
-            int t = a.get(i).getName().charAt(d);
-            if (t < v) exchange(a, lt++, i++);
-            else if (t > v) exchange(a, i, gt--);
-            else
-                i++;
-        }
-
-        // Recursive call
-        sort(a, low, lt-1, d);
-        if(v >= 0) sort(a, lt, gt, d+1);
-        sort(a, gt+1, high, d);
-    }
- 
-    private static void exchange(ArrayList<InventoryItem> a, int i, int i1) {
-        InventoryItem temp = a.get(i);
-        a.add(i, a.get(i1));
-        a.add(i1, temp);
-    }
+   
     
     
     
@@ -178,7 +179,7 @@ public class Global_Inventory_Management {
 
 
     // Public inner Class InventoryItem turns products into items in the machines inventory.
-    public class InventoryItem {
+    public class InventoryItem implements Comparable<InventoryItem>{
         private final Product product;
         private final String productName;
         private final double productPrice;
@@ -223,5 +224,13 @@ public class Global_Inventory_Management {
         public String getInventoryItemType() {
             return product.getClass().getSimpleName();
         }
+
+		@Override
+		public int compareTo(InventoryItem item) {
+			if(this.getName() != null && item.getName() != null) {
+				return this.getName().compareToIgnoreCase(item.getName());
+			}
+			return 0;
+		}
     }
 }
