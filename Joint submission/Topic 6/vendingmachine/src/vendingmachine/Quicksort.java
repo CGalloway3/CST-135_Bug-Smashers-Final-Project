@@ -8,7 +8,6 @@
 package vendingmachine;
 
 import java.util.ArrayList;
-import sun.text.normalizer.UTF16;
 
 
 
@@ -21,11 +20,11 @@ public class Quicksort {
     {
         if (high <= low) return;
         int lt = low, gt = high;
-        int v = UTF16.charAt(a.get(low).getName(), d);
+        int v = a.get(low).getName().charAt(d);
         int i = low + 1;
         while (i <= gt)
         {
-            int t = UTF16.charAt(a.get(i).getName(), d);
+            int t = a.get(i).getName().charAt(d);
             if (t < v) exchange(a, lt++, i++);
             else if (t > v) exchange(a, i, gt--);
             else
