@@ -4,7 +4,7 @@
 *    Summary: Class to manage transactions
 *    Author: Chad Galloway
 *    Date Created: April 24th, 2018
-*    Last Update: April 24th, 2018
+*    Last Update: April 30th, 2018
 **/
 
 package vendingmachine;
@@ -90,7 +90,7 @@ public class TransactionManager {
         receiptVBox.setPadding(new Insets(10));
 
         if (iM.getItemsSelectedForPurchase().isEmpty()) {
-            receiptVBox.getChildren().add(new Text("Your have not selected anything to buy."));
+            receiptVBox.getChildren().add(new Text("You have not selected anything to buy."));
         }
 
         else if ( getMoneyInserted() < getProductsCost() ) {
