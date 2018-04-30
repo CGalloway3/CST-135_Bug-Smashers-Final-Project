@@ -2,20 +2,25 @@ package vendingmachine;
 
 import java.util.ArrayList;
 
-import vendingmachine.Global_Inventory_Management.InventoryItem;
-
-public class Restock {
+public class Restock extends Global_Inventory_Management{
 	
-	public ArrayList<InventoryItem> getLowItems(ArrayList<InventoryItem> list) {
-		ArrayList<InventoryItem> lowItems = new ArrayList<>();
-		for (int i = 0; i < list.size(); i++ ) {
-			if (list.get(i).getQuantity() <= 3) {
-				lowItems.add(list.get(i));
+	public static ArrayList<InventoryItem> lowLocal = new ArrayList<>();
+	public static ArrayList<InventoryItem> lowRemote = new ArrayList<>();
+	public static ArrayList<InventoryItem> alphLocal = new ArrayList<>();
+	public static ArrayList<InventoryItem> alphRemote = new ArrayList<>();
+	public static ArrayList<InventoryItem> numLocal = new ArrayList<>();
+	public static ArrayList<InventoryItem> numRemote = new ArrayList<>();
+	
+	
+	public ArrayList<InventoryItem> getLowLocal() {
+		for (int i = 0; i < getLocalInventoryList().size(); i++ ) {
+			if (getLocalInventoryList().get(i).getQuantity() <= 3) {
+				lowLocal.add(getLocalInventoryList().get(i));
 			}
 		}
-		
-		
-		return lowItems;				
+		return lowLocal;						
 	}
+	
+	
 	
 }

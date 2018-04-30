@@ -353,8 +353,11 @@ public class Dispenser extends Application {
                 	adminStage.setScene(localScene);
                 });
                 btnLocalLow.setOnAction((ActionEvent event) -> {
-                	
-                	
+                	VBox localLow = new VBox();
+                	for (Global_Inventory_Management.InventoryItem i : Restock.lowLocal) {
+                		Button btnLocalLowItem = new Button(i.getName());
+                		
+                	}
                 	
                 });
                 btnLocalReturn.setOnAction((ActionEvent event) -> {
