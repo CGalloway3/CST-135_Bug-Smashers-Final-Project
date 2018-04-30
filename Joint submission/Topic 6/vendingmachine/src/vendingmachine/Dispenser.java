@@ -8,8 +8,6 @@
 **/
 
 package vendingmachine;
-import vendingmachine.Global_Inventory_Management.InventoryItem;
-
 import java.util.ArrayList;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
@@ -39,6 +37,7 @@ public class Dispenser extends Application {
     private final Global_Inventory_Management inventoryManager = new Global_Inventory_Management();
     private final AnimationController animationController = new AnimationController();
     private final TransactionManager transactionManager = new TransactionManager(this);
+    private final Restock Restock = new Restock();
     private Boolean adminMode = false;  // adminMode flag
     private String itemGridCategory;
     private int itemGridPageNumber = 1;
@@ -349,6 +348,7 @@ public class Dispenser extends Application {
                 localVBox.getChildren().addAll(btnLocalAz, btnLocal12, btnLocalLow, btnLocalReturn);
                 Scene localScene = new Scene(localVBox, 710, 500);
                 btnLocal.setOnAction((ActionEvent event) -> {
+                	
                 	adminStage.setTitle("Local Machine");
                 	adminStage.setScene(localScene);
                 });
