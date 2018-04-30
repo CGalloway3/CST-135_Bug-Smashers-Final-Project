@@ -115,7 +115,7 @@ public class Global_Inventory_Management {
     	sortAlpha(getRemoteInventoryList());
     }
     
-    public void sortAlpha(ArrayList<InventoryItem> a) {
+    private static void sortAlpha(ArrayList<InventoryItem> a) {
         Collections.sort(a);
         
         final Stage alphaStage = new Stage();
@@ -142,7 +142,69 @@ public class Global_Inventory_Management {
         
     }
 
-   
+    public void sortNumLocal() {
+    	sortNum(getLocalInventoryList());
+    }
+    
+    public void sortNumRemote() {
+    	sortNum(getRemoteInventoryList());
+    }
+    
+    private static void sortNum(ArrayList<InventoryItem> a) {
+        sort(a, 0, a.size() - 1, 0);
+        final Stage numStage = new Stage();
+        numStage.initModality(Modality.APPLICATION_MODAL);
+        numStage.setAlwaysOnTop(true); 
+
+        TableView<InventoryItem> numTable = new TableView<>(FXCollections.observableArrayList(a));
+
+        TableColumn<InventoryItem, String> itemNameColumn = new TableColumn<>("Product Name");
+        itemNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+        
+        TableColumn<InventoryItem, String> itemLocationColumn = new TableColumn<>("Location");
+        itemLocationColumn.setCellValueFactory(new PropertyValueFactory<>("location"));                  
+
+        TableColumn<InventoryItem, String> itemQuantityColumn = new TableColumn<>("Quantity");
+        itemQuantityColumn.setCellValueFactory(new PropertyValueFactory<>("quantity"));            
+
+        numTable.getColumns().addAll(itemNameColumn, itemLocationColumn, itemQuantityColumn);
+        numTable.setItems(FXCollections.observableArrayList(a));
+
+        Scene numScene = new Scene(numTable);
+        numStage.setScene(numScene);
+        numStage.show();
+    }
+
+    private static void sort(ArrayList<InventoryItem> a, int low, int high, int d) {
+        if (high <= low) return;
+        int lt = low, gt = high;
+        int v = a.get(low).getQuantity();
+        int i = low + 1;
+        while (i <= gt)
+        {
+            int t = a.get(i).getQuantity();
+            if (t < v) exchange(a, lt++, i++);
+            else if (t > v) exchange(a, i, gt--);
+            else
+                i++;
+        }
+
+        // Recursive call
+        sort(a, low, lt-1, d);
+        if(v >= 0) sort(a, lt, gt, d+1);
+        sort(a, gt+1, high, d);
+    }
+ 
+    private static void exchange(ArrayList<InventoryItem> a, int i, int i1) {
+        InventoryItem temp = a.get(i);
+        a.add(i, a.get(i1));
+        a.add(i1, temp);
+    }
+    
+    
+    
+    
+    
     
     
     

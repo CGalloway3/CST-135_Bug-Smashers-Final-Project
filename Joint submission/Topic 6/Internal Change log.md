@@ -1,5 +1,7 @@
 CST-135 Topic 6 Change log
 
+04-30-18 15:21 CST (Richard) Button functionallity added for quantity sort. quicksort code spliced in as placeholder, not currently working. Once sort code works, tableview will display like alpha sort.
+
 04-30-18 15:01 CST (Richard) Alphabetization fully implemented.
 
 04-30-18 14:21 CST (Richard) Sliced in sort code to G.I.M. doesnt seem to work. began setting up methods to sort and display newly sorted list.

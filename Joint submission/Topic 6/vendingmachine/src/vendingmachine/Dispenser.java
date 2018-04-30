@@ -366,6 +366,9 @@ public class Dispenser extends Application {
                 btnLocalAz.setOnAction((ActionEvent event) -> {
                 	Global_Inventory_Management.sortAlphaLocal();
                 });
+                btnLocal12.setOnAction((ActionEvent event) -> {
+                	Global_Inventory_Management.sortNumLocal();
+                });
                 btnLocalLow.setOnAction((ActionEvent event) -> {
                 	Restock.getLowLocal();
                 });
@@ -391,6 +394,9 @@ public class Dispenser extends Application {
                 });
                 btnRemoteAz.setOnAction((ActionEvent event) -> {
                 	Global_Inventory_Management.sortAlphaRemote();
+                });
+                btnRemote12.setOnAction((ActionEvent event) -> {
+                	Global_Inventory_Management.sortNumRemote();
                 });
                 btnRemoteReturn.setOnAction((ActionEvent event) -> {
                 	adminStage.setScene(adminScene);
