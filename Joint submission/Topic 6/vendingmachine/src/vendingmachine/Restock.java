@@ -3,7 +3,9 @@ package vendingmachine;
 import java.util.ArrayList;
 import javafx.collections.FXCollections;
 import javafx.scene.Scene;
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -18,13 +20,14 @@ public class Restock extends Global_Inventory_Management{
 	
 	public Restock() {
 		//getLowLocal();
-		getLowRemote();
+		//getLowRemote();
 	}
 	
 	public void getLowLocal() {
 		for (int i = 0; i < getLocalInventoryList().size(); i++ ) {
 			if (getLocalInventoryList().get(i).getQuantity() <= 3) {
 				lowLocal.add(getLocalInventoryList().get(i));
+                                System.out.println("vendingmachine.Restock.getLowLocal() Adding: " + getLocalInventoryList().get(i));
 			}
 		}
                 
@@ -33,6 +36,12 @@ public class Restock extends Global_Inventory_Management{
                 restockStage.setAlwaysOnTop(true); 
                 
                 TableView<Global_Inventory_Management.InventoryItem> restockTable = new TableView<>(FXCollections.observableArrayList(lowLocal));
+                
+                TableColumn<Global_Inventory_Management.InventoryItem, String> itemNameColumn = new TableColumn<>("Product Name");
+                itemNameColumn.setCellValueFactory(new PropertyValueFactory<>("productName"));
+                
+                restockTable.getColumns().addAll(itemNameColumn);
+                restockTable.setItems(FXCollections.observableArrayList(lowLocal));
 
                 Scene restockScene = new Scene(restockTable);
                 restockStage.setScene(restockScene);

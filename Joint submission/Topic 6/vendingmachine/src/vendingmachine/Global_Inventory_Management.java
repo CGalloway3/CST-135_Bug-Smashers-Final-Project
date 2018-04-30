@@ -162,12 +162,16 @@ public class Global_Inventory_Management {
     // Public inner Class InventoryItem turns products into items in the machines inventory.
     public class InventoryItem {
         private final Product product;
+        private final String productName;
+        private final double productPrice;
         private String location;
         private int quantity;
         
         // Inventory Item constructor.
         public InventoryItem(Product product, String location, int quantity){
            this.product = product;
+           this.productName = product.getName();
+           this.productPrice = ( product.getPrice() / 100 );
            this.location = location;
            this.quantity = quantity;
         }
