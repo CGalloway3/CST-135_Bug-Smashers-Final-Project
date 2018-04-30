@@ -38,9 +38,12 @@ public class Restock extends Global_Inventory_Management{
                 TableView<Global_Inventory_Management.InventoryItem> restockTable = new TableView<>(FXCollections.observableArrayList(lowLocal));
                 
                 TableColumn<Global_Inventory_Management.InventoryItem, String> itemNameColumn = new TableColumn<>("Product Name");
-                itemNameColumn.setCellValueFactory(new PropertyValueFactory<>("productName"));
+                itemNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
                 
-                restockTable.getColumns().addAll(itemNameColumn);
+                TableColumn<Global_Inventory_Management.InventoryItem, String> itemQuantityColumn = new TableColumn<>("Quantity");
+                itemQuantityColumn.setCellValueFactory(new PropertyValueFactory<>("quantity"));            
+                
+                restockTable.getColumns().addAll(itemNameColumn, itemQuantityColumn);
                 restockTable.setItems(FXCollections.observableArrayList(lowLocal));
 
                 Scene restockScene = new Scene(restockTable);
@@ -53,7 +56,26 @@ public class Restock extends Global_Inventory_Management{
 			if (getRemoteInventoryList().get(i).getQuantity() <= 3) {
 				lowRemote.add(getRemoteInventoryList().get(i));
 			}
-		}						
+		}
+                final Stage restockStage = new Stage();
+                restockStage.initModality(Modality.APPLICATION_MODAL);
+                restockStage.setAlwaysOnTop(true); 
+                
+                TableView<Global_Inventory_Management.InventoryItem> restockTable = new TableView<>(FXCollections.observableArrayList(lowLocal));
+                
+                TableColumn<Global_Inventory_Management.InventoryItem, String> itemNameColumn = new TableColumn<>("Product Name");
+                itemNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+                
+                TableColumn<Global_Inventory_Management.InventoryItem, String> itemQuantityColumn = new TableColumn<>("Quantity");
+                itemQuantityColumn.setCellValueFactory(new PropertyValueFactory<>("quantity"));            
+                
+                restockTable.getColumns().addAll(itemNameColumn, itemQuantityColumn);
+                restockTable.setItems(FXCollections.observableArrayList(lowLocal));
+
+                Scene restockScene = new Scene(restockTable);
+                restockStage.setScene(restockScene);
+                restockStage.show();
+                
 	}	
 	
 }
