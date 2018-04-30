@@ -2,10 +2,15 @@ package vendingmachine;
 
 import java.util.ArrayList;
 import javafx.collections.FXCollections;
+import javafx.event.ActionEvent;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -58,6 +63,10 @@ public class Restock extends Global_Inventory_Management{
         final Stage restockStage = new Stage();
         restockStage.initModality(Modality.APPLICATION_MODAL);
         restockStage.setAlwaysOnTop(true); 
+        Button btnRemoteRestock = new Button("Click to order products to fill");
+        VBox remoteRestock = new VBox(15);
+        remoteRestock.setAlignment(Pos.CENTER);
+        remoteRestock.setPadding(new Insets(10));
 
         TableView<Global_Inventory_Management.InventoryItem> restockTableRemote = new TableView<>(FXCollections.observableArrayList(lowRemote));
 
@@ -72,14 +81,21 @@ public class Restock extends Global_Inventory_Management{
 
         restockTableRemote.getColumns().addAll(itemNameColumnRemote, itemLocationColumnRemote, itemQuantityColumnRemote);
         restockTableRemote.setItems(FXCollections.observableArrayList(lowRemote));
-
-        Scene restockSceneRemote = new Scene(restockTableRemote);
+        
+        remoteRestock.getChildren().addAll(restockTableRemote, btnRemoteRestock);
+        Scene restockSceneRemote = new Scene(remoteRestock, 309, 500);
         restockStage.setScene(restockSceneRemote);
         restockStage.show();
-
+        
+        btnRemoteRestock.setOnAction((ActionEvent event)-> {
+        	generatePurchaseOrder();
+        });
+        
     }
     
-    public void generatePurchaseOrder() {
+    
+    
+    public static void generatePurchaseOrder() {
         
     }
 	
