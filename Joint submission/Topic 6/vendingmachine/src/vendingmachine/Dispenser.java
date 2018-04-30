@@ -353,11 +353,15 @@ public class Dispenser extends Application {
                 	adminStage.setScene(localScene);
                 });
                 btnLocalLow.setOnAction((ActionEvent event) -> {
-                	VBox localLow = new VBox();
-                	for (Global_Inventory_Management.InventoryItem i : Restock.lowLocal) {
-                		Button btnLocalLowItem = new Button(i.getName());
+                	VBox localLowVBox = new VBox();
+                	Button[] btnLocalLowItem = new Button[100];
+                	for (int i = 0; i < Restock.lowLocal.size(); i++) {
+                		btnLocalLowItem[i] = new Button(Restock.lowLocal.get(i).getName());
+                		localLowVBox.getChildren().add(btnLocalLowItem[i]);
                 		
                 	}
+                	Scene localLowScene = new Scene(localLowVBox, 710, 500);
+                	adminStage.setScene(localLowScene);
                 	
                 });
                 btnLocalReturn.setOnAction((ActionEvent event) -> {

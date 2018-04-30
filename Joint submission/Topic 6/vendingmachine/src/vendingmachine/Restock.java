@@ -21,6 +21,13 @@ public class Restock extends Global_Inventory_Management{
 		return lowLocal;						
 	}
 	
-	
+	public ArrayList<InventoryItem> getLowRemote() {
+		for (int i = 0; i < getRemoteInventoryList().size(); i++ ) {
+			if (getRemoteInventoryList().get(i).getQuantity() <= 3) {
+				lowRemote.add(getRemoteInventoryList().get(i));
+			}
+		}
+		return lowRemote;						
+	}	
 	
 }
