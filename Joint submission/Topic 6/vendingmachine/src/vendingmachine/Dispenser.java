@@ -331,20 +331,30 @@ public class Dispenser extends Application {
 
                 // Admin page
                 Button btnAdminReturn = new Button("Back to customer mode");
+                btnAdminReturn.setMinWidth(150);
                 adminStage.setTitle("Admin Stage");
-                VBox adminVBox = new VBox();
+                VBox adminVBox = new VBox(10);
+                adminVBox.setAlignment(Pos.CENTER);
+                adminVBox.setPadding(new Insets(10));
                 Text adminTitle = new Text("Select a machine to access options");
                 Button btnLocal = new Button("Local Machine");
+                btnLocal.setMinWidth(150);
                 Button btnRemote = new Button("Remote Machine");
+                btnRemote.setMinWidth(150);
                 adminVBox.getChildren().addAll(adminTitle, btnLocal, btnRemote, btnAdminReturn);
                 Scene adminScene = new Scene(adminVBox, 710, 500);
                 adminStage.setScene(adminScene);
                 
                 Button btnLocalAz = new Button("View all items in alphebetical order");
+                btnLocalAz.setMinWidth(200);
                 Button btnLocal12 = new Button("View all items sorted by quantity");
+                btnLocal12.setMinWidth(200);
                 Button btnLocalLow = new Button("View items with low inventory");
+                btnLocalLow.setMinWidth(200);
                 Button btnLocalReturn = new Button("<< Back");
-                VBox localVBox = new VBox();
+                VBox localVBox = new VBox(10);
+                localVBox.setAlignment(Pos.CENTER);
+                localVBox.setPadding(new Insets(10));
                 localVBox.getChildren().addAll(btnLocalAz, btnLocal12, btnLocalLow, btnLocalReturn);
                 Scene localScene = new Scene(localVBox, 710, 500);
                 btnLocal.setOnAction((ActionEvent event) -> {
@@ -360,10 +370,15 @@ public class Dispenser extends Application {
                 });
                 
                 Button btnRemoteAz = new Button("View all items in alphebetical order");
+                btnRemoteAz.setMinWidth(200);
                 Button btnRemote12 = new Button("View all items sorted by quantity");
+                btnRemote12.setMinWidth(200);
                 Button btnRemoteLow = new Button("View items with low inventory");
+                btnRemoteLow.setMinWidth(200);
                 Button btnRemoteReturn = new Button("<< Back");
-                VBox remoteVBox = new VBox();
+                VBox remoteVBox = new VBox(10);
+                remoteVBox.setAlignment(Pos.CENTER);
+                remoteVBox.setPadding(new Insets(10));
                 remoteVBox.getChildren().addAll(btnRemoteAz, btnRemote12, btnRemoteLow, btnRemoteReturn);
                 Scene remoteScene = new Scene(remoteVBox, 710, 500);
                 btnRemote.setOnAction((ActionEvent event) -> {
