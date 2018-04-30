@@ -1,6 +1,11 @@
 package vendingmachine;
 
 import java.util.ArrayList;
+import javafx.collections.FXCollections;
+import javafx.scene.Scene;
+import javafx.scene.control.TableView;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 public class Restock extends Global_Inventory_Management{
 	
@@ -12,7 +17,7 @@ public class Restock extends Global_Inventory_Management{
 	public ArrayList<InventoryItem> numRemote = new ArrayList<>();
 	
 	public Restock() {
-		getLowLocal();
+		//getLowLocal();
 		getLowRemote();
 	}
 	
@@ -21,7 +26,17 @@ public class Restock extends Global_Inventory_Management{
 			if (getLocalInventoryList().get(i).getQuantity() <= 3) {
 				lowLocal.add(getLocalInventoryList().get(i));
 			}
-		}						
+		}
+                
+                final Stage restockStage = new Stage();
+                restockStage.initModality(Modality.APPLICATION_MODAL);
+                restockStage.setAlwaysOnTop(true); 
+                
+                TableView<Global_Inventory_Management.InventoryItem> restockTable = new TableView<>(FXCollections.observableArrayList(lowLocal));
+
+                Scene restockScene = new Scene(restockTable);
+                restockStage.setScene(restockScene);
+                restockStage.show();
 	}
 	
 	public void getLowRemote() {
