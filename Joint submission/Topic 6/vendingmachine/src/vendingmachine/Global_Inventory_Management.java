@@ -114,16 +114,16 @@ public class Global_Inventory_Management {
             String[] scannedLineArray = scannedLine.split(",");
             switch ( scannedLineArray[1] ) {
                 case "Drink":
-                    addRemoteInventoryItem(new Drink(scannedLineArray[0], Double.parseDouble(scannedLineArray[3])), setItemsLocation("Drink"), Integer.parseInt(scannedLineArray[2]));
+                    addRemoteInventoryItem(new Drink(scannedLineArray[0], Double.parseDouble(scannedLineArray[3])), "Not in local machine", Integer.parseInt(scannedLineArray[2]));
                     break;
                 case "Candy":
-                    addRemoteInventoryItem(new Candy(scannedLineArray[0], Double.parseDouble(scannedLineArray[3])), setItemsLocation("Candy"), Integer.parseInt(scannedLineArray[2]));
+                    addRemoteInventoryItem(new Candy(scannedLineArray[0], Double.parseDouble(scannedLineArray[3])), "Not in local machine", Integer.parseInt(scannedLineArray[2]));
                     break;
                 case "Chips":
-                    addRemoteInventoryItem(new Chips(scannedLineArray[0], Double.parseDouble(scannedLineArray[3])), setItemsLocation("Chips"), Integer.parseInt(scannedLineArray[2]));
+                    addRemoteInventoryItem(new Chips(scannedLineArray[0], Double.parseDouble(scannedLineArray[3])), "Not in local machine", Integer.parseInt(scannedLineArray[2]));
                     break;
                 case "Gum":
-                    addRemoteInventoryItem(new Gum(scannedLineArray[0], Double.parseDouble(scannedLineArray[3])), setItemsLocation("Gum"), Integer.parseInt(scannedLineArray[2]));
+                    addRemoteInventoryItem(new Gum(scannedLineArray[0], Double.parseDouble(scannedLineArray[3])), "Not in local machine", Integer.parseInt(scannedLineArray[2]));
                     break;
                 default:
                     throw new UnsupportedOperationException("Unsupported file type.");
