@@ -11,8 +11,8 @@ import javafx.stage.Stage;
 
 public class Restock extends Global_Inventory_Management{
 	
-    private ArrayList<InventoryItem> lowLocal = new ArrayList<>();
-    private ArrayList<InventoryItem> lowRemote = new ArrayList<>();
+    private ArrayList<InventoryManager.InventoryItem> lowLocal = new ArrayList<>();
+    private ArrayList<InventoryManager.InventoryItem> lowRemote = new ArrayList<>();
 
     public Restock() {
 
@@ -30,21 +30,21 @@ public class Restock extends Global_Inventory_Management{
         restockStage.initModality(Modality.APPLICATION_MODAL);
         restockStage.setAlwaysOnTop(true); 
 
-        TableView<Global_Inventory_Management.InventoryItem> restockTableLocal = new TableView<>(FXCollections.observableArrayList(lowLocal));
+        TableView<InventoryManager.InventoryItem> restockTableLocal = new TableView<>(FXCollections.observableArrayList(lowLocal));
 
-        TableColumn<Global_Inventory_Management.InventoryItem, String> itemNameColumnLocal = new TableColumn<>("Product Name");
+        TableColumn<InventoryManager.InventoryItem, String> itemNameColumnLocal = new TableColumn<>("Product Name");
         itemNameColumnLocal.setCellValueFactory(new PropertyValueFactory<>("name"));
         
-        TableColumn<Global_Inventory_Management.InventoryItem, String> itemLocationColumnLocal = new TableColumn<>("Location");
+        TableColumn<InventoryManager.InventoryItem, String> itemLocationColumnLocal = new TableColumn<>("Location");
         itemLocationColumnLocal.setCellValueFactory(new PropertyValueFactory<>("location"));                  
 
-        TableColumn<Global_Inventory_Management.InventoryItem, String> itemQuantityColumnLocal = new TableColumn<>("Quantity");
+        TableColumn<InventoryManager.InventoryItem, String> itemQuantityColumnLocal = new TableColumn<>("Quantity");
         itemQuantityColumnLocal.setCellValueFactory(new PropertyValueFactory<>("quantity"));            
 
         restockTableLocal.getColumns().addAll(itemNameColumnLocal, itemLocationColumnLocal, itemQuantityColumnLocal);
         restockTableLocal.setItems(FXCollections.observableArrayList(lowLocal));
 
-        Scene restockSceneLocal = new Scene(restockTableLocal);
+        Scene restockSceneLocal = new Scene(restockTableLocal, 400, 400);
         restockStage.setScene(restockSceneLocal);
         restockStage.show();
     }
@@ -59,21 +59,21 @@ public class Restock extends Global_Inventory_Management{
         restockStage.initModality(Modality.APPLICATION_MODAL);
         restockStage.setAlwaysOnTop(true); 
 
-        TableView<Global_Inventory_Management.InventoryItem> restockTableRemote = new TableView<>(FXCollections.observableArrayList(lowRemote));
+        TableView<InventoryManager.InventoryItem> restockTableRemote = new TableView<>(FXCollections.observableArrayList(lowRemote));
 
-        TableColumn<Global_Inventory_Management.InventoryItem, String> itemNameColumnRemote = new TableColumn<>("Product Name");
+        TableColumn<InventoryManager.InventoryItem, String> itemNameColumnRemote = new TableColumn<>("Product Name");
         itemNameColumnRemote.setCellValueFactory(new PropertyValueFactory<>("name"));
         
-        TableColumn<Global_Inventory_Management.InventoryItem, String> itemLocationColumnRemote = new TableColumn<>("Location");
+        TableColumn<InventoryManager.InventoryItem, String> itemLocationColumnRemote = new TableColumn<>("Location");
         itemLocationColumnRemote.setCellValueFactory(new PropertyValueFactory<>("location"));
 
-        TableColumn<Global_Inventory_Management.InventoryItem, String> itemQuantityColumnRemote = new TableColumn<>("Quantity");
+        TableColumn<InventoryManager.InventoryItem, String> itemQuantityColumnRemote = new TableColumn<>("Quantity");
         itemQuantityColumnRemote.setCellValueFactory(new PropertyValueFactory<>("quantity"));            
 
         restockTableRemote.getColumns().addAll(itemNameColumnRemote, itemLocationColumnRemote, itemQuantityColumnRemote);
         restockTableRemote.setItems(FXCollections.observableArrayList(lowRemote));
 
-        Scene restockSceneRemote = new Scene(restockTableRemote);
+        Scene restockSceneRemote = new Scene(restockTableRemote, 400, 400);
         restockStage.setScene(restockSceneRemote);
         restockStage.show();
 
