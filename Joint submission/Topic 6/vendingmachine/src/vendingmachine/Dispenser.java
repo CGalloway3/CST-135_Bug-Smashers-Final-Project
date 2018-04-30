@@ -342,17 +342,32 @@ public class Dispenser extends Application {
                 Button btnLocalAz = new Button("View all items in alphebetical order");
                 Button btnLocal12 = new Button("View all items sorted by quantity");
                 Button btnLocalLow = new Button("View items with low inventory");
-                Button btnAdmin = new Button("<< Back");
+                Button btnLocalReturn = new Button("<< Back");
                 VBox localVBox = new VBox();
-                localVBox.getChildren().addAll(btnLocalAz, btnLocal12, btnLocalLow, btnAdmin);
+                localVBox.getChildren().addAll(btnLocalAz, btnLocal12, btnLocalLow, btnLocalReturn);
                 Scene localScene = new Scene(localVBox, 710, 500);
                 btnLocal.setOnAction((ActionEvent event) -> {
+                	adminStage.setTitle("Local Machine");
                 	adminStage.setScene(localScene);
                 });
                 
+                Button btnRemoteAz = new Button("View all items in alphebetical order");
+                Button btnRemote12 = new Button("View all items sorted by quantity");
+                Button btnRemoteLow = new Button("View items with low inventory");
+                Button btnRemoteReturn = new Button("<< Back");
+                VBox remoteVBox = new VBox();
+                remoteVBox.getChildren().addAll(btnRemoteAz, btnRemote12, btnRemoteLow, btnRemoteReturn);
+                Scene remoteScene = new Scene(remoteVBox, 710, 500);
+                btnRemote.setOnAction((ActionEvent event) -> {
+                	adminStage.setTitle("Remote Machine");
+                	adminStage.setScene(remoteScene);
+                });
                 
+                btnLocalReturn.setOnAction((ActionEvent event) -> {
+                	adminStage.setScene(adminScene);
+                });
                 
-                btnAdmin.setOnAction((ActionEvent event) -> {
+                btnRemoteReturn.setOnAction((ActionEvent event) -> {
                 	adminStage.setScene(adminScene);
                 });
                 
