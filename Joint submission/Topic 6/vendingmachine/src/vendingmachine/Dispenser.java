@@ -356,7 +356,7 @@ public class Dispenser extends Application {
                 	VBox localLowVBox = new VBox();
                 	Button[] btnLocalLowItem = new Button[100];
                 	for (int i = 0; i < Restock.lowLocal.size(); i++) {
-                		btnLocalLowItem[i] = new Button(Restock.lowLocal.get(i).getName());
+                		btnLocalLowItem[i].setText(Restock.lowLocal.get(i).getName());
                 		localLowVBox.getChildren().add(btnLocalLowItem[i]);
                 		
                 	}

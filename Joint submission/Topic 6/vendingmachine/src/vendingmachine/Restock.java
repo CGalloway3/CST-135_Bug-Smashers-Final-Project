@@ -12,22 +12,20 @@ public class Restock extends Global_Inventory_Management{
 	public static ArrayList<InventoryItem> numRemote = new ArrayList<>();
 	
 	
-	public ArrayList<InventoryItem> getLowLocal() {
+	public void getLowLocal() {
 		for (int i = 0; i < getLocalInventoryList().size(); i++ ) {
 			if (getLocalInventoryList().get(i).getQuantity() <= 3) {
 				lowLocal.add(getLocalInventoryList().get(i));
 			}
-		}
-		return lowLocal;						
+		}						
 	}
 	
-	public ArrayList<InventoryItem> getLowRemote() {
+	public void getLowRemote() {
 		for (int i = 0; i < getRemoteInventoryList().size(); i++ ) {
 			if (getRemoteInventoryList().get(i).getQuantity() <= 3) {
 				lowRemote.add(getRemoteInventoryList().get(i));
 			}
-		}
-		return lowRemote;						
+		}						
 	}	
 	
 }
