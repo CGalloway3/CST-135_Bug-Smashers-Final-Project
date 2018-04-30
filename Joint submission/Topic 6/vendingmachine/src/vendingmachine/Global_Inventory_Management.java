@@ -11,6 +11,14 @@ package vendingmachine;
 
 import java.util.ArrayList;
 import java.util.Scanner;
+
+import javafx.collections.FXCollections;
+import javafx.scene.Scene;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import vendingmachine.products.Candy;
 import vendingmachine.products.Chips;
 import vendingmachine.products.Drink;
@@ -97,7 +105,50 @@ public class Global_Inventory_Management {
             }
         }
     }
+    
+    public void sortAlphaLocal() {
+    	sortAlpha(getLocalInventoryList());
+    }
+    
+    public void sortAlpha(ArrayList<InventoryItem> a) {
+        sort(a, 0, a.size() - 1, 0);
+        
+        
+        
+    }
 
+    private static void sort(ArrayList<InventoryItem> a, int low, int high, int d) {
+        if (high <= low) return;
+        int lt = low, gt = high;
+        int v = a.get(low).getName().charAt(d);
+        int i = low + 1;
+        while (i <= gt)
+        {
+            int t = a.get(i).getName().charAt(d);
+            if (t < v) exchange(a, lt++, i++);
+            else if (t > v) exchange(a, i, gt--);
+            else
+                i++;
+        }
+
+        // Recursive call
+        sort(a, low, lt-1, d);
+        if(v >= 0) sort(a, lt, gt, d+1);
+        sort(a, gt+1, high, d);
+    }
+ 
+    private static void exchange(ArrayList<InventoryItem> a, int i, int i1) {
+        InventoryItem temp = a.get(i);
+        a.add(i, a.get(i1));
+        a.add(i1, temp);
+    }
+    
+    
+    
+    
+    
+    
+    
     private void saveInventoryList() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }

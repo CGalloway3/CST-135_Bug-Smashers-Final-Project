@@ -1,5 +1,7 @@
 CST-135 Topic 6 Change log
 
+04-30-18 14:21 CST (Richard) Sliced in sort code to G.I.M. doesnt seem to work. began setting up methods to sort and display newly sorted list.
+
 04-30-18 13:08 CST (Richard) Fixed tableview code to create seperate columns and tableviews so eliminate duplicate table bug.
 
 04-30-18 12:45 CST (Richard) Restored InventoryManager and seperated its funcionality from Global_Inventory_Management. Also changed remote tableview to match local tableview.

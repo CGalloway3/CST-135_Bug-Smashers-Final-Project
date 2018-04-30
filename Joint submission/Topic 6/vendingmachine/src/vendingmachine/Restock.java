@@ -13,10 +13,6 @@ public class Restock extends Global_Inventory_Management{
 	
     private ArrayList<InventoryItem> lowLocal = new ArrayList<>();
     private ArrayList<InventoryItem> lowRemote = new ArrayList<>();
-    private ArrayList<InventoryItem> alphLocal = new ArrayList<>();
-    private ArrayList<InventoryItem> alphRemote = new ArrayList<>();
-    private ArrayList<InventoryItem> numLocal = new ArrayList<>();
-    private ArrayList<InventoryItem> numRemote = new ArrayList<>();
 
     public Restock() {
 

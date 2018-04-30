@@ -36,6 +36,7 @@ public class Dispenser extends Application {
     
     // Managers, Controllers, and flags.
     private final InventoryManager inventoryManager = new InventoryManager();
+    private final Global_Inventory_Management Global_Inventory_Management = new Global_Inventory_Management();
     private final AnimationController animationController = new AnimationController();
     private final TransactionManager transactionManager = new TransactionManager(this);
     private final Restock Restock = new Restock();
@@ -357,11 +358,13 @@ public class Dispenser extends Application {
                 localVBox.setAlignment(Pos.CENTER);
                 localVBox.setPadding(new Insets(10));
                 localVBox.getChildren().addAll(btnLocalAz, btnLocal12, btnLocalLow, btnLocalReturn);
-                Scene localScene = new Scene(localVBox, 710, 500);
-                btnLocal.setOnAction((ActionEvent event) -> {
-                	
+                Scene localScene = new Scene(localVBox, 710, 500);     
+                btnLocal.setOnAction((ActionEvent event) -> {                	
                 	adminStage.setTitle("Local Machine");
                 	adminStage.setScene(localScene);
+                });
+                btnLocalAz.setOnAction((ActionEvent event) -> {
+                	Global_Inventory_Management.sortAlphaLocal();
                 });
                 btnLocalLow.setOnAction((ActionEvent event) -> {
                 	Restock.getLowLocal();
