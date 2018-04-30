@@ -8,7 +8,9 @@
 **/
 
 package vendingmachine;
+import vendingmachine.Global_Inventory_Management.InventoryItem;
 
+import java.util.ArrayList;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
@@ -350,6 +352,14 @@ public class Dispenser extends Application {
                 	adminStage.setTitle("Local Machine");
                 	adminStage.setScene(localScene);
                 });
+                btnLocalLow.setOnAction((ActionEvent event) -> {
+                	
+                	
+                	
+                });
+                btnLocalReturn.setOnAction((ActionEvent event) -> {
+                	adminStage.setScene(adminScene);
+                });
                 
                 Button btnRemoteAz = new Button("View all items in alphebetical order");
                 Button btnRemote12 = new Button("View all items sorted by quantity");
@@ -362,14 +372,11 @@ public class Dispenser extends Application {
                 	adminStage.setTitle("Remote Machine");
                 	adminStage.setScene(remoteScene);
                 });
-                
-                btnLocalReturn.setOnAction((ActionEvent event) -> {
-                	adminStage.setScene(adminScene);
-                });
-                
                 btnRemoteReturn.setOnAction((ActionEvent event) -> {
                 	adminStage.setScene(adminScene);
                 });
+                
+                                
                 
                 btnAdminReturn.setOnAction((ActionEvent event) -> {
                     adminStage.hide();

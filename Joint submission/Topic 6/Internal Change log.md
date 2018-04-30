@@ -1,5 +1,7 @@
 CST-135 Topic 6 Change log
 
+04-29-18 20:51 CST (Richard) Added Restock class, trying to implement sorting functionallity
+
 04-29-18 19:41 CST (Richard) Added some scenes to Admin Stage, still in progress
 
 04-29-18 16:11 CST (Richard) Copied InventoryManager into new Global_Inventory_Management, began adding new list to populate from remote inventory list
