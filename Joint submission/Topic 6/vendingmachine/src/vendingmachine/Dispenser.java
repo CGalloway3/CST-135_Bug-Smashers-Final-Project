@@ -366,7 +366,7 @@ public class Dispenser extends Application {
                 	adminStage.setScene(localScene);
                 });
                 btnLocalSearch.setOnAction((event) -> {
-                        Quicksort.itemSearch();
+                        Quicksort.itemSearch(Global_Inventory_Management.getLocalInventoryList());
                 });
                 btnLocalAz.setOnAction((ActionEvent event) -> {
                 	Global_Inventory_Management.sortAlphaLocal();
@@ -400,7 +400,7 @@ public class Dispenser extends Application {
                 	adminStage.setScene(remoteScene);
                 });
                 btnRemoteSearch.setOnAction((event) -> {
-                        Quicksort.itemSearch();
+                        Quicksort.itemSearch(Global_Inventory_Management.getRemoteInventoryList());
                 });
                 btnRemoteAz.setOnAction((ActionEvent event) -> {
                 	Global_Inventory_Management.sortAlphaRemote();

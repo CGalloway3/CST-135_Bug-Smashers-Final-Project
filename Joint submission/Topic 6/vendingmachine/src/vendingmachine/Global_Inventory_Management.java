@@ -135,7 +135,7 @@ public class Global_Inventory_Management {
         alphaTable.getColumns().addAll(itemNameColumn, itemLocationColumn, itemQuantityColumn);
         alphaTable.setItems(FXCollections.observableArrayList(a));
 
-        Scene alphaScene = new Scene(alphaTable);
+        Scene alphaScene = new Scene(alphaTable, 400, 400);
         alphaStage.setScene(alphaScene);
         alphaStage.show();
         
@@ -170,7 +170,7 @@ public class Global_Inventory_Management {
         numTable.getColumns().addAll(itemNameColumn, itemLocationColumn, itemQuantityColumn);
         numTable.setItems(FXCollections.observableArrayList(a));
 
-        Scene alphaScene = new Scene(numTable);
+        Scene alphaScene = new Scene(numTable, 400, 400);
         alphaStage.setScene(alphaScene);
         alphaStage.show();
         

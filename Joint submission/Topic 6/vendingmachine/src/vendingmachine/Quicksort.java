@@ -8,8 +8,22 @@
 package vendingmachine;
 
 import java.util.ArrayList;
+import javafx.collections.FXCollections;
+import javafx.geometry.Pos;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 public class Quicksort {
+        
+    private static ArrayList<InventoryManager.InventoryItem> searchResults = new ArrayList<>();
+    
     public static void sortAlpha(ArrayList<InventoryManager.InventoryItem> a) {
         alphaSort(a, 0, a.size() - 1, 0);
     }
@@ -65,7 +79,60 @@ public class Quicksort {
         a.set(i1, temp);
     }
     
-    public static ArrayList<InventoryManager.InventoryItem> itemSearch() {
-        return null;
+    public static void itemSearch(ArrayList<InventoryManager.InventoryItem> list) {
+        final Stage searchStage = new Stage();
+        searchStage.initModality(Modality.APPLICATION_MODAL);
+        searchStage.setAlwaysOnTop(true);
+        
+        TextField txtSearch = new TextField();
+        Button btnSearch = new Button("Search");
+        VBox vboxSearch = new VBox(txtSearch, btnSearch);
+        vboxSearch.setAlignment(Pos.CENTER);
+        vboxSearch.setSpacing(10);
+        
+        Scene searchScene = new Scene(vboxSearch, 200, 75);
+        searchStage.setScene(searchScene);
+        searchStage.show();
+        
+        btnSearch.setOnAction((event) -> {
+            searchForInventoryItem(list, txtSearch.getText());
+
+            TableView<InventoryManager.InventoryItem> searchTable = new TableView<>(FXCollections.observableArrayList(searchResults));
+
+            TableColumn<InventoryManager.InventoryItem, String> itemNameColumnLocal = new TableColumn<>("Product Name");
+            itemNameColumnLocal.setCellValueFactory(new PropertyValueFactory<>("name"));
+
+            TableColumn<InventoryManager.InventoryItem, String> itemLocationColumnLocal = new TableColumn<>("Location");
+            itemLocationColumnLocal.setCellValueFactory(new PropertyValueFactory<>("location"));                  
+
+            TableColumn<InventoryManager.InventoryItem, String> itemQuantityColumnLocal = new TableColumn<>("Quantity");
+            itemQuantityColumnLocal.setCellValueFactory(new PropertyValueFactory<>("quantity"));            
+
+            searchTable.getColumns().addAll(itemNameColumnLocal, itemLocationColumnLocal, itemQuantityColumnLocal);
+            searchTable.setItems(FXCollections.observableArrayList(searchResults));
+
+            Scene searchResultsScene = new Scene(searchTable, 400, 400);
+            searchStage.setScene(searchResultsScene);
+        });
+
+    }
+
+    private static ArrayList<InventoryManager.InventoryItem> searchForInventoryItem(ArrayList<InventoryManager.InventoryItem> list, String text) {
+        
+        searchResults.clear();
+        
+        if ( text.isEmpty() || list.isEmpty() ) return searchResults;
+        
+        search(list, text, 0, list.size() - 1);
+        
+        return searchResults;
+    }
+
+    private static void search(ArrayList<InventoryManager.InventoryItem> list, String text, int low, int high) {
+        if ( high <= low ) return;
+        if ( list.get(low).getName().equalsIgnoreCase(text) ){
+            searchResults.add(list.get(low));
+        }
+        search(list, text, ++low, high);
     }
 }
