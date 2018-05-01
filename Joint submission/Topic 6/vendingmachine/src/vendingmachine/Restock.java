@@ -119,7 +119,7 @@ public class Restock extends Global_Inventory_Management{
     
     
     public void generatePurchaseOrder(ArrayList<InventoryManager.InventoryItem> list) throws IOException {
-        FileWriter writer = new FileWriter("files/Purchase Order.csv");
+        FileWriter writer = new FileWriter("Purchase Order.csv");
         try {
         	writer.append("Item Name,Quantity Ordered\n");
         	for (int i=0; i < list.size(); i++) {

@@ -7,6 +7,8 @@
  **/
 package vendingmachine;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import javafx.collections.FXCollections;
 import javafx.geometry.Pos;
@@ -117,18 +119,32 @@ public class Quicksort {
 
     }
 
-    private static ArrayList<InventoryManager.InventoryItem> searchForInventoryItem(ArrayList<InventoryManager.InventoryItem> list, String text) {
+    private static ArrayList<InventoryManager.InventoryItem> searchForInventoryItem(ArrayList<InventoryManager.InventoryItem> list, String text){
         
         searchResults.clear();
         
         if ( text.isEmpty() || list.isEmpty() ) return searchResults;
-        
+        try (FileWriter writer = new FileWriter("SearchStackTrace.txt")) {
+            writer.close();
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
         search(list, text, 0, list.size() - 1);
         
         return searchResults;
     }
 
     private static void search(ArrayList<InventoryManager.InventoryItem> list, String text, int low, int high) {
+        try (FileWriter writer = new FileWriter("SearchStackTrace.txt", true)) {
+        	writer.append("vendingmachine.Quicksort.search(" + list.getClass().getTypeName() + ", " + text + ", " + low + ", " + high + ")");
+			writer.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    
+	
         if ( high <= low ) return;
         if ( list.get(low).getName().equalsIgnoreCase(text) ){
             searchResults.add(list.get(low));
