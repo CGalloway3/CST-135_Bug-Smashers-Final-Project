@@ -347,6 +347,8 @@ public class Dispenser extends Application {
                 Scene adminScene = new Scene(adminVBox, 710, 500);
                 adminStage.setScene(adminScene);
                 
+                Button btnLocalSearch = new Button("Search for an item");
+                btnLocalSearch.setMinWidth(200);
                 Button btnLocalAz = new Button("View all items in alphebetical order");
                 btnLocalAz.setMinWidth(200);
                 Button btnLocal12 = new Button("View all items sorted by quantity");
@@ -357,11 +359,14 @@ public class Dispenser extends Application {
                 VBox localVBox = new VBox(10);
                 localVBox.setAlignment(Pos.CENTER);
                 localVBox.setPadding(new Insets(10));
-                localVBox.getChildren().addAll(btnLocalAz, btnLocal12, btnLocalLow, btnLocalReturn);
+                localVBox.getChildren().addAll(btnLocalSearch, btnLocalAz, btnLocal12, btnLocalLow, btnLocalReturn);
                 Scene localScene = new Scene(localVBox, 710, 500);     
                 btnLocal.setOnAction((ActionEvent event) -> {                	
                 	adminStage.setTitle("Local Machine");
                 	adminStage.setScene(localScene);
+                });
+                btnLocalSearch.setOnAction((event) -> {
+                        Quicksort.itemSearch();
                 });
                 btnLocalAz.setOnAction((ActionEvent event) -> {
                 	Global_Inventory_Management.sortAlphaLocal();
@@ -376,6 +381,8 @@ public class Dispenser extends Application {
                 	adminStage.setScene(adminScene);
                 });
                 
+                Button btnRemoteSearch = new Button("Search for an item");
+                btnRemoteSearch.setMinWidth(200);
                 Button btnRemoteAz = new Button("View all items in alphebetical order");
                 btnRemoteAz.setMinWidth(200);
                 Button btnRemote12 = new Button("View all items sorted by quantity");
@@ -386,11 +393,14 @@ public class Dispenser extends Application {
                 VBox remoteVBox = new VBox(10);
                 remoteVBox.setAlignment(Pos.CENTER);
                 remoteVBox.setPadding(new Insets(10));
-                remoteVBox.getChildren().addAll(btnRemoteAz, btnRemote12, btnRemoteLow, btnRemoteReturn);
+                remoteVBox.getChildren().addAll(btnRemoteSearch, btnRemoteAz, btnRemote12, btnRemoteLow, btnRemoteReturn);
                 Scene remoteScene = new Scene(remoteVBox, 710, 500);
                 btnRemote.setOnAction((ActionEvent event) -> {
                 	adminStage.setTitle("Remote Machine");
                 	adminStage.setScene(remoteScene);
+                });
+                btnRemoteSearch.setOnAction((event) -> {
+                        Quicksort.itemSearch();
                 });
                 btnRemoteAz.setOnAction((ActionEvent event) -> {
                 	Global_Inventory_Management.sortAlphaRemote();

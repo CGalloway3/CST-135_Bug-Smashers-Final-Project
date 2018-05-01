@@ -11,12 +11,10 @@ import java.util.ArrayList;
 
 public class Quicksort {
     public static void sortAlpha(ArrayList<InventoryManager.InventoryItem> a) {
-        System.out.println(a.size());
-        sort(a, 0, a.size() - 1, 0);
-        System.out.println(a.size());
+        alphaSort(a, 0, a.size() - 1, 0);
     }
 
-    private static void sort(ArrayList<InventoryManager.InventoryItem> a, int low, int high, int d) {
+    private static void alphaSort(ArrayList<InventoryManager.InventoryItem> a, int low, int high, int d) {
         if (high <= low) return;
         int lt = low, ht = high;
         if ( a.get(low).getName().length() <= d ) return;
@@ -33,18 +31,12 @@ public class Quicksort {
         }
 
         // Recursive call
-        sort(a, low, lt-1, d);
-        if(v >= 0) sort(a, lt, ht, d+1);
-        sort(a, ht+1, high, d);
+        alphaSort(a, low, lt-1, d);
+        if(v >= 0) alphaSort(a, lt, ht, d+1);
+        alphaSort(a, ht+1, high, d);
     }
  
-    private static void exchange(ArrayList<InventoryManager.InventoryItem> a, int i, int i1) {
-        InventoryManager.InventoryItem temp = a.get(i);
-        a.set(i, a.get(i1));
-        a.set(i1, temp);
-    }
-
-    static void sortNum(ArrayList<InventoryManager.InventoryItem> a) {
+     public static void sortNum(ArrayList<InventoryManager.InventoryItem> a) {
         numericSort(a, 0, a.size() - 1);
     }
 
@@ -64,8 +56,16 @@ public class Quicksort {
 
         // Recursive call
         numericSort(a, low, lt-1);
-        //if(v >= 0) numericSort(a, lt, ht);
-        numericSort(a, ht+1, high);
+        numericSort(a, ht+1, high);    
+    }
+
+    private static void exchange(ArrayList<InventoryManager.InventoryItem> a, int i, int i1) {
+        InventoryManager.InventoryItem temp = a.get(i);
+        a.set(i, a.get(i1));
+        a.set(i1, temp);
+    }
     
+    public static ArrayList<InventoryManager.InventoryItem> itemSearch() {
+        return null;
     }
 }
