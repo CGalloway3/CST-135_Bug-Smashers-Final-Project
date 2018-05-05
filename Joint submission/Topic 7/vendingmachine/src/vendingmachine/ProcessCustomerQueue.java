@@ -18,7 +18,7 @@ public class ProcessCustomerQueue {
 	LinkedList<Customer> customerQueue = new LinkedList<>();
 	
 	public ProcessCustomerQueue() {
-            
+            readQueueFile();
 	}
 	
 	public Customer first() {
