@@ -1,10 +1,10 @@
-//CST-135 group assignment for Topic 6, a collaboration of Richard Boyd, Chad Galloway, and Dennis Witt
+//CST-135 group assignment for Topic 7, a collaboration of Richard Boyd, Chad Galloway, and Dennis Witt
 /**  Program: Vending Machine
-*    File: AnimationController.java
+*    File: TransactionManager.java
 *    Summary: Class to manage transactions
 *    Author: Chad Galloway
 *    Date Created: April 24th, 2018
-*    Last Update: April 30th, 2018
+*    Last Update: May 4th, 2018
 **/
 
 package vendingmachine;

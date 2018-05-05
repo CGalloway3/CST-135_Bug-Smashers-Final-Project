@@ -1,3 +1,11 @@
+//CST-135 group assignment for Topic 7, a collaboration of Richard Boyd, Chad Galloway, and Dennis Witt
+/**  Program: Vending Machine
+*    File: Restock.java
+*    Summary: Class to manage purchase orders
+*    Author: Richard Boyd
+*    Date Created: April 28th, 2018
+*    Last Update: May 4th, 2018
+**/
 package vendingmachine;
 
 import java.io.FileWriter;

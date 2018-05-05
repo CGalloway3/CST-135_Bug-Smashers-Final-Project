@@ -1,4 +1,4 @@
-//CST-135 group assignment for Topic 2, a collaboration of Richard Boyd, Chad Galloway, and Dennis Witt
+//CST-135 group assignment for Topic 7, a collaboration of Richard Boyd, Chad Galloway, and Dennis Witt
 /**  Program: Vending Machine
 *    File: Drink.java
 *    Summary: Drink subclass inherited from Product.

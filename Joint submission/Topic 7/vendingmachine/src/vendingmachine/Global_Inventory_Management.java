@@ -1,10 +1,10 @@
-//CST-135 group assignment for Topic 6, a collaboration of Richard Boyd, Chad Galloway, and Dennis Witt
+//CST-135 group assignment for Topic 7, a collaboration of Richard Boyd, Chad Galloway, and Dennis Witt
 /**  Program: Vending Machine
-*    File: InventoryManager.java
+*    File: Global_Inventory_Management.java
 *    Summary: Inventory management of products in and out.
 *    Author: Chad Galloway, Richard Boyd
 *    Date: April 22th, 2018
-*    Last Update: April 29th, 2018
+*    Last Update: May 4th, 2018
 **/
 
 package vendingmachine;
