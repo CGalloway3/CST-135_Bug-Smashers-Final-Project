@@ -71,8 +71,10 @@ public class CustomerDisplay extends Dispenser{
     }
     
     public void nextCustomer() {
-        processCustomerQueue.out();
     }
     
-    
+    public boolean customerDone() {
+        processCustomerQueue.out();
+        return true;
+    }
 }
