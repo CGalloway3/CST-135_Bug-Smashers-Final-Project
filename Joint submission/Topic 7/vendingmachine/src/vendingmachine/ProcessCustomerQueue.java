@@ -13,13 +13,15 @@ import java.io.IOException;
 import java.util.LinkedList;
 import java.util.Scanner;
 
-public class ProcessCustomerQueue extends Dispenser{
+public class ProcessCustomerQueue{
 	
 	
-	LinkedList<Customer> customerQueue = new LinkedList<>();
+	private Dispenser dispenser;
+        LinkedList<Customer> customerQueue = new LinkedList<>();
 	
-	public ProcessCustomerQueue() {
-           // readQueueFile();
+	public ProcessCustomerQueue(Dispenser dispenser) {
+           this.dispenser = dispenser;
+           readQueueFile();
 	}
 	
 	public Customer first() {
