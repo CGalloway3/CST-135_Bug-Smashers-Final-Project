@@ -8,9 +8,25 @@
  **/
 package vendingmachine;
 
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+
 public class CustomerDisplay {
     
-    public CustomerDisplay (){
+    public CustomerDisplay () {
         
     }
+    
+    public void lineCustomersUp () {
+        final Stage queueStage = new Stage();
+        queueStage.initModality(Modality.APPLICATION_MODAL);
+        queueStage.setAlwaysOnTop(true);
+        
+    }
+    
+    public void nextCustomer() {
+        
+    }
+    
+    
 }

@@ -67,6 +67,10 @@ public class ProcessCustomerQueue {
 		writer.append("END");
 		writer.close();
 	}
+
+    void processQueue() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 	
 	
 	

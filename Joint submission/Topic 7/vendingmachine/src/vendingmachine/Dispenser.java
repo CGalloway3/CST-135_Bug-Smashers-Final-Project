@@ -39,6 +39,7 @@ public class Dispenser extends Application {
     private final Global_Inventory_Management Global_Inventory_Management = new Global_Inventory_Management();
     private final AnimationController animationController = new AnimationController();
     private final TransactionManager transactionManager = new TransactionManager(this);
+    private final ProcessCustomerQueue processCustomerQueue = new ProcessCustomerQueue();
     private final Restock Restock = new Restock();
     private Boolean adminMode = false;  // adminMode flag
     private String itemGridCategory;
@@ -347,6 +348,10 @@ public class Dispenser extends Application {
                 Scene adminScene = new Scene(adminVBox, 710, 500);
                 adminStage.setScene(adminScene);
                 
+                Button btnProcessQueue = new Button("Process Queue");
+                btnProcessQueue.setMinWidth(200);
+                Button btnSeperator = new Button();
+                btnSeperator.setVisible(false);
                 Button btnLocalSearch = new Button("Search for an item");
                 btnLocalSearch.setMinWidth(200);
                 Button btnLocalAz = new Button("View all items in alphebetical order");
@@ -359,8 +364,11 @@ public class Dispenser extends Application {
                 VBox localVBox = new VBox(10);
                 localVBox.setAlignment(Pos.CENTER);
                 localVBox.setPadding(new Insets(10));
-                localVBox.getChildren().addAll(btnLocalSearch, btnLocalAz, btnLocal12, btnLocalLow, btnLocalReturn);
-                Scene localScene = new Scene(localVBox, 710, 500);     
+                localVBox.getChildren().addAll(btnProcessQueue, btnSeperator, btnLocalSearch, btnLocalAz, btnLocal12, btnLocalLow, btnLocalReturn);
+                Scene localScene = new Scene(localVBox, 710, 500);
+                btnProcessQueue.setOnAction((event) -> {
+                    processCustomerQueue.processQueue();
+                });
                 btnLocal.setOnAction((ActionEvent event) -> {                	
                 	adminStage.setTitle("Local Machine");
                 	adminStage.setScene(localScene);
