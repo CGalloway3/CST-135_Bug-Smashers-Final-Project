@@ -89,10 +89,10 @@ public class ProcessCustomerQueue{
                           
                 // add funds to customers account
                 dispenser.transactionManager.addMoneyInserted(dispenser.transactionManager.getProductsCost());
+                // Remove customer from queue
+                customerDisplay.customerDone("\n" + first().getName() + " purchased " + first().getSelection() + " for $" + Integer.toString(dispenser.transactionManager.getProductsCost()));
                 // Complete transaction
                 dispenser.inventoryManager.completePurchase();
-                // Remove customer from queue
-                customerDisplay.customerDone(first().getName() + " purchased " + first().getSelection() + " for $" + Integer.toString(dispenser.transactionManager.getProductsCost()));
              
                 
             }

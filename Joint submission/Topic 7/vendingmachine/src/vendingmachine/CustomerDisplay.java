@@ -42,6 +42,8 @@ public class CustomerDisplay {
         
         AnchorPane queuePane = new AnchorPane();
         
+        //queueDisplay.
+        
         queueDisplay.setLayoutX(30);
         queueDisplay.setLayoutY(30);
         
@@ -117,10 +119,13 @@ public class CustomerDisplay {
         firstCustomerScaleTransition.setToX(2);
         firstCustomerScaleTransition.setToY(2);
         
+        
+        
     }
     
     public boolean customerDone(String s) {
         dispenser.processCustomerQueue.out();
+        queueDisplay.setText(queueDisplay.getText() + s) ;
         return true;
     }
 }
