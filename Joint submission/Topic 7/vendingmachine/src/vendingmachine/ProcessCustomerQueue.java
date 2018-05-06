@@ -57,6 +57,7 @@ public class ProcessCustomerQueue{
                 String scannedLine = queueFileScanner.nextLine();
                 String[] scannedLineArray = scannedLine.split(",");
                 this.in(new Customer(scannedLineArray[0], scannedLineArray[1]));
+                System.out.println(scannedLineArray[0]);
             }
             queueFileScanner.close();
         }
@@ -72,7 +73,7 @@ public class ProcessCustomerQueue{
 	}
 
         public void processQueue() {
-            CustomerDisplay customerDisplay = new CustomerDisplay();
+            CustomerDisplay customerDisplay = new CustomerDisplay(dispenser);
             
             // Initialize Customer line
             customerDisplay.lineCustomersUp();

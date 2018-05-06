@@ -19,7 +19,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-public class CustomerDisplay extends Dispenser{
+public class CustomerDisplay {
     
     private TextField queueDisplay = new TextField();
     private ImageView vendingMachineImage = new ImageView(new Image(getClass().getResourceAsStream("images/VendingMachine.png"), 150, 150, true, true));
@@ -29,8 +29,10 @@ public class CustomerDisplay extends Dispenser{
     private ImageView fourthCustomer = new ImageView(new Image(getClass().getResourceAsStream("images/CustomerInLine.png"), 25, 25, true, true));
     private ImageView currentCustomer = new ImageView(new Image(getClass().getResourceAsStream("images/CurrentCustomer.png"), 125, 125, true, true));
 
-    public CustomerDisplay () {
-        
+    private Dispenser dispenser;
+    
+    public CustomerDisplay (Dispenser dispenser) {
+        this.dispenser = dispenser;
     }
     
     public void lineCustomersUp () {
