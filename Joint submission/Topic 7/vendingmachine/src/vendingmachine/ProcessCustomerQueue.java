@@ -19,7 +19,7 @@ public class ProcessCustomerQueue extends Dispenser{
 	LinkedList<Customer> customerQueue = new LinkedList<>();
 	
 	public ProcessCustomerQueue() {
-            readQueueFile();
+           // readQueueFile();
 	}
 	
 	public Customer first() {
