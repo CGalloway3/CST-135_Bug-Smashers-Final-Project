@@ -97,6 +97,8 @@ public class Dispenser extends Application {
     private final Stage customerStage = new Stage();
     private final Stage adminStage = new Stage();
     private Stage applicationStage = new Stage();
+    private final Button btnAppleOrGooglePay = new Button ("Apple or Google Pay");
+    
 
     
     @Override
@@ -265,6 +267,7 @@ public class Dispenser extends Application {
         btnAddFiveDollars.prefWidthProperty().bind(smallCoinSlot.widthProperty());
         btnAddTenDollars.prefWidthProperty().bind(smallCoinSlot.widthProperty());
         btnAddTwentyDollars.prefWidthProperty().bind(smallCoinSlot.widthProperty());
+        btnAppleOrGooglePay.setOnAction((event) -> {transactionManager.addMoneyInserted(transactionManager.getProductsCost());});
         
         // Coin Return button
         btnReturnMoney.setOnAction((event) -> {   //returns funds to 0 when "coin return" is clicked
@@ -292,7 +295,7 @@ public class Dispenser extends Application {
         largeCoinSlot.setAlignment(Pos.CENTER);
         smallCoinSlot.getChildren().addAll(btnAddQuater, btnAddDime, btnAddNickle);
         smallCoinSlot.setAlignment(Pos.CENTER);
-        moneySlot.getChildren().addAll(lblCoins, largeCoinSlot, smallCoinSlot, lblLeftBlank, lblBills, btnAddOneDollar, btnAddFiveDollars, btnAddTenDollars, btnAddTwentyDollars);
+        moneySlot.getChildren().addAll(lblCoins, largeCoinSlot, smallCoinSlot, lblLeftBlank, lblBills, btnAddOneDollar, btnAddFiveDollars, btnAddTenDollars, btnAddTwentyDollars, btnAppleOrGooglePay);
         moneySlot.setAlignment(Pos.CENTER);
         customerBorder.setLeft(moneySlot);
        
@@ -546,6 +549,10 @@ public class Dispenser extends Application {
         // Display the finished item grid
         customerBorder.setCenter(itemGrid);
         return morePages;
+    }
+
+    private Object btnAddAppleOrGooglePay() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }
