@@ -120,7 +120,7 @@ public class CustomerDisplay {
     }
     
     public boolean customerDone(String s) {
-        processCustomerQueue.out();
+        dispenser.processCustomerQueue.out();
         return true;
     }
 }
