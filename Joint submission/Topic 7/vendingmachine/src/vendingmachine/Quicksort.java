@@ -161,7 +161,7 @@ public class Quicksort{
 		int result = 0;
     	
     	for (int i=0; i < dispenser.inventoryManager.getLocalInventoryList().size(); i++) {
-    		if (dispenser.inventoryManager.getLocalInventoryList().get(i).getName() == item) {
+    		if (dispenser.inventoryManager.getLocalInventoryList().get(i).getName().equalsIgnoreCase(item)) {
     			result = i;
     		}
     	}

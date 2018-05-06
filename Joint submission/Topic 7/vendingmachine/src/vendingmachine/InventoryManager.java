@@ -171,6 +171,10 @@ public class InventoryManager {
             return this.product.getPrice();
         }
         
+        public String getFormattedPrice() {
+            return String.format("$" + this.product.getPrice() / 100 + ".%02d", this.product.getPrice() % 100);
+        }
+        
         // get the quantity of items stocked in the vending machine for this inventory item.
         public int getQuantity() {
             return this.quantity;

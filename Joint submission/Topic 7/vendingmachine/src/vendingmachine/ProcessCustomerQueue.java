@@ -12,6 +12,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.Scanner;
+import vendingmachine.InventoryManager;
 
 public class ProcessCustomerQueue{
 	
@@ -84,10 +85,11 @@ public class ProcessCustomerQueue{
 	
 	public void processCurrentCustomerInQueue(CustomerDisplay customerDisplay) {
             // seartch for what customer wants and add it to cart
-            String price = new String(String.format("$" + dispenser.quicksort.queueSearch(first().getSelection()).getPrice() / 100 + ".%02d", dispenser.quicksort.queueSearch(first().getSelection()).getPrice() % 100));
-
+            InventoryManager.InventoryItem customerSelectedItem;
+            
+            customerSelectedItem = dispenser.quicksort.queueSearch(first().getSelection());
             // Remove customer from queue
-            customerDisplay.customerDone(first().getName() + " purchased " + first().getSelection() + " for " + price + "\n");
+            customerDisplay.customerDone(first().getName() + " purchased " + customerSelectedItem.getName() + " for " + customerSelectedItem.getFormattedPrice() + "\n");
             
         }
 	
