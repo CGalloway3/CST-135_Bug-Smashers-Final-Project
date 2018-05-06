@@ -142,14 +142,12 @@ public class Quicksort{
 
     private static void search(ArrayList<InventoryManager.InventoryItem> list, String text, int low, int high) {
         try (FileWriter writer = new FileWriter("SearchStackTrace.txt", true)) {
-        	writer.append("vendingmachine.Quicksort.search(" + list.getClass().getTypeName() + ", " + text + ", " + low + ", " + high + ")");
-			writer.close();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-    
-	
+            writer.append("vendingmachine.Quicksort.search(" + list.getClass().getTypeName() + ", " + text + ", " + low + ", " + high + ")");
+                    writer.close();
+            } catch (IOException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+            }
         if ( high <= low ) return;
         if ( list.get(low).getName().equalsIgnoreCase(text) ){
             searchResults.add(list.get(low));
@@ -158,15 +156,20 @@ public class Quicksort{
     }
     
     public InventoryManager.InventoryItem queueSearch(String item){
-		int result = 0;
+        int result = -1;
     	
     	for (int i=0; i < dispenser.inventoryManager.getLocalInventoryList().size(); i++) {
-    		if (dispenser.inventoryManager.getLocalInventoryList().get(i).getName().equalsIgnoreCase(item)) {
-    			result = i;
-    		}
+            if (dispenser.inventoryManager.getLocalInventoryList().get(i).getName().equalsIgnoreCase(item)) {
+                    result = i;
+            }
     	}
     	
-    	return dispenser.inventoryManager.getLocalInventoryList().get(result);
+    	if ( result >= 0 ) {
+            return dispenser.inventoryManager.getLocalInventoryList().get(result);
+        }
+        else {
+            return null;
+        }
     	
     }
     

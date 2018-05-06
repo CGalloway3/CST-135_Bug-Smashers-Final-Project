@@ -88,9 +88,16 @@ public class ProcessCustomerQueue{
             InventoryManager.InventoryItem customerSelectedItem;
             
             customerSelectedItem = dispenser.quicksort.queueSearch(first().getSelection());
-            // Remove customer from queue
-            customerDisplay.customerDone(first().getName() + " purchased " + customerSelectedItem.getName() + " for " + customerSelectedItem.getFormattedPrice() + "\n");
             
+            if ( customerSelectedItem == null ) {
+                customerSelectedItem = dispenser.inventoryManager.getLocalInventoryList().get((int)(Math.random() * dispenser.inventoryManager.getLocalInventoryList().size()));
+                customerDisplay.customerDone("Vending machine does not have " + first().getSelection() + " so,\n" + first().getName() + " purchased " + customerSelectedItem.getName() + " for " + customerSelectedItem.getFormattedPrice() + "\n");
+
+            }
+            else {
+                // Remove customer from queue
+                customerDisplay.customerDone(first().getName() + " purchased " + customerSelectedItem.getName() + " for " + customerSelectedItem.getFormattedPrice() + "\n");
+            }
         }
 	
 	
