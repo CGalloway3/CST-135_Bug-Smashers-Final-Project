@@ -89,7 +89,7 @@ public class Dispenser extends Application {
     private final Label lblFunds = new Label("Funds:");
     private final Text txtFundsAmount = new Text("$0.00");
     private final Label lblCost = new Label("Cost:");
-    private final Text txtCostAmount = new Text("$0.00");
+    public final Text txtCostAmount = new Text("$0.00");
     private final Button btnReturnMoney = new Button("Coin Return");
     private final Button btnCompletePurchase = new Button("Complete Purchase");
     private final Button btnMyItems = new Button ("My Items");

@@ -85,15 +85,11 @@ public class ProcessCustomerQueue{
                 customerDisplay.nextCustomer();
                 
                 // seartch for what customer wants and add it to cart
-                dispenser.inventoryManager.addItemToProductsSelectedForPurchase(dispenser.quicksort.queueSearch(first().getSelection()));
+                
                           
-                // add funds to customers account
-                dispenser.transactionManager.addMoneyInserted(dispenser.transactionManager.getProductsCost());
                 // Remove customer from queue
-                customerDisplay.customerDone("\n" + first().getName() + " purchased " + first().getSelection() + " for $" + Integer.toString(dispenser.transactionManager.getProductsCost()));
-                // Complete transaction
-                dispenser.inventoryManager.completePurchase();
-             
+                customerDisplay.customerDone("\n" + first().getName() + " purchased " + first().getSelection() + " for " + String.format("$" + dispenser.quicksort.queueSearch(first().getSelection()).getPrice() / 100 + ".%02d", dispenser.quicksort.queueSearch(first().getSelection()).getPrice() % 100));
+                            
                 
             }
             
