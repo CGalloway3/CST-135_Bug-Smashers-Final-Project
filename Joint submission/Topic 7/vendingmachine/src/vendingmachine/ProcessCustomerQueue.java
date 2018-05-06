@@ -57,7 +57,6 @@ public class ProcessCustomerQueue{
                 String scannedLine = queueFileScanner.nextLine();
                 String[] scannedLineArray = scannedLine.split(",");
                 this.in(new Customer(scannedLineArray[0], scannedLineArray[1]));
-                System.out.println(scannedLineArray[0]);
             }
             queueFileScanner.close();
         }
@@ -78,25 +77,19 @@ public class ProcessCustomerQueue{
             // Initialize Customer line
             customerDisplay.lineCustomersUp();
             
-            // Loop through all customers
-            while ( !customerQueue.isEmpty() ) {
-                
-            	// next customer
-                customerDisplay.nextCustomer();
-                
-                // seartch for what customer wants and add it to cart
-                
-                String price = new String(String.format("$" + dispenser.quicksort.queueSearch(first().getSelection()).getPrice() / 100 + ".%02d", dispenser.quicksort.queueSearch(first().getSelection()).getPrice() % 100));
-                
-                // Remove customer from queue
-                customerDisplay.customerDone("\n" + first().getName() + " purchased " + first().getSelection() + " for " + price);
-                            
-                
-            }
-            
+            // next customer
+            customerDisplay.nextCustomer();
+
         }
 	
-	
+	public void processCurrentCustomerInQueue(CustomerDisplay customerDisplay) {
+            // seartch for what customer wants and add it to cart
+            String price = new String(String.format("$" + dispenser.quicksort.queueSearch(first().getSelection()).getPrice() / 100 + ".%02d", dispenser.quicksort.queueSearch(first().getSelection()).getPrice() % 100));
+
+            // Remove customer from queue
+            customerDisplay.customerDone(first().getName() + " purchased " + first().getSelection() + " for " + price + "\n");
+            
+        }
 	
 	
 	
