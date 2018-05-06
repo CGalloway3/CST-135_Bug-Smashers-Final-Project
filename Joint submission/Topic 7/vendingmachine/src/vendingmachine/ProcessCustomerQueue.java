@@ -84,14 +84,14 @@ public class ProcessCustomerQueue{
                 customerDisplay.nextCustomer();
                 
                 // seartch for what customer wants and add it to cart
-                inventoryManager.addItemToProductsSelectedForPurchase(quicksort.queueSearch(first().getSelection()));
+                dispenser.inventoryManager.addItemToProductsSelectedForPurchase(dispenser.quicksort.queueSearch(first().getSelection()));
                           
                 // add funds to customers account
-                transactionManager.addMoneyInserted(transactionManager.getProductsCost());
+                dispenser.transactionManager.addMoneyInserted(dispenser.transactionManager.getProductsCost());
                 // Complete transaction
-                inventoryManager.completePurchase();
+                dispenser.inventoryManager.completePurchase();
                 // Remove customer from queue
-                customerDisplay.customerDone(first().getName() + " purchased " + first().getSelection() + " for $" + Integer.toString(transactionManager.getProductsCost()));
+                customerDisplay.customerDone(first().getName() + " purchased " + first().getSelection() + " for $" + Integer.toString(dispenser.transactionManager.getProductsCost()));
              
                 
             }
