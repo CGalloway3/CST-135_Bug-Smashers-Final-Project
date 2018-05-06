@@ -8,6 +8,8 @@
  **/
 package vendingmachine;
 
+import javafx.animation.ScaleTransition;
+import javafx.animation.TranslateTransition;
 import javafx.scene.Scene;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -15,6 +17,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 public class CustomerDisplay extends Dispenser{
     
@@ -47,6 +50,7 @@ public class CustomerDisplay extends Dispenser{
         
         currentCustomer.setLayoutX(150);
         currentCustomer.setLayoutY(305);
+        currentCustomer.setVisible(false);
         
         firstCustomer.setLayoutX(280);
         firstCustomer.setLayoutY(320);
@@ -71,9 +75,49 @@ public class CustomerDisplay extends Dispenser{
     }
     
     public void nextCustomer() {
+        // Button 4
+        TranslateTransition fourthCustomerTranslateTransition = new TranslateTransition(Duration.seconds(1.5), fourthCustomer);
+        ScaleTransition fourthCustomerScaleTransition = new ScaleTransition(Duration.seconds(1.5), fourthCustomer);
+        
+        fourthCustomerTranslateTransition.setToX(thirdCustomer.getLocalToSceneTransform().getTx() - fourthCustomer.getLocalToSceneTransform().getTx());       
+        fourthCustomerTranslateTransition.setToY(thirdCustomer.getLocalToSceneTransform().getTy() - fourthCustomer.getLocalToSceneTransform().getTy());
+        
+        fourthCustomerScaleTransition.setToX(2);
+        fourthCustomerScaleTransition.setToY(2);
+        
+        // button 3
+        TranslateTransition thirdCustomerTranslateTransition = new TranslateTransition(Duration.seconds(1.5), thirdCustomer);
+        ScaleTransition thirdCustomerScaleTransition = new ScaleTransition(Duration.seconds(1.5), thirdCustomer);
+        
+        thirdCustomerTranslateTransition.setToX(secondCustomer.getLocalToSceneTransform().getTx() - thirdCustomer.getLocalToSceneTransform().getTx());       
+        thirdCustomerTranslateTransition.setToY(secondCustomer.getLocalToSceneTransform().getTy() - thirdCustomer.getLocalToSceneTransform().getTy());
+        
+        thirdCustomerScaleTransition.setToX(2);
+        thirdCustomerScaleTransition.setToY(2);
+        
+        // button 2
+        TranslateTransition secondCustomerTranslateTransition = new TranslateTransition(Duration.seconds(1.5), secondCustomer);
+        ScaleTransition secondCustomerScaleTransition = new ScaleTransition(Duration.seconds(1.5), secondCustomer);
+
+        secondCustomerTranslateTransition.setToX(firstCustomer.getLocalToSceneTransform().getTx() - secondCustomer.getLocalToSceneTransform().getTx());       
+        secondCustomerTranslateTransition.setToY(firstCustomer.getLocalToSceneTransform().getTy() - secondCustomer.getLocalToSceneTransform().getTy());
+        
+        secondCustomerScaleTransition.setToX(2);
+        secondCustomerScaleTransition.setToY(2);
+        
+        // button 1
+        TranslateTransition firstCustomerTranslateTransition = new TranslateTransition(Duration.seconds(1.5), firstCustomer);
+        ScaleTransition firstCustomerScaleTransition = new ScaleTransition(Duration.seconds(1.5), firstCustomer);
+        
+        firstCustomerTranslateTransition.setToX(currentCustomer.getLocalToSceneTransform().getTx() - firstCustomer.getLocalToSceneTransform().getTx());       
+        firstCustomerTranslateTransition.setToY(currentCustomer.getLocalToSceneTransform().getTy() - firstCustomer.getLocalToSceneTransform().getTy());
+        
+        firstCustomerScaleTransition.setToX(2);
+        firstCustomerScaleTransition.setToY(2);
+        
     }
     
-    public boolean customerDone() {
+    public boolean customerDone(String s) {
         processCustomerQueue.out();
         return true;
     }
