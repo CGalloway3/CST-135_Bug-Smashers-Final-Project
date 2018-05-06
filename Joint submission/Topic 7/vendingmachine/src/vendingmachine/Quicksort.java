@@ -22,9 +22,14 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-public class Quicksort extends Dispenser{
+public class Quicksort{
         
+    private Dispenser dispenser;
     private static ArrayList<InventoryManager.InventoryItem> searchResults = new ArrayList<>();
+    
+    public Quicksort(Dispenser dispenser) {
+        this.dispenser = dispenser;
+    }
     
     public static void sortAlpha(ArrayList<InventoryManager.InventoryItem> a) {
         alphaSort(a, 0, a.size() - 1, 0);
@@ -155,13 +160,13 @@ public class Quicksort extends Dispenser{
     public InventoryManager.InventoryItem queueSearch(String item){
 		int result = 0;
     	
-    	for (int i=0; i < inventoryManager.getLocalInventoryList().size(); i++) {
-    		if (inventoryManager.getLocalInventoryList().get(i).getName() == item) {
+    	for (int i=0; i < dispenser.inventoryManager.getLocalInventoryList().size(); i++) {
+    		if (dispenser.inventoryManager.getLocalInventoryList().get(i).getName() == item) {
     			result = i;
     		}
     	}
     	
-    	return inventoryManager.getLocalInventoryList().get(result);
+    	return dispenser.inventoryManager.getLocalInventoryList().get(result);
     	
     }
     

@@ -38,8 +38,8 @@ public class Dispenser extends Application {
     private final Global_Inventory_Management Global_Inventory_Management = new Global_Inventory_Management();
     private final AnimationController animationController = new AnimationController();
     public final TransactionManager transactionManager = new TransactionManager(this);
-    public final ProcessCustomerQueue processCustomerQueue = new ProcessCustomerQueue();
     public final Quicksort quicksort = new Quicksort();
+    public final ProcessCustomerQueue processCustomerQueue = new ProcessCustomerQueue();
     private final Restock Restock = new Restock();
     private Boolean adminMode = false;  // adminMode flag
     private String itemGridCategory;
