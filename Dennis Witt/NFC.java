@@ -13,7 +13,7 @@ import java.util.*;
 
 package VendingMachine;
 
-public class Main {
+public class NFC {
 
     // Apple pay or google pay
         public static void main(String[] args) throws NfcException {
