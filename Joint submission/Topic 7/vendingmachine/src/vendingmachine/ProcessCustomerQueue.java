@@ -15,6 +15,7 @@ import java.util.Scanner;
 
 public class ProcessCustomerQueue {
 	
+	
 	LinkedList<Customer> customerQueue = new LinkedList<>();
 	
 	public ProcessCustomerQueue() {
@@ -81,7 +82,7 @@ public class ProcessCustomerQueue {
                 customerDisplay.nextCustomer();
                 
                 // seartch for what customer wants
-                Quicksort.itemSearch(first().getSelection());
+                Quicksort.queueSearch(first().getSelection());
                 
                 // Add item to customers cart
                 

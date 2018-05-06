@@ -35,7 +35,7 @@ import vendingmachine.InventoryManager.InventoryItem;
 public class Dispenser extends Application {
     
     // Managers, Controllers, and flags.
-    private final InventoryManager inventoryManager = new InventoryManager();
+    static final InventoryManager inventoryManager = new InventoryManager();
     private final Global_Inventory_Management Global_Inventory_Management = new Global_Inventory_Management();
     private final AnimationController animationController = new AnimationController();
     private final TransactionManager transactionManager = new TransactionManager(this);
