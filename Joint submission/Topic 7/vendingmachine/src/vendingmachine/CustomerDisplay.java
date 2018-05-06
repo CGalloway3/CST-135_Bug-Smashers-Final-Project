@@ -11,7 +11,7 @@ package vendingmachine;
 import javafx.animation.ScaleTransition;
 import javafx.animation.TranslateTransition;
 import javafx.scene.Scene;
-import javafx.scene.control.TextField;
+import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -21,7 +21,7 @@ import javafx.util.Duration;
 
 public class CustomerDisplay {
     
-    private TextField queueDisplay = new TextField();
+    private TextArea queueDisplay = new TextArea();
     private ImageView vendingMachineImage = new ImageView(new Image(getClass().getResourceAsStream("images/VendingMachine.png"), 150, 150, true, true));
     private ImageView firstCustomer = new ImageView(new Image(getClass().getResourceAsStream("images/CustomerInLine.png"), 100, 100, true, true));
     private ImageView secondCustomer = new ImageView(new Image(getClass().getResourceAsStream("images/CustomerInLine.png"), 75, 75, true, true));
@@ -125,7 +125,8 @@ public class CustomerDisplay {
     
     public boolean customerDone(String s) {
         dispenser.processCustomerQueue.out();
-        queueDisplay.setText(queueDisplay.getText() + s) ;
+        String newText = queueDisplay.getText() + s;
+        queueDisplay.setText(newText) ;
         return true;
     }
 }
