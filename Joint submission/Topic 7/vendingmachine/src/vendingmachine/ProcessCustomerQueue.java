@@ -13,7 +13,7 @@ import java.io.IOException;
 import java.util.LinkedList;
 import java.util.Scanner;
 
-public class ProcessCustomerQueue {
+public class ProcessCustomerQueue extends Dispenser{
 	
 	
 	LinkedList<Customer> customerQueue = new LinkedList<>();
@@ -78,11 +78,11 @@ public class ProcessCustomerQueue {
             // Loop through all customers
             while ( !customerQueue.isEmpty() ) {
                 
-                // next customer
+            	// next customer
                 customerDisplay.nextCustomer();
                 
                 // seartch for what customer wants
-                Quicksort.queueSearch(first().getSelection());
+                quicksort.queueSearch(first().getSelection());
                 
                 // Add item to customers cart
                 
@@ -91,6 +91,8 @@ public class ProcessCustomerQueue {
                 // Complete transaction
                 
                 // Remove customer from queue
+                customerDisplay.customerDone();
+             
                 
             }
             
