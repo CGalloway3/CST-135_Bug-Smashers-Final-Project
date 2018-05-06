@@ -152,7 +152,7 @@ public class Quicksort extends Dispenser{
         search(list, text, ++low, high);
     }
     
-    public static InventoryManager.InventoryItem queueSearch(String item){
+    public InventoryManager.InventoryItem queueSearch(String item){
 		int result = 0;
     	
     	for (int i=0; i < inventoryManager.getLocalInventoryList().size(); i++) {

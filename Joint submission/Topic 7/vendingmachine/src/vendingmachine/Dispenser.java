@@ -30,16 +30,16 @@ import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import vendingmachine.InventoryManager.InventoryItem;
 
 public class Dispenser extends Application {
     
     // Managers, Controllers, and flags.
-    static final InventoryManager inventoryManager = new InventoryManager();
+    public final InventoryManager inventoryManager = new InventoryManager();
     private final Global_Inventory_Management Global_Inventory_Management = new Global_Inventory_Management();
     private final AnimationController animationController = new AnimationController();
     private final TransactionManager transactionManager = new TransactionManager(this);
     public final ProcessCustomerQueue processCustomerQueue = new ProcessCustomerQueue();
+    public final Quicksort quicksort = new Quicksort();
     private final Restock Restock = new Restock();
     private Boolean adminMode = false;  // adminMode flag
     private String itemGridCategory;
