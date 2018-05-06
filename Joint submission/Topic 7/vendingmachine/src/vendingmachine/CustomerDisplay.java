@@ -120,7 +120,39 @@ public class CustomerDisplay {
         firstCustomerScaleTransition.setToY(2);
         
         
+        fourthCustomerScaleTransition.play();
+        fourthCustomerTranslateTransition.play();
         
+        thirdCustomerScaleTransition.play();
+        thirdCustomerTranslateTransition.play();
+
+        secondCustomerScaleTransition.play();
+        secondCustomerTranslateTransition.play();
+
+        firstCustomerScaleTransition.play();
+        firstCustomerTranslateTransition.play();
+        
+        fourthCustomerTranslateTransition.setOnFinished((event) -> {
+            fourthCustomer.setTranslateX(0);
+            fourthCustomer.setTranslateY(0);
+            
+        });
+        thirdCustomerTranslateTransition.setOnFinished((event) -> {
+            thirdCustomer.setTranslateX(0);
+            thirdCustomer.setTranslateY(0);
+            
+        });
+        secondCustomerTranslateTransition.setOnFinished((event) -> {
+            secondCustomer.setTranslateX(0);
+            secondCustomer.setTranslateY(0);
+           
+        });
+        firstCustomerTranslateTransition.setOnFinished((event) -> {
+            firstCustomer.setTranslateX(0);
+            firstCustomer.setTranslateY(0);
+            
+        });
+
     }
     
     public boolean customerDone(String s) {
