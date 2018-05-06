@@ -16,7 +16,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-public class CustomerDisplay {
+public class CustomerDisplay extends Dispenser{
     
     private TextField queueDisplay = new TextField();
     private ImageView vendingMachineImage = new ImageView(new Image(getClass().getResourceAsStream("images/VendingMachine.png"), 150, 150, true, true));
@@ -71,7 +71,7 @@ public class CustomerDisplay {
     }
     
     public void nextCustomer() {
-        
+        processCustomerQueue.out();
     }
     
     
