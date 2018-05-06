@@ -86,9 +86,10 @@ public class ProcessCustomerQueue{
                 
                 // seartch for what customer wants and add it to cart
                 
-                          
+                String price = new String(String.format("$" + dispenser.quicksort.queueSearch(first().getSelection()).getPrice() / 100 + ".%02d", dispenser.quicksort.queueSearch(first().getSelection()).getPrice() % 100));
+                
                 // Remove customer from queue
-                customerDisplay.customerDone("\n" + first().getName() + " purchased " + first().getSelection() + " for " + String.format("$" + dispenser.quicksort.queueSearch(first().getSelection()).getPrice() / 100 + ".%02d", dispenser.quicksort.queueSearch(first().getSelection()).getPrice() % 100));
+                customerDisplay.customerDone("\n" + first().getName() + " purchased " + first().getSelection() + " for " + price);
                             
                 
             }
