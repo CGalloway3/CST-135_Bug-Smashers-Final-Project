@@ -69,7 +69,30 @@ public class ProcessCustomerQueue {
 	}
 
         public void processQueue() {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            CustomerDisplay customerDisplay = new CustomerDisplay();
+            
+            // Initialize Customer line
+            customerDisplay.lineCustomersUp();
+            
+            // Loop through all customers
+            while ( !customerQueue.isEmpty() ) {
+                
+                // next customer
+                customerDisplay.nextCustomer();
+                
+                // seartch for what customer wants
+                Quicksort.itemSearch(first().getSelection());
+                
+                // Add item to customers cart
+                
+                // add funds to customers account
+                
+                // Complete transaction
+                
+                // Remove customer from queue
+                
+            }
+            
         }
 	
 	
