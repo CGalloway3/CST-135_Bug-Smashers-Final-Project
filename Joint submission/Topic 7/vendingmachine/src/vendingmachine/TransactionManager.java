@@ -95,7 +95,7 @@ public class TransactionManager {
 
         else if ( getMoneyInserted() < getProductsCost() ) {
             receiptVBox.getChildren().add(new Text("Insufficient Funds"));
-            receiptVBox.getChildren().add(new Text("Please insert cash or select Apple or Google Pay before continuing"));
+            receiptVBox.getChildren().add(new Text("Please insert cash or select Apple/Google Pay before continuing"));
         }
 
         else {
