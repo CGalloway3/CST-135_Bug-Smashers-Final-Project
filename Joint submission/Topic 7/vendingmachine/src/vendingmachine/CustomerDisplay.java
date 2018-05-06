@@ -216,7 +216,7 @@ public class CustomerDisplay {
         });
         
         if ( dispenser.processCustomerQueue.isEmpty() ) {
-            newText = queueDisplay.getText() + "Completed Processing Customer Queue!";
+            newText = queueDisplay.getText() + "\nCompleted Processing Customer Queue!";
             queueDisplay.setText(newText) ;
             
         }
