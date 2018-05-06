@@ -37,7 +37,7 @@ public class Dispenser extends Application {
     public final InventoryManager inventoryManager = new InventoryManager();
     private final Global_Inventory_Management Global_Inventory_Management = new Global_Inventory_Management();
     private final AnimationController animationController = new AnimationController();
-    private final TransactionManager transactionManager = new TransactionManager(this);
+    public final TransactionManager transactionManager = new TransactionManager(this);
     public final ProcessCustomerQueue processCustomerQueue = new ProcessCustomerQueue();
     public final Quicksort quicksort = new Quicksort();
     private final Restock Restock = new Restock();

@@ -81,17 +81,15 @@ public class ProcessCustomerQueue extends Dispenser{
             	// next customer
                 customerDisplay.nextCustomer();
                 
-                // seartch for what customer wants
-                quicksort.queueSearch(first().getSelection());
-                
-                // Add item to customers cart
-                
+                // seartch for what customer wants and add it to cart
+                inventoryManager.addItemToProductsSelectedForPurchase(quicksort.queueSearch(first().getSelection()));
+                          
                 // add funds to customers account
-                
+                transactionManager.addMoneyInserted(transactionManager.getProductsCost());
                 // Complete transaction
-                
+                inventoryManager.completePurchase();
                 // Remove customer from queue
-                customerDisplay.customerDone();
+                customerDisplay.customerDone(first().getName() + " purchased " + first().getSelection() + " for $" + Integer.toString(transactionManager.getProductsCost()));
              
                 
             }
